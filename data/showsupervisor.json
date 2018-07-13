@@ -1,4 +1,41 @@
 {
-  "code": "000000",
-  "msg": "success"
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [
+      {
+        "id": 2,
+        "lastLoginIp": "",
+        "lastLoginTime": null,
+        "lockStatus": 0,
+        "mobile": "15738773742",
+        "name": "ztl",
+        "realityName": "张桃丽",
+        "remark": "",
+        "rightIds": [],
+        "roleId": 1,
+        "roleName": "超级",
+        "roleType": ""
+      },
+      {
+        "id": 1,
+        "lastLoginIp": "",
+        "lastLoginTime": null,
+        "lockStatus": 0,
+        "mobile": "13911764496",
+        "name": "admin",
+        "realityName": "admin",
+        "remark": "",
+        "rightIds": [],
+        "roleId": 1,
+        "roleName": "超级",
+        "roleType": ""
+      }
+    ],
+    "pageSize": 5,
+    "totalCount": 2,
+    "totalPageCount": 1
+  }
 }

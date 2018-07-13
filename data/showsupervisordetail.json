@@ -1,0 +1,46 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "listRole": [
+      {
+        "roleId": 1,
+        "name": "超级"
+      },
+      {
+        "roleId": 2,
+        "name": "顾问"
+      },
+      {
+        "roleId": 3,
+        "name": "美容师"
+      },
+      {
+        "roleId": 6,
+        "name": "店长"
+      },
+      {
+        "roleId": 7,
+        "name": "店长2"
+      }
+    ],
+    "roleId": 1,
+    "supervisor": {
+      "createrId": 0,
+      "id": 1,
+      "isPasswordLocked": false,
+      "lastLoginIp": "0:0:0:0:0:0:0:1",
+      "lastLoginTime": "2018-07-02 20:31:45",
+      "lockStatus": 0,
+      "loginCount": 2362,
+      "mobile": "13911764496",
+      "name": "admin",
+      "password": "ef3c274ebbb48e1b7fd5f5f81fcdf0fd",
+      "passwordContinueFails": 0,
+      "passwordLockedTime": "2018-07-06 11:38:43",
+      "realityName": "admin",
+      "remark": "",
+      "time": "2016-05-21 09:53:43"
+    }
+  }
+}

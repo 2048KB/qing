@@ -1,0 +1,41 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [
+      {
+        "description": "超级管理员",
+        "id": 1,
+        "name": "超级管理员",
+        "number": 2,
+        "time": "2018-07-11 19:19:48"
+      },
+      {
+        "description": "顾问",
+        "id": 2,
+        "name": "顾问",
+        "number": 0,
+        "time": "2018-07-06 10:24:50"
+      },
+      {
+        "description": "美容师",
+        "id": 3,
+        "name": "美容师",
+        "number": 0,
+        "time": "2018-07-06 10:27:28"
+      },
+      {
+        "description": "店长",
+        "id": 6,
+        "name": "店长",
+        "number": 0,
+        "time": "2018-07-11 19:23:45"
+      }
+    ],
+    "pageSize": 5,
+    "totalCount": 4,
+    "totalPageCount": 1
+  }
+}
