@@ -2,7 +2,7 @@
 
 ```
 # Clone project
-git clone https://github.com/40kb/qing.git
+git clone https://github.com/2048KB/qing.git
 
 # Install dependencies
 npm install
