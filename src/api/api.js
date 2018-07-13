@@ -1,5 +1,5 @@
 /* eslint-disable */
-module.exports = {
+export default {
   getUser: '/back/user',
   showsupervisor: '/back/supervisor/showsupervisor',
   // 登陆
@@ -58,7 +58,6 @@ module.exports = {
   listplatformfee: '/fee/listplatformfee',
   // 后台佣金列表
   listbonus: '/bonus/listbonus',
-  login: '/back/login', // 登录
   showsupervisor: '/back/supervisor/showsupervisor', // 系统管理-管理员列表接口
   showsupervisordetail: '/back/supervisor/showsupervisordetail', // 系统管理-管理员添加和更新的回显信息
   editsupervisor: '/back/supervisor/editsupervisor', // 系统管理-更新管理员接口
