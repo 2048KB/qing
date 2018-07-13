@@ -23,7 +23,8 @@ import Layout from '../views/layout/Layout'
 **/
 export const constantRouterMap = [
   { path: '/page-index', component: () => import('@/views/page-index/index'), hidden: true },
-  { path: '/login', component: () => import('@/views/login/index'), hidden: true },
+  // 路径为/login的时候重定向到/dashboard,不知缘由
+  { path: '/login1', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
   {

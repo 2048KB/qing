@@ -1,65 +1,61 @@
 <template>
   <div class="login-container">
     <el-form class="login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left">
-      <h3 class="title">vue-element-admin</h3>
-      <el-form-item prop="username">
+      <h3 class="title"></h3>
+      <el-form-item prop="name">
         <span class="svg-container svg-container_login">
           <svg-icon icon-class="user" />
         </span>
-        <el-input name="username" type="text" v-model="loginForm.username" autoComplete="on" placeholder="username" />
+        <el-input name="name" type="text" v-model="loginForm.name" autoComplete="on" placeholder="请输入用户名" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
           <svg-icon icon-class="password"></svg-icon>
         </span>
         <el-input name="password" :type="pwdType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on"
-          placeholder="password"></el-input>
+          placeholder="请输入密码"></el-input>
           <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
       </el-form-item>
+      <p class="loginError" v-if="loginError">{{loginError}}</p>
       <el-form-item>
         <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
-          Sign in
+          登陆
         </el-button>
       </el-form-item>
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: admin</span>
-      </div>
     </el-form>
   </div>
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/validate'
 
 export default {
   name: 'login',
   data() {
-    const validateUsername = (rule, value, callback) => {
-      if (!isvalidUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
-      } else {
-        callback()
+    const validatename = (rule, value, callback) => {
+      if (!value) {
+        callback(new Error('请输入用户名'))
       }
+      callback()
     }
     const validatePass = (rule, value, callback) => {
-      if (value.length < 5) {
-        callback(new Error('密码不能小于5位'))
+      if (!value) {
+        callback(new Error('请输入密码'))
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: 'admin'
+        name: '',
+        password: ''
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
+        name: [{ required: true, trigger: 'blur', validator: validatename }],
         password: [{ required: true, trigger: 'blur', validator: validatePass }]
       },
       loading: false,
-      pwdType: 'password'
+      pwdType: 'password',
+      loginError: null
     }
   },
   methods: {
@@ -71,15 +67,21 @@ export default {
       }
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
+          console.log(this.loginForm)
           this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(() => {
+          // this.$store.dispatch('Login', this.loginForm).then(() => {
+          //   this.loading = false
+          //   this.$router.push({ path: '/' })
+          // }).catch(() => {
+          //   this.loading = false
+          // })
+
+          setTimeout(() => {
             this.loading = false
             this.$router.push({ path: '/' })
-          }).catch(() => {
-            this.loading = false
-          })
+          }, 1000)
         } else {
           console.log('error submit!!')
           return false
@@ -91,11 +93,17 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss">
-$bg:#2d3a4b;
-$light_gray:#eee;
+@import '../../styles/vars.scss';
+$bg:#f8f8f8;
+$light_gray:#2d3a4b;
+$dark_gray:#889aa4;
 
 /* reset element-ui css */
 .login-container {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: $bg;
   .el-input {
     display: inline-block;
     height: 47px;
@@ -109,8 +117,8 @@ $light_gray:#eee;
       color: $light_gray;
       height: 47px;
       &:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0px 1000px $bg inset !important;
-        -webkit-text-fill-color: #fff !important;
+        -webkit-box-shadow: 0 0 0px 1000px #e5e5e5 inset !important;
+        -webkit-text-fill-color: $light_gray!important;
       }
     }
   }
@@ -120,19 +128,6 @@ $light_gray:#eee;
     border-radius: 5px;
     color: #454545;
   }
-}
-
-</style>
-
-<style rel="stylesheet/scss" lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
-.login-container {
-  position: fixed;
-  height: 100%;
-  width: 100%;
-  background-color: $bg;
   .login-form {
     position: absolute;
     left: 0;
@@ -140,6 +135,7 @@ $light_gray:#eee;
     width: 520px;
     padding: 35px 35px 15px 35px;
     margin: 120px auto;
+    background-color: white;
   }
   .tips {
     font-size: 14px;
@@ -162,12 +158,8 @@ $light_gray:#eee;
     }
   }
   .title {
-    font-size: 26px;
-    font-weight: 400;
-    color: $light_gray;
-    margin: 0px auto 40px auto;
-    text-align: center;
-    font-weight: bold;
+    height: 56px;
+    background-image: url('./images/qq-1.png');
   }
   .show-pwd {
     position: absolute;
@@ -178,5 +170,12 @@ $light_gray:#eee;
     cursor: pointer;
     user-select: none;
   }
+  .loginError {
+    margin: 0;
+    padding-left: 4px;
+    font-size: 12px;
+    color: $c1;
+  }
 }
 </style>
+
