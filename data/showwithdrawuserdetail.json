@@ -1,0 +1,25 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "amount": 1000,
+    "auditOpinion": "拒绝提现",
+    "auditSupervisorId": 0,
+    "auditTime": "2018-07-12 18:11:17",
+    "availableBalance": 900,
+    "completeInfo": "",
+    "completeTime": null,
+    "fee": 0,
+    "id": 1,
+    "mobile": "15738773742",
+    "name": "admin",
+    "nickName": "amber",
+    "realityName": "胡一菲",
+    "remark": "提现审核的备注",
+    "serviceOrderNo": "12356498",
+    "status": -1,
+    "time": "2018-07-09 20:21:46",
+    "type": 1,
+    "userId": 2
+  }
+}

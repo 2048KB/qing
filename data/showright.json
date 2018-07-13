@@ -1,0 +1,321 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "roleId": 1,
+    "rights": [
+      1,
+      2,
+      3
+    ],
+    "allRight": [
+      {
+        "顾问列表": [
+          {
+            "description": "查看顾问列表",
+            "id": 1,
+            "moduleId": 1,
+            "name": "查看"
+          },
+          {
+            "description": "查看顾问详情",
+            "id": 2,
+            "moduleId": 1,
+            "name": "查看详情"
+          },
+          {
+            "description": "添加顾问",
+            "id": 3,
+            "moduleId": 1,
+            "name": "添加顾问"
+          },
+          {
+            "description": "编辑个人信息",
+            "id": 4,
+            "moduleId": 1,
+            "name": "编辑个人信息"
+          },
+          {
+            "description": "编辑职业信息",
+            "id": 5,
+            "moduleId": 1,
+            "name": "编辑职业信息"
+          }
+        ]
+      },
+      {
+        "美容师列表": [
+          {
+            "description": "查看美容师列表",
+            "id": 6,
+            "moduleId": 2,
+            "name": "查看"
+          },
+          {
+            "description": "查看美容师详情",
+            "id": 7,
+            "moduleId": 2,
+            "name": "查看详情"
+          },
+          {
+            "description": "添加美容师",
+            "id": 8,
+            "moduleId": 2,
+            "name": "添加美容师"
+          },
+          {
+            "description": "编辑个人信息",
+            "id": 9,
+            "moduleId": 2,
+            "name": "编辑个人信息"
+          },
+          {
+            "description": "编辑职业信息",
+            "id": 10,
+            "moduleId": 2,
+            "name": "编辑职业信息"
+          }
+        ]
+      },
+      {
+        "注册会员列表": [
+          {
+            "description": "查看注册会员列表",
+            "id": 11,
+            "moduleId": 3,
+            "name": "查看"
+          },
+          {
+            "description": "查看注册会员详情",
+            "id": 12,
+            "moduleId": 3,
+            "name": "查看详情"
+          },
+          {
+            "description": "更改邀请",
+            "id": 13,
+            "moduleId": 3,
+            "name": "更改邀请"
+          }
+        ]
+      },
+      {
+        "顾客列表": [
+          {
+            "description": "查看顾客列表",
+            "id": 14,
+            "moduleId": 4,
+            "name": "查看"
+          },
+          {
+            "description": "查看顾客详情",
+            "id": 15,
+            "moduleId": 4,
+            "name": "查看详情"
+          },
+          {
+            "description": "更改邀请",
+            "id": 16,
+            "moduleId": 4,
+            "name": "更改邀请"
+          }
+        ]
+      },
+      {
+        "平台状况": [
+          {
+            "description": "查看平台概况",
+            "id": 17,
+            "moduleId": 5,
+            "name": "查看"
+          }
+        ]
+      },
+      {
+        "管理费列表": [
+          {
+            "description": "查看管理费列表",
+            "id": 18,
+            "moduleId": 6,
+            "name": "查看"
+          }
+        ]
+      },
+      {
+        "奖金表": [
+          {
+            "description": "查看奖金表",
+            "id": 19,
+            "moduleId": 7,
+            "name": "查看"
+          }
+        ]
+      },
+      {
+        "订单列表": [
+          {
+            "description": "查看订单列表",
+            "id": 20,
+            "moduleId": 8,
+            "name": "查看"
+          },
+          {
+            "description": "查看订单列表详情",
+            "id": 21,
+            "moduleId": 8,
+            "name": "查看详情"
+          }
+        ]
+      },
+      {
+        "提现总表": [
+          {
+            "description": "查看提现总表",
+            "id": 22,
+            "moduleId": 9,
+            "name": "查看"
+          },
+          {
+            "description": "审核提现总表",
+            "id": 23,
+            "moduleId": 9,
+            "name": "审核"
+          }
+        ]
+      },
+      {
+        "运营规则设置": [
+          {
+            "description": "查看运营规则",
+            "id": 24,
+            "moduleId": 10,
+            "name": "查看"
+          },
+          {
+            "description": "编辑运营规则",
+            "id": 25,
+            "moduleId": 10,
+            "name": "编辑运营规则"
+          }
+        ]
+      },
+      {
+        "分销规则设置": [
+          {
+            "description": "查看分销规则",
+            "id": 26,
+            "moduleId": 11,
+            "name": "查看"
+          },
+          {
+            "description": "编辑分销规则",
+            "id": 27,
+            "moduleId": 11,
+            "name": "编辑分销规则"
+          }
+        ]
+      },
+      {
+        "操作日志": [
+          {
+            "description": "查看操作日志",
+            "id": 28,
+            "moduleId": 12,
+            "name": "操作日志"
+          }
+        ]
+      },
+      {
+        "组织机构": [
+          {
+            "description": "查看组织机构",
+            "id": 29,
+            "moduleId": 13,
+            "name": "查看"
+          },
+          {
+            "description": "添加大区",
+            "id": 30,
+            "moduleId": 13,
+            "name": "添加大区"
+          },
+          {
+            "description": "添加美容店",
+            "id": 31,
+            "moduleId": 13,
+            "name": "添加美容店"
+          },
+          {
+            "description": "编辑大区",
+            "id": 32,
+            "moduleId": 13,
+            "name": "编辑大区"
+          },
+          {
+            "description": "编辑美容店",
+            "id": 33,
+            "moduleId": 13,
+            "name": "编辑美容店"
+          }
+        ]
+      },
+      {
+        "管理员列表": [
+          {
+            "description": "查看管理员列表",
+            "id": 34,
+            "moduleId": 14,
+            "name": "查看"
+          },
+          {
+            "description": "添加管理员",
+            "id": 35,
+            "moduleId": 14,
+            "name": "添加管理员"
+          },
+          {
+            "description": "编辑管理员",
+            "id": 36,
+            "moduleId": 14,
+            "name": "编辑管理员"
+          },
+          {
+            "description": "删除管理员",
+            "id": 37,
+            "moduleId": 14,
+            "name": "删除"
+          }
+        ]
+      },
+      {
+        "角色列表": [
+          {
+            "description": "查看角色列表",
+            "id": 38,
+            "moduleId": 15,
+            "name": "查看"
+          },
+          {
+            "description": "添加角色",
+            "id": 39,
+            "moduleId": 15,
+            "name": "添加角色"
+          },
+          {
+            "description": "编辑角色",
+            "id": 40,
+            "moduleId": 15,
+            "name": "编辑角色"
+          },
+          {
+            "description": "权限分配",
+            "id": 41,
+            "moduleId": 15,
+            "name": "权限分配"
+          }
+        ]
+      }
+    ],
+    "roleName": "超级管理员"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [
+      {
+        "amount": 1000,
+        "auditOpinion": "",
+        "auditSupervisorId": 0,
+        "auditTime": null,
+        "availableBalance": 900,
+        "completeInfo": "",
+        "completeTime": null,
+        "fee": 0,
+        "id": 1,
+        "mobile": "15738773742",
+        "name": "",
+        "nickName": "amber",
+        "realityName": "胡一菲",
+        "remark": "",
+        "serviceOrderNo": "12356498",
+        "status": -1,
+        "time": "2018-07-09 20:21:46",
+        "type": 1,
+        "userId": 2
+      }
+    ],
+    "pageSize": 5,
+    "totalCount": 1,
+    "totalPageCount": 1
+  }
+}
