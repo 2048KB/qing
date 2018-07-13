@@ -1,0 +1,21 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 2,
+    "page": [{
+      "inviterMobile": "13111111119",
+      "inviterRealName": "赵燕",
+      "typeStr": "双人奖",
+      "amount": 1200.00,
+      "inviteeName": "dsadasqw",
+      "inviteeMobile": "12345678999",
+      "time": "2018-07-07 17:10:29",
+      "type": 6
+    }],
+    "pageSize": 1,
+    "totalCount": 6,
+    "totalPageCount": 6
+  }
+}

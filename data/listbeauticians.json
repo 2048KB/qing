@@ -1,0 +1,36 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [{
+      "address": "",
+      "belongCounselor": "王五",
+      "birthDate": "1979-07-01 00:00:00",
+      "birthDateStr": "",
+      "email": "",
+      "entryDate": "2017-07-01 00:00:00",
+      "entryDateStr": "",
+      "id": 12,
+      "idNumber": "",
+      "mobile": "17896666666",
+      "parentId": 5,
+      "photo": "default123.png",
+      "qq": "",
+      "realityName": "张雪女",
+      "remark": "",
+      "roleType": 1,
+      "roleTypeStr": "美容师",
+      "sex": 2,
+      "sexStr": "女",
+      "sno": "BJCYMZYD-000009",
+      "storeId": 1,
+      "storeName": "",
+      "time": "2018-07-07 15:38:27"
+    }],
+    "pageSize": 1,
+    "totalCount": 3,
+    "totalPageCount": 3
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [{
+      "cardId": 0,
+      "dirInviteId": 0,
+      "dirInviteMobile": "",
+      "dirInviteName": "",
+      "dirInviteRole": "",
+      "id": 11,
+      "inDirInviteId": 0,
+      "inDirInviteMobile": "--",
+      "inDirInviteName": "--",
+      "inDirInviteRole": "--",
+      "isActive": false,
+      "mobile": "12345645687",
+      "nickName": "单身吗",
+      "time": "2018-07-10 11:16:47"
+    }],
+    "pageSize": 1,
+    "totalCount": 6,
+    "totalPageCount": 6
+  }
+}

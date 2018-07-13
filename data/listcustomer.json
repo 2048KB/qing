@@ -1,0 +1,42 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [{
+      "cardId": 0,
+      "dirInviteId": 0,
+      "dirInviteMobile": "",
+      "dirInviteName": "",
+      "dirInviteRole": "",
+      "id": 13,
+      "inDirInviteId": 0,
+      "inDirInviteMobile": "--",
+      "inDirInviteName": "--",
+      "inDirInviteRole": "--",
+      "isActive": false,
+      "mobile": "12312321312",
+      "nickName": "就是顾客啊",
+      "time": "2018-07-11 13:48:46"
+    }, {
+      "cardId": 0,
+      "dirInviteId": 3,
+      "dirInviteMobile": "13111111119",
+      "dirInviteName": "赵燕",
+      "dirInviteRole": "顾问",
+      "id": 1,
+      "inDirInviteId": 0,
+      "inDirInviteMobile": "--",
+      "inDirInviteName": "--",
+      "inDirInviteRole": "--",
+      "isActive": false,
+      "mobile": "13155555555",
+      "nickName": "xiaohei",
+      "time": "2018-06-23 15:25:38"
+    }],
+    "pageSize": 10,
+    "totalCount": 2,
+    "totalPageCount": 1
+  }
+}

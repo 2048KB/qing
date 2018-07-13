@@ -1,0 +1,56 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "counselorCurMonSpreadCustomer": 0,
+    "userAmountByUserId": 6431,
+    "employeeDetail": {
+      "address": "",
+      "belongCounselor": "",
+      "birthDate": "1979-07-01 00:00:00",
+      "birthDateStr": "",
+      "email": "",
+      "entryDate": "2017-07-01 00:00:00",
+      "entryDateStr": "",
+      "id": 10,
+      "idNumber": "",
+      "mobile": "13111111119",
+      "parentId": -1,
+      "photo": "default123.png",
+      "qq": "",
+      "realityName": "赵燕",
+      "remark": "",
+      "roleType": 2,
+      "roleTypeStr": "",
+      "sex": 2,
+      "sexStr": "",
+      "sno": "BJCYMZYD-000007",
+      "storeId": 1,
+      "storeName": "北京朝阳门直营店",
+      "time": "2018-07-06 15:22:11"
+    },
+    "counselorSpreadMember": 1,
+    "userCurMonDirectAmount": 3931,
+    "userCurMonBonus": [{
+      "inviterMobile": "13111111119",
+      "inviterRealName": "赵燕",
+      "typeStr": "双人奖",
+      "amount": 1200.00,
+      "inviteeName": "dsadasqw",
+      "inviteeMobile": "12345678999",
+      "time": 1530954629000,
+      "type": 6
+    }],
+    "userCurMonInDirectAmount": 2500,
+    "userFunds": {
+      "availableBalance": 0,
+      "balance": 0,
+      "freeze": 0,
+      "id": 2,
+      "sign": "55c82b601deae028c1c5e87fd820923d",
+      "time": "2018-07-06 15:22:31",
+      "userId": 3
+    },
+    "counselorCurMonSpreadMember": 1
+  }
+}

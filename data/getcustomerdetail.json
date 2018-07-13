@@ -1,0 +1,35 @@
+{
+  "code": 1,
+  "msg": "查询成功",
+  "obj": {
+    "memberVO": {
+      "nickName": "赵燕",
+      "time": null,
+      "userId": 3,
+      "mobile": "13111111119",
+      "photo": "default123.png",
+      "sexStr": "女",
+      "roleTypeStr": "顾问",
+      "isChange": true
+    },
+    "storeName": "北京朝阳门直营店",
+    "user": {
+      "id": 1,
+      "time": "2018-06-23 15:25:38",
+      "name": "QQMR_SJDBSAKJDB",
+      "mobile": "13155555555",
+      "password": null,
+      "payPassword": null,
+      "sex": 0,
+      "nickName": "xiaohei",
+      "photo": null,
+      "roleType": 1,
+      "employeeId": -1,
+      "loginTime": null,
+      "loginCount": null,
+      "loginIp": null,
+      "wxOpenId": null
+    },
+    "listUserAddress": []
+  }
+}

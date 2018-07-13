@@ -1,0 +1,19 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "commissionFee": 12872,
+    "memberCount": 6,
+    "FeeTotal": 13193,
+    "fundTotal": 19800,
+    "withdrawFee": 321,
+    "adviserAward": 6431,
+    "awardTotal": 6431,
+    "userCount": 12,
+    "withdrawalAmount": 0,
+    "purchaseMemberCardAmount": 19800,
+    "memberAward": 0,
+    "beauticianAward": 0,
+    "customerCount": 6
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [{
+      "acount": "平台账户",
+      "amount": "560.00",
+      "mobile": "13111111119",
+      "nickName": "--",
+      "orderNo": "fsaf123",
+      "realityName": "赵燕",
+      "roleType": "4",
+      "roleTypeStr": "顾问",
+      "sex": "2",
+      "sexStr": "女",
+      "time": "2018-07-12 14:15:20.0",
+      "type": "1",
+      "typeStr": "佣金",
+      "userId": "3"
+    }],
+    "pageSize": 1,
+    "totalCount": 3,
+    "totalPageCount": 3
+  }
+}

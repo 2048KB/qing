@@ -1,0 +1,12 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "dayWithdrawalPending": {
+      "count": 0
+    },
+    "dayWithdrawalSuccess": {
+      "count": 0
+    }
+  }
+}

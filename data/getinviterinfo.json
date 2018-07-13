@@ -1,0 +1,14 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "isChange": true,
+    "mobile": "13111111119",
+    "nickName": "胡三飞",
+    "photo": "",
+    "roleTypeStr": "顾问",
+    "sexStr": "女",
+    "time": null,
+    "userId": 3
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": [{
+    "address": "",
+    "birthDate": "2018-06-23 00:00:00",
+    "email": "",
+    "entryDate": "2018-06-23 00:00:00",
+    "id": 1,
+    "idNumber": "",
+    "mobile": "13135931720",
+    "parentId": -1,
+    "photo": "default.png",
+    "qq": "",
+    "realityName": "胡一菲",
+    "remark": "",
+    "roleType": 2,
+    "sex": 2,
+    "sno": "BJCYMZYD-000001",
+    "storeId": 1,
+    "time": "2018-06-23 14:16:23"
+  }]
+}

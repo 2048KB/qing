@@ -1,0 +1,24 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [{
+      "amount": "500.00",
+      "mobile": "13111111119",
+      "nickName": "--",
+      "orderNo": "cxzczca",
+      "realityName": "赵燕",
+      "roleType": "4",
+      "roleTypeStr": "顾问",
+      "time": "2018-07-31 23:00:00.0",
+      "type": "5",
+      "typeStr": "人头奖",
+      "userId": "3"
+    }],
+    "pageSize": 1,
+    "totalCount": 6,
+    "totalPageCount": 6
+  }
+}

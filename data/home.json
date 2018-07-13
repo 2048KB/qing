@@ -1,0 +1,16 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "id": 1,
+    "lastLoginIp": "127.0.0.1",
+    "lastLoginTime": "2018-07-12 16:55:57",
+    "lockStatus": 0,
+    "mobile": "",
+    "name": "admin",
+    "realityName": "",
+    "remark": "",
+    "rightIds": [],
+    "roleType": "超级管理员"
+  }
+}

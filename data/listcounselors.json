@@ -1,0 +1,36 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [{
+      "address": "",
+      "belongCounselor": "",
+      "birthDate": "1979-07-01 00:00:00",
+      "birthDateStr": "",
+      "email": "",
+      "entryDate": "2017-07-01 00:00:00",
+      "entryDateStr": "",
+      "id": 10,
+      "idNumber": "",
+      "mobile": "13111111119",
+      "parentId": -1,
+      "photo": "default123.png",
+      "qq": "",
+      "realityName": "赵燕",
+      "remark": "",
+      "roleType": 2,
+      "roleTypeStr": "顾问",
+      "sex": 2,
+      "sexStr": "女",
+      "sno": "BJCYMZYD-000007",
+      "storeId": 1,
+      "storeName": "",
+      "time": "2018-07-06 15:22:11"
+    }],
+    "pageSize": 1,
+    "totalCount": 7,
+    "totalPageCount": 7
+  }
+}
