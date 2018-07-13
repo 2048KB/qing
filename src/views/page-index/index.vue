@@ -1,7 +1,7 @@
 <template>
   <div class="pageIndex">
     <ul>
-      <li v-for="(item) in list" :key="key">
+      <li v-for="(item) in list">
         <!-- <h2>{{key}}</h2> -->
         <nav>
           <router-link :to="item.path" class="block-link">
