@@ -79,7 +79,7 @@ export default {
               this.$router.push({ path: '/' })
             })
             .catch((err) => {
-              this.login = false
+              this.loading = false
               this.loginError = err && err.msg || null
             })
         }
