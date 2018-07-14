@@ -41,21 +41,21 @@ export const constantRouterMap = [
   {
     path: '/example',
     component: Layout,
-    redirect: '/example/table',
+    redirect: '/example/listmember',
     name: 'Example',
     meta: { title: 'Example', icon: 'example' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
+        path: 'listmember',
+        name: 'Listmember',
+        component: () => import('@/views/listmember/index'),
+        meta: { title: 'listmember', icon: 'listmember' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
+        path: 'listcustomer',
+        name: 'listcustomer',
+        component: () => import('@/views/listcustomer/index'),
+        meta: { title: 'listcustomer', icon: 'listcustomer' }
       }
     ]
   },
@@ -101,24 +101,57 @@ export const constantRouterMap = [
   {
     path: '/customer',
     component: Layout,
-    redirect: '/customer/table',
+    redirect: '/customer/listmember',
     name: 'Customer',
     meta: { title: '客户管理', icon: 'example' },
     children: [
       {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/consultant/index'),
-        meta: { title: '注册会员', icon: 'table' }
+        path: 'listmember',
+        name: 'Listmember',
+        component: () => import('@/views/listmember/index'),
+        meta: { title: '注册会员', icon: 'listmember' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/beautician/index'),
-        meta: { title: '顾客', icon: 'tree' }
+        path: 'listcustomer',
+        name: 'Listcustomer',
+        component: () => import('@/views/listcustomer/index'),
+        meta: { title: '顾客', icon: 'listcustomer' }
       }
     ]
   },
+  // 提现管理
+  {
+    path: '/account',
+    component: Layout,
+    redirect: '/account/showwithdrawuser',
+    name: 'account',
+    meta: { title: '提现管理', icon: 'example' },
+    children: [
+      {
+        path: 'showwithdrawuser',
+        name: 'Showwithdrawuser',
+        component: () => import('@/views/showwithdrawuser/index'),
+        meta: { title: '提现总表', icon: 'showwithdrawuser' }
+      }
+    ]
+  },
+  // 订单管理
+  // 接口还没给，先注释
+  // {
+  //   path: '/account',
+  //   component: Layout,
+  //   redirect: '/account/showwithdrawuser',
+  //   name: 'account',
+  //   meta: { title: '订单管理', icon: 'example' },
+  //   children: [
+  //     {
+  //       path: 'showwithdrawuser',
+  //       name: 'Showwithdrawuser',
+  //       component: () => import('@/views/showwithdrawuser/index'),
+  //       meta: { title: '订单列表', icon: 'showwithdrawuser' }
+  //     }
+  //   ]
+  // },
 
   {
     path: '/form',

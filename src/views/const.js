@@ -44,3 +44,19 @@ export const sexsOptions = [{
   value: '2',
   label: '女'
 }]
+export const withdrawStatuOptions = [{
+  value: '0',
+  label: '全部'
+}, {
+  value: '1',
+  label: '待审核'
+}, {
+  value: '2',
+  label: '处理中'
+}, {
+  value: '-1',
+  label: '提现拒绝'
+}, {
+  value: '3',
+  label: '提现成功'
+}]
