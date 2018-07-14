@@ -57,6 +57,13 @@
           <template slot-scope="scope"><span class="detail" @click="handleToDetail">详情</span></template>
         </el-table-column>
       </el-table>
+      <div class="pagination-container">
+        <el-pagination
+          @current-change="handleChangeCurrent"
+          layout="prev, pager, next"
+          :total="totalCount">
+        </el-pagination> 
+      </div>
     </TableWrapper>
   </div>
 </template>
@@ -91,11 +98,12 @@ export default {
           begin: null,
           end: null
         },
-
         search: {
           type: '0',
           text: ''
-        }
+        },
+        currPage: 0,
+        currPage: 10
       },
       list: null,
       listLoading: true,
@@ -134,6 +142,7 @@ export default {
         })
     },
     handleChange () {
+      console.log()
       console.log('requst api')
     },
     handleAddMember() {
@@ -141,6 +150,10 @@ export default {
     },
     handleToDetail () {
 
+    },
+    handleChangeCurrent (currentPage) {
+      this.requestData.currPage = currentPage
+      this.handleChange()
     }
   }
 }
@@ -182,6 +195,11 @@ export default {
     .detail {
       color: $c0;
       cursor: pointer;
+    }
+    .pagination-container {
+      display: flex;
+      justify-content: flex-end;
+      padding-right: 20px;
     }
   }
 </style>
