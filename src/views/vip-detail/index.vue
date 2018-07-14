@@ -146,7 +146,6 @@ export default {
     CardYqxx,
     CardInfo,
     CardSsgw,
-    CardZyxx,
     CardAddress
   },
   data() {

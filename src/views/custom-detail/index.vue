@@ -4,7 +4,9 @@
       <el-col :span="16">
         <div class="grid-content">
           <!-- 职业信息 -->
-          <card-zyxx :employeeDetail="employeeDetail"></card-zyxx>
+          <card-zyxx :employeeDetail="employeeDetail" :isCustom="true">
+            <span>个人信息</span>
+          </card-zyxx>
 
           <!-- 账户信息 -->
           <card-zhxx :userFunds="userFunds"></card-zhxx>
@@ -21,10 +23,22 @@
       <el-col :span="8">
         <div class="grid-content">
           <!-- 个人信息 -->
-          <card-info :employeeDetail="employeeDetail"></card-info>
+          <card-address :employeeDetail="employeeDetail"></card-address>
 
-          <!-- 所属顾问 -->
-          <card-ssgw :employeeDetail="employeeDetail"></card-ssgw>
+          <!-- 直接邀请人 -->
+          <card-ssgw :employeeDetail="employeeDetail" :type="1">
+            <span>直接邀请人</span>
+          </card-ssgw>
+
+          <card-ssgw :employeeDetail="employeeDetail" :type="2">
+            <span>间接邀请人</span>
+          </card-ssgw>
+
+          <card-ssgw :employeeDetail="employeeDetail" :type="3">
+            <span>间接邀请人</span>
+          </card-ssgw>
+
+          <card-vipcard></card-vipcard>
         </div>
       </el-col>
     </el-row>
@@ -137,6 +151,7 @@ import CardInfo from '@/components/CardInfo'
 import CardSsgw from '@/components/CardSsgw'
 import CardZyxx from '@/components/CardZyxx'
 import CardAddress from '@/components/CardAddress'
+import CardVipcard from '@/components/CardVipcard'
 
 export default {
   name: 'counselor-detail',
@@ -147,7 +162,8 @@ export default {
     CardInfo,
     CardSsgw,
     CardZyxx,
-    CardAddress
+    CardAddress,
+    CardVipcard
   },
   data() {
     return {

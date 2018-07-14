@@ -94,6 +94,18 @@ export const constantRouterMap = [
         component: () => import('@/views/beautician-detail/index'),
         meta: { title: '美容师详情', icon: 'table' }
       },
+      {
+        path: 'custom-detail',
+        name: 'CustomDetail',
+        component: () => import('@/views/custom-detail/index'),
+        meta: { title: '会员详情', icon: 'table' }
+      },
+      {
+        path: 'vip-detail',
+        name: 'VipDetail',
+        component: () => import('@/views/vip-detail/index'),
+        meta: { title: '顾客详情', icon: 'table' }
+      }
     ]
   },
 

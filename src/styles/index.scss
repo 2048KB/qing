@@ -76,13 +76,14 @@ a:hover {
 
 .app-container {
   padding: 20px;
+  color: #676a6c;
 }
 
 hr.style-one {
   border: 0;
   height: 1px;
   background: #333;
-  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+  background-image: linear-gradient(to right, #e3e3e3, #ddd, #e3e3e3);
 }
 
 
@@ -210,7 +211,6 @@ hr.style-one {
   .meta {
     padding-left: 15px;
     position: relative;
-    border-bottom: 1px solid #e3e3e3;
   }
 
   .meta .name {
@@ -221,7 +221,7 @@ hr.style-one {
 
   .meta > div {
     position: absolute;
-    top: 0;
+    top: -5px;
     right: 0;
   }
 
@@ -239,8 +239,12 @@ hr.style-one {
   }
 }
 
+.detail-card__footer {
+  border-top: 1px solid #e3e3e3;
+}
+
 .counselor-detail-container {
-  padding: 40px;
+  padding: 20px;
   background: #f6f6f6;
 }
 
@@ -299,6 +303,22 @@ hr.style-one {
 }
 
 .qq-31 {
+  height: 20px;
+  width: 20px;
   background: url(../assets/images/qq-31.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-34 {
+  height: 20px;
+  width: 20px;
+  background: url(../assets/images/qq-34.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-38 {
+  height: 20px;
+  width: 20px;
+  background: url(../assets/images/qq-38.png) no-repeat;
   background-size: contain;
 }
