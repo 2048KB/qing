@@ -34,3 +34,13 @@ export const employeeTypes = [{
   value: '6',
   label: '所属顾问'
 }]
+export const sexsOptions = [{
+  value: '0',
+  label: '全部'
+}, {
+  value: '1',
+  label: '男'
+}, {
+  value: '2',
+  label: '女'
+}]

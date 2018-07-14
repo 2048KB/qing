@@ -1,14 +1,14 @@
 <template>
   <div class="DatePicker">
     <span class="title">{{title}}</span>
-    <el-date-picker value-format="yyyy-MM-dd" v-model="innerValue.start" @change="handleChange" :type="type" placeholder="选择开始日期" ></el-date-picker>
+    <el-date-picker value-format="yyyy-MM-dd" v-model="innerValue.begin" @change="handleChange" :type="type" placeholder="选择开始日期" ></el-date-picker>
     <span class="link-date">至</span>
     <el-date-picker value-format="yyyy-MM-dd" v-model="innerValue.end" @change="handleChange" :type="type" placeholder="选择结束日期"></el-date-picker>
   </div>
 </template>
 
 <script>
-// 组件value为 {start, end}的对象格式
+// 组件value为 {begin, end}的对象格式
 export default {
   props: {
     value: Object,
@@ -20,7 +20,7 @@ export default {
     }
   },
   data () {
-    let defaultValue = { start: null, end: null }
+    let defaultValue = { begin: null, end: null }
     return {
       innerValue: this.value || defaultValue
     }

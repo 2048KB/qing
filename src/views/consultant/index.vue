@@ -1,75 +1,97 @@
 <template>
-  <div class="app-container">
-    <RadioGroup 
-      title="直接邀请人角色"
-      @change="handleChange"
-      :options="roleOptions"
-      v-model="requestData.dirInviteRole"></RadioGroup>
-    <DatePicker 
-      @change="handleChange" 
-      v-model="requestData.time" 
-      title="注册日期"></DatePicker>
+  <div class="app-container consultant-page">
+    <div class="top-bar">
+      <span class="add-member" @click="handleAddMember">添加</span>
+    </div>
     <SearchBox 
+      class="search-box"
       @change="handleChange"
       :options="employeeTypes"
       v-model="requestData.search"></SearchBox>
-
-<!--     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
-      <el-table-column align="center" label='ID' width="95">
-        <template slot-scope="scope">
-          {{scope.$index}}
-        </template>
-      </el-table-column>
-      <el-table-column label="Title">
-        <template slot-scope="scope">
-          {{scope.row.title}}
-        </template>
-      </el-table-column>
-      <el-table-column label="Author" width="110" align="center">
-        <template slot-scope="scope">
-          <span>{{scope.row.author}}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
-        <template slot-scope="scope">
-          {{scope.row.pageviews}}
-        </template>
-      </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time"></i>
-          <span>{{scope.row.display_time}}</span>
-        </template>
-      </el-table-column>
-    </el-table> -->
+    <div class="filter-box">
+      <div class="filter-item">
+        <RadioGroup 
+          title="直接邀请人角色"
+          @change="handleChange"
+          :options="sexsOptions"
+          v-model="requestData.dirInviteRole"></RadioGroup>
+      </div>
+      <div class="filter-item">
+        <DatePicker 
+          @change="handleChange" 
+          v-model="requestData.birthDate" 
+          title="出生日期"></DatePicker>
+      </div>
+      <div class="filter-item">
+        <DatePicker 
+          @change="handleChange" 
+          v-model="requestData.entryDate" 
+          title="入职日期"></DatePicker>
+      </div>
+      <div class="filter-item">
+        <DatePicker 
+          @change="handleChange" 
+          v-model="requestData.creatTime" 
+          title="创建日期"></DatePicker>
+      </div>
+    </div>
+    <TableWrapper title="顾问列表">
+      <span slot="right">共{{totalCount}}人</span>
+      <el-table 
+        class="list"
+        :data="list" 
+        v-loading.body="listLoading" 
+        element-loading-text="Loading" 
+        :fit="true"
+        border highlight-current-row>
+        <el-table-column min-width="50" align="center" label='员工编号' prop="sno"></el-table-column>
+        <el-table-column min-width="50" align="center" label='姓名' prop="realityName"></el-table-column>
+        <el-table-column min-width="50" align="center" label='性别' prop="sexStr"></el-table-column>
+        <el-table-column min-width="50" align="center" label='手机号' prop="mobile"></el-table-column>
+        <el-table-column min-width="50" align="center" label='出生日期' prop="birthDate"></el-table-column>
+        <el-table-column min-width="100" align="center" label='身份证号' prop="idNumber"></el-table-column>
+        <el-table-column min-width="50" align="center" label='QQ号' prop="qq"></el-table-column>
+        <el-table-column min-width="50" align="center" label='入职日期' prop="entryDate"></el-table-column>
+        <el-table-column min-width="100" align="center" label='创建日期' prop=""></el-table-column>
+        <el-table-column min-width="50" align="center" label='操作'>
+          <template slot-scope="scope"><span class="detail" @click="handleToDetail">详情</span></template>
+        </el-table-column>
+      </el-table>
+    </TableWrapper>
   </div>
 </template>
 
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {roleOptions, employeeTypes} from '@/views/const'
+import {sexsOptions, employeeTypes} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
+import TableWrapper from '@/components/TableWrapper'
 export default {
   components: {
     RadioGroup,
     DatePicker,
-    SearchBox
+    SearchBox,
+    TableWrapper
   },
   data() {
     return {
       requestData: {
         dirInviteRole: '0',
-        time: {
-          start: null,
+        creatTime: {
+          begin: null,
           end: null
         },
+        birthDate: {
+          begin: null,
+          end: null
+        },
+        entryDate: {
+          begin: null,
+          end: null
+        },
+
         search: {
           type: '0',
           text: ''
@@ -77,8 +99,9 @@ export default {
       },
       list: null,
       listLoading: true,
-      roleOptions,
-      employeeTypes
+      sexsOptions,
+      employeeTypes,
+      totalCount: 0
     }
   },
   filters: {
@@ -96,15 +119,69 @@ export default {
   },
   methods: {
     fetchData () {
-      this.listLoading = true
-      getList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.listLoading = false
+      this.$API.listcounselors({
+        data: this.requestData
       })
+        .then((res) => {
+          this.listLoading = false
+          console.log(res)
+          let data = res.data || {}
+          this.list = data.page
+          this.totalCount = data.totalCount
+        })
+        .catch((res) => {
+          console.log(res)
+        })
     },
     handleChange () {
-      console.log(this.requestData)
+      console.log('requst api')
+    },
+    handleAddMember() {
+      console.log('add-member')
+    },
+    handleToDetail () {
+
     }
   }
 }
 </script>
+<style lang="scss">
+  @import  '../../styles/vars.scss';
+  $padding: 20px;
+  .consultant-page {
+    padding: 0;
+    .search-box {
+      margin-right: $padding;
+      margin-bottom: $padding;
+    }
+    .filter-box {
+      margin: $padding;
+      padding: $padding;
+      background-color: white;
+      .filter-item {
+        padding: 15px 0px;
+        border-bottom: 1px solid #ddd;
+        &:first-child {
+          padding-top: 5px;
+        }
+        &:last-child {
+          border-width: 0;
+          padding-bottom: 5px;
+        }
+      }
+    }
+    .add-member {
+      display: block;
+      color: $c0;
+      cursor: pointer;
+    }
+    .list {
+      margin: $padding;
+      width: auto;
+    }
+    .detail {
+      color: $c0;
+      cursor: pointer;
+    }
+  }
+</style>
