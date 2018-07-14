@@ -74,14 +74,26 @@ export const constantRouterMap = [
         path: 'consultant',
         name: 'Consultant',
         component: () => import('@/views/consultant/index'),
-        meta: { title: '顾问', icon: 'table' }
+        meta: { title: '顾问列表', icon: 'table' }
       },
       {
         path: 'beautician',
         name: 'Beautician',
         component: () => import('@/views/beautician/index'),
-        meta: { title: '美容师', icon: 'tree' }
-      }
+        meta: { title: '美容师列表', icon: 'tree' }
+      },
+      {
+        path: 'counselor-detail',
+        name: 'CounselorDetail',
+        component: () => import('@/views/counselor-detail/index'),
+        meta: { title: '顾问详情', icon: 'table' }
+      },
+      {
+        path: 'beautician-detail',
+        name: 'BeauticianDetail',
+        component: () => import('@/views/beautician-detail/index'),
+        meta: { title: '美容师详情', icon: 'table' }
+      },
     ]
   },
 
