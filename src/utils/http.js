@@ -1,6 +1,5 @@
 /* eslint-disable */
 import $ from 'jquery'
-import spinner from './spinner'
 
 const fetch = function fetch(url = '', options = {}) {
   return new Promise((resolve, reject) => {
@@ -23,16 +22,18 @@ const fetch = function fetch(url = '', options = {}) {
       xhrFields: { withCredentials: true },
       crossDomain: true,
       beforeSend: function beforeSend() {
-        if (request.loading && !spinning) {
-          console.log('加载 Loading')
-          // spinner.start()
-        }
+        console.log('加载 Loading')
+        // if (request.loading && !spinning) {
+        //   console.log('加载 Loading')
+        //   spinner.start()
+        // }
       },
       complete: function complete() {
-        setTimeout(() => {
-          console.log('关闭 Loading')
-          // spinner.close()
-        }, 3000)
+        console.log('关闭 Loading')
+        // setTimeout(() => {
+        //   console.log('关闭 Loading')
+        //   spinner.close()
+        // }, 3000)
       }
     }
 

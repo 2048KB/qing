@@ -10,6 +10,7 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-size: 14px;
 }
 
 label {
@@ -75,4 +76,229 @@ a:hover {
 
 .app-container {
   padding: 20px;
+}
+
+hr.style-one {
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+}
+
+
+// 详情
+// reset el-card
+.el-card {
+  border-radius: 0;
+}
+
+.detail-card {
+  padding-bottom: 20px;
+}
+
+.el-card__header {
+  background: #34c4d4;
+  color: #fff;
+  border-radius: none;
+  padding: 10px 15px;
+  position: relative;
+
+  .icon {
+    position: absolute;
+    top: 6.5px;
+    right: 12px;
+    display: block;
+    width: 22px;
+    height: 22px;
+    background: url(../assets/images/qq-17.png) no-repeat;
+    background-size: contain;
+  }
+}
+
+.detail-card__body {
+  text-align: center;
+
+  .row {
+    padding-top: 20px;
+  }
+
+  .row1 {
+    margin-bottom: 30px;
+  }
+
+  .sum {
+    color: red;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+
+  .title {
+    font-size: 18px;
+  }
+}
+
+.detail-card__body--yj {
+  font-size: 14px;
+
+  .pagination {
+    margin-top: 20px;
+  }
+}
+
+.detail-card__body--userinfo {
+  text-align: left;
+  p {
+    margin-bottom: 20px;
+  }
+}
+
+.detail-card--user {
+  padding-left: 0;
+}
+
+.detail-card__body--user {
+  .th {
+    padding-top: 15px;
+    text-align: center;
+    margin: auto;
+    overflow: hidden;
+  }
+
+  .th img {
+    margin: auto;
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .meta {
+    position: relative;
+    padding-left: 15px;
+    overflow: hidden;
+  }
+
+  .meta > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .meta > p.name {
+    font-size: 18px;
+    color: $mainColor;
+    font-weight: bold;
+  }
+
+  .meta > div .el-button {
+    padding: 5px 10px;
+  }
+}
+
+.detail-card__body--counselor {
+  text-align: left;
+
+  .th {
+    padding-top: 10px;
+  }
+
+  .th img {
+    display: blcok;
+    width: 100%;
+    margin: auto;
+  }
+
+  .meta {
+    padding-left: 15px;
+    position: relative;
+    border-bottom: 1px solid #e3e3e3;
+  }
+
+  .meta .name {
+    color: $mainColor;
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .meta > div {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .meta > div .el-button {
+    padding: 5px 10px;
+  }
+
+  .exlink {
+    margin-top: 10px;
+    text-align: right;
+  }
+
+  .exlink:hover {
+    cursor: pointer;
+  }
+}
+
+.counselor-detail-container {
+  padding: 40px;
+  background: #f6f6f6;
+}
+
+.qq {
+  position: relative;
+  top: 5px;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.qq-19 {
+  background: url(../assets/images/qq-19.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-20 {
+  background: url(../assets/images/qq-20.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-21 {
+  background: url(../assets/images/qq-21.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-23 {
+  background: url(../assets/images/qq-23.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-24 {
+  background: url(../assets/images/qq-24.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-25 {
+  background: url(../assets/images/qq-25.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-26 {
+  background: url(../assets/images/qq-26.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-27 {
+  background: url(../assets/images/qq-27.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-28 {
+  background: url(../assets/images/qq-28.png) no-repeat;
+  background-size: contain;
+}
+
+.qq-31 {
+  background: url(../assets/images/qq-31.png) no-repeat;
+  background-size: contain;
 }
