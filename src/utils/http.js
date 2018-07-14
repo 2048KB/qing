@@ -48,6 +48,11 @@ const fetch = function fetch(url = '', options = {}) {
     }
 
     request.success = (data) => {
+      if (data.code < 0) {
+        reject(data)
+        return
+      }
+
       resolve(data)
     }
 
