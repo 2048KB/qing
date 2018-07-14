@@ -2,8 +2,7 @@
   <div class="RadioGroup">
     <span class="title">{{title}}</span>
     <el-radio-group v-model="innerValue" @change="handleChange">
-      <el-radio class="radio-label" label="0">全部</el-radio>
-      <el-radio class="radio-label" v-for="item in options" :key="item.key" :label="item.key">{{item.value}}
+      <el-radio class="radio-label" v-for="item in options" :key="item.value" :label="item.value">{{item.label}}
       </el-radio>
     </el-radio-group>
   </div>
@@ -38,6 +37,7 @@
 @import '../../styles/vars.scss';
 .RadioGroup {
   .title {
+    min-width: 8em;
     font-size: 14px;
     padding-right: .5em;
   }

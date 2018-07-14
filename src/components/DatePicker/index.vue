@@ -47,6 +47,8 @@ export default {
   line-height: 40px;
   font-size: 14px;
   .title {
+    display: inline-block;
+    min-width: 8em;
     padding-right: 1.5em;
   }
   .link-date {

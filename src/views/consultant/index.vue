@@ -9,6 +9,10 @@
       @change="handleChange" 
       v-model="requestData.time" 
       title="注册日期"></DatePicker>
+    <SearchBox 
+      @change="handleChange"
+      :options="employeeTypes"
+      v-model="requestData.search"></SearchBox>
 
 <!--     <el-table :data="list" v-loading.body="listLoading" element-loading-text="Loading" border fit highlight-current-row>
       <el-table-column align="center" label='ID' width="95">
@@ -49,12 +53,14 @@
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {roleOptions} from '@/views/const'
+import {roleOptions, employeeTypes} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
+import SearchBox from '@/components/SearchBox'
 export default {
   components: {
     RadioGroup,
-    DatePicker
+    DatePicker,
+    SearchBox
   },
   data() {
     return {
@@ -63,11 +69,16 @@ export default {
         time: {
           start: null,
           end: null
+        },
+        search: {
+          type: '0',
+          text: ''
         }
       },
       list: null,
       listLoading: true,
-      roleOptions
+      roleOptions,
+      employeeTypes
     }
   },
   filters: {
