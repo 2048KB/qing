@@ -18,7 +18,7 @@
       </el-form-item>
       <p class="loginError" v-if="loginError">{{loginError}}</p>
       <el-form-item>
-        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">
+        <el-button type="primary" style="width:100%; font-size: 18px;" :loading="loading" @click.native.prevent="handleLogin">
           登陆
         </el-button>
       </el-form-item>
@@ -69,22 +69,18 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          console.log(this.loginForm)
           this.loading = true
-          // this.$store.dispatch('Login', this.loginForm).then(() => {
-          //   this.loading = false
-          //   this.$router.push({ path: '/' })
-          // }).catch(() => {
-          //   this.loading = false
-          // })
-
-          setTimeout(() => {
-            this.loading = false
-            this.$router.push({ path: '/' })
-          }, 1000)
-        } else {
-          console.log('error submit!!')
-          return false
+          this.$API.login({
+            data: this.loginForm
+          })
+            .then((res) => {
+              this.loading = false
+              this.$router.push({ path: '/' })
+            })
+            .catch((err) => {
+              this.loading = false
+              this.loginError = err && err.msg || null
+            })
         }
       })
     }
