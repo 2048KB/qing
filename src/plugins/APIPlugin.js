@@ -3,7 +3,7 @@ import API from '@/api'
 
 const APIPlugin = {
   install(Vue) {
-    Vue.prototype.API = API
+    Vue.prototype.$API = API
 
     Vue.mixin({
       methods: {
