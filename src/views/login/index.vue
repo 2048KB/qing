@@ -74,7 +74,6 @@ export default {
             data: this.loginForm
           })
             .then((res) => {
-              console.log(res)
               this.loading = false
               this.$router.push({ path: '/' })
             })
