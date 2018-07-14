@@ -7,7 +7,7 @@
           <el-card class="box-card detail-card detail-card--user" shadow="never">
             <div slot="header" class="clearfix">
               <span>职业信息</span>
-              <el-button style="float: right; padding: 3px 0" type="text">
+              <el-button style="float: right; padding: 3px 0" type="text" @click="dialogFormVisible = true">
                 <div class="icon"></div>
               </el-button>
             </div>
@@ -23,7 +23,7 @@
                 <el-col :span="18">
                   <div class="meta">
                     <p class="name">{{ employeeDetail.realityName }}</p>
-                    <p><i class="qq qq-19"></i>{{ employeeDetail.idNumber }}</p>
+                    <p><i class="qq qq-19"></i>{{ employeeDetail.sno }}</p>
                     <p><i class="qq qq-20"></i>{{ employeeDetail.entryDate }}</p>
                     <p><i class="qq qq-21"></i>{{ employeeDetail.remark }}</p>
                     <div>
@@ -154,7 +154,7 @@
           <el-card class="box-card detail-card detail-card--userinfo" shadow="never">
             <div slot="header" class="clearfix">
               <span>个人信息</span>
-              <el-button style="float: right; padding: 3px 0" type="text">
+              <el-button style="float: right; padding: 3px 0" type="text" @click="infodialogFormVisible = true">
                 <div class="icon"></div>
               </el-button>
             </div>
@@ -199,6 +199,104 @@
       </el-col>
     </el-row>
 
+
+    <!-- 编辑职业信息弹窗 -->
+    <div class="edit-modal edit-modal--zyxx">
+      <el-dialog title="编辑职业信息" :visible.sync="dialogFormVisible">
+        <el-form :model="form">
+          <el-form-item label="入职日期" :label-width="formLabelWidth">
+            <el-input v-model="form.date" auto-complete="off" :disabled="true"></el-input>
+          </el-form-item>
+          <el-form-item label="所属门店" :label-width="formLabelWidth">
+            <el-select v-model="form.region" placeholder="请选择活动区域" :disabled="true">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+            <el-select v-model="form.shopid" placeholder="请选择活动区域" :disabled="true">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="备注" :label-width="formLabelWidth">
+            <el-input type="textarea" :rows="2" placeholder="请输入备注" v-model="form.remark"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+
+
+    <!-- 编辑个人信息弹窗 -->
+    <div class="edit-modal edit-modal--zyxx">
+      <el-dialog title="编辑个人信息" :visible.sync="infodialogFormVisible">
+        <el-form :model="infoform">
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="姓名*" :label-width="formLabelWidth">
+                <el-input v-model="infoform.realityName" auto-complete="on"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="性别*" :label-width="formLabelWidth">
+                <el-radio v-model="infoform.sex" label="1">男</el-radio>
+                <el-radio v-model="infoform.sex" label="2">女</el-radio>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="出生日期*" :label-width="formLabelWidth">
+                <el-date-picker v-model="infoform.birthDate" type="date" placeholder="选择日期"></el-date-picker>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="手机号*" :label-width="formLabelWidth">
+                <el-input v-model="infoform.mobile" auto-complete="on"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="邮箱" :label-width="formLabelWidth">
+                <el-input v-model="infoform.email" auto-complete="on"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="QQ" :label-width="formLabelWidth">
+                <el-input v-model="infoform.qq" auto-complete="on"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="12">
+              <el-form-item label="身份证" :label-width="formLabelWidth">
+                <el-input v-model="infoform.idNumber" auto-complete="on" placeholder="18位"></el-input>
+              </el-form-item>
+            </el-col>
+            <el-col :span="12">
+              <el-form-item label="员工编号*" :label-width="formLabelWidth">
+                <el-input v-model="infoform.sno" auto-complete="on"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+          <el-row>
+            <el-col :span="24">
+              <el-form-item label="通讯地址" :label-width="formLabelWidth">
+                <el-input type="textarea" :rows="4" placeholder="限制30字" v-model="infoform.address"></el-input>
+              </el-form-item>
+            </el-col>
+          </el-row>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="updateInfo">确 定</el-button>
+        </div>
+      </el-dialog>
+    </div>
+
   </div>
 </template>
 
@@ -206,8 +304,50 @@
 export default {
   name: 'counselor-detail',
   data() {
+    /*
+    <p><i class="qq qq-23"></i>{{ employeeDetail.mobile }}</p>
+    <p><i class="qq qq-24"></i>{{ employeeDetail.birthDate }}</p>
+    <p><i class="qq qq-25"></i>{{ employeeDetail.address }}</p>
+    <p><i class="qq qq-26"></i>{{ employeeDetail.email }}</p>
+    <p><i class="qq qq-27"></i>{{ employeeDetail.qq }}</p>
+    <p><i class="qq qq-28"></i>{{ employeeDetail.idNumber }}</p>
+     */
     return {
-      employeeDetail: {},
+      infoform: {
+        mobile: '',
+        birthDate: '',
+        address: '',
+        qq: '',
+        idNumber: '',
+        sex: '',
+        realityName: ''
+      },
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      infodialogFormVisible: false,
+      userAmountByUserId: '',
+      userCurMonDirectAmount: '',
+      userCurMonInDirectAmount: '',
+      counselorSpreadMember: '',
+      counselorCurMonSpreadMember: '',
+      counselorCurMonSpreadCustomer: '',
+      counselorCurMonSpreadCustomer: '',
+      form: {
+        date: '2018-02-23',
+        name: '',
+        region: '北京',
+        date1: '',
+        date2: '',
+        delivery: false,
+        type: [],
+        resource: '',
+        desc: '',
+        remark: ''
+      },
+      formLabelWidth: '120px',
+      employeeDetail: {
+        mobile: '1234567890'
+      },
       userFunds: {},
       yjLists: [],
       tableData3: [{
@@ -230,6 +370,11 @@ export default {
   },
   created() {
     console.log(this.$API)
+    // console.log(this.$loading())
+
+    // setTimeout(() => {
+    //   this.$loading().close()
+    // }, 2000)
     // 顾问详情
     this.$API.getcounselordetail({
       data: {
@@ -246,6 +391,17 @@ export default {
       this.counselorCurMonSpreadMember = res.data.counselorCurMonSpreadMember
       this.counselorSpreadMember = res.data.counselorSpreadMember
 
+      // 同步编辑个人信息数据
+      this.infoform.mobile = res.data.employeeDetail.mobile
+      this.infoform.birthDate = res.data.employeeDetail.birthDate
+      this.infoform.email = res.data.employeeDetail.email
+      this.infoform.qq = res.data.employeeDetail.qq
+      this.infoform.idNumber = res.data.employeeDetail.idNumber
+      this.infoform.realityName = res.data.employeeDetail.realityName
+      this.infoform.sex = res.data.employeeDetail.sex + ''
+      this.infoform.sno = res.data.employeeDetail.sno
+      this.infoform.address = res.data.employeeDetail.address
+
       console.log('====== API RESPONSE ======')
       console.log(res)
       console.log('====== END API RESPONSE ======')
@@ -255,6 +411,14 @@ export default {
   },
 
   methods: {
+    updateInfo() {
+      this.$API.updatecounselor({
+        data: this.infoform
+      }).then(res => {
+
+      })
+      console.log(this.infoform)
+    },
     getListcounselorcurmonbonus() {
       // 当月佣金明细
       this.$API.listcounselorcurmonbonus({

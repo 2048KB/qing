@@ -1,8 +1,8 @@
 /* eslint-disable */
 import $ from 'jquery'
-import { Loading } from 'element-ui';
+// import { Loading } from 'element-ui';
 
-var loadingInstance
+// var loadingInstance
 
 const fetch = function fetch(url = '', options = {}) {
   return new Promise((resolve, reject) => {
@@ -25,18 +25,18 @@ const fetch = function fetch(url = '', options = {}) {
       xhrFields: { withCredentials: true },
       crossDomain: true,
       beforeSend: function beforeSend() {
-        console.log('start loading...')
-        loadingInstance = Loading.service()
+        // console.log('start loading...')
+        // loadingInstance = Loading.service()
         // if (request.loading && !spinning) {
         //   console.log('加载 Loading')
         //   spinner.start()
         // }
       },
       complete: function complete() {
-        setTimeout(() => {
-          console.log('关闭 Loading')
-          loadingInstance.close()
-        }, 2000)
+        // setTimeout(() => {
+        //   console.log('关闭 Loading')
+        //   loadingInstance.close()
+        // }, 2000)
       }
     }
 
