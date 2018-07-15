@@ -4,16 +4,16 @@
       <span>收货地址</span>
     </div>
     <div class="detail-card__body detail-card__body--address">
-      <el-row class="item">
+      <el-row class="item" v-for="item in address" :key="item.name">
         <el-col :span="5">
           <div class="name">
-            马大海
+            {{ item.name }}
           </div>
         </el-col>
         <el-col :span="19">
           <div class="address__item">
-            <div class="phone">15726658123 <span class="state">默认</span></div>
-            <div>北京市 北京市 昌平区 北七家镇白庙村北七家镇白庙村北七家镇白庙村北七家镇白庙村北七家镇白庙村北七家镇白庙村</div>
+            <div class="phone">{{ item.mobile }}<span class="state" v-show="item.isDefault">默认</span></div>
+            <div>{{item.provinceName}} {{item.cityName}} {{item.areaName}} {{item.detail}}</div>
           </div>
         </el-col>
       </el-row>
@@ -24,7 +24,7 @@
 <script>
   export default {
     props: {
-      employeeDetail: Object
+      address: Array
     }
   }
 </script>
@@ -39,7 +39,7 @@
 
     > .item {
       border-bottom: 1px solid #e3e3e3;
-      padding-bottom: 10px;
+      padding: 10px 0;
     }
 
     > .item:last-child {

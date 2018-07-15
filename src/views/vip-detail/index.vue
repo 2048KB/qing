@@ -4,7 +4,9 @@
       <el-col :span="16">
         <div class="grid-content">
           <!-- 职业信息 -->
-          <card-zyxx :employeeDetail="employeeDetail"></card-zyxx>
+          <card-zyxx :employeeDetail="employeeDetail" :isCustom="true" :hideEdit="true">
+            <span>个人信息</span>
+          </card-zyxx>
 
           <!-- 账户信息 -->
           <card-zhxx :userFunds="userFunds"></card-zhxx>
@@ -20,106 +22,96 @@
       <!-- right column -->
       <el-col :span="8">
         <div class="grid-content">
-          <!-- 个人信息 -->
-          <card-info :employeeDetail="employeeDetail"></card-info>
+          <!-- 收货地址 -->
+          <card-address :address="listUserAddress"></card-address>
 
-          <!-- 所属顾问 -->
-          <card-ssgw :employeeDetail="employeeDetail"></card-ssgw>
+          <!-- 直接邀请人 -->
+          <card-ssgw :inviterinfo="memberVO" :type="1" @activeReBind="rebindRe">
+            <span>直接邀请人</span>
+          </card-ssgw>
+
+          <!-- 间接邀请人 -->
+          <card-ssgw :inviterinfo="inMemberVO" :type="2">
+            <span>间接邀请人</span>
+          </card-ssgw>
+
+          <!-- 修改间接邀请人 -->
+          <card-ssgw :inviterinfo="inMemberVO" :type="3" @activeReBind="rebindRe">
+            <span>间接邀请人</span>
+          </card-ssgw>
+
+          <!-- 会员服务信息 -->
+          <card-vipcard :cardlist="vipcardRecordArray"></card-vipcard>
         </div>
       </el-col>
     </el-row>
 
-    <!-- 编辑职业信息弹窗 -->
-    <div class="edit-modal edit-modal--zyxx">
-      <el-dialog title="编辑职业信息" :visible.sync="dialogFormVisible">
-        <el-form :model="form">
-          <el-form-item label="入职日期" :label-width="formLabelWidth">
-            <el-input v-model="form.date" auto-complete="off" :disabled="true"></el-input>
-          </el-form-item>
-          <el-form-item label="所属门店" :label-width="formLabelWidth">
-            <el-select v-model="form.region" placeholder="请选择活动区域" :disabled="true">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-            <el-select v-model="form.shopid" placeholder="请选择活动区域" :disabled="true">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="备注" :label-width="formLabelWidth">
-            <el-input type="textarea" :rows="2" placeholder="请输入备注" v-model="form.remark"></el-input>
-          </el-form-item>
-        </el-form>
+    <!-- 选择绑定邀请关系 -->
+    <div class="edit-modal edit-modal--choose">
+      <el-dialog :title="modalTitle" :visible.sync="dialogFormVisible">
+        <div class="wrap">
+          <el-button type="primary" @click="selectGW">指定顾问</el-button>
+          <el-button type="primary" @click="selectMYS">指定美容师</el-button>
+          <el-button type="primary" @click="selectVIP">指定会员</el-button>
+        </div>
+
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
         </div>
       </el-dialog>
     </div>
 
-    <!-- 编辑个人信息弹窗 -->
-    <div class="edit-modal edit-modal--zyxx">
-      <el-dialog title="编辑个人信息" :visible.sync="infodialogFormVisible">
-        <el-form :model="infoform">
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="姓名*" :label-width="formLabelWidth">
-                <el-input v-model="infoform.realityName" auto-complete="on"></el-input>
+    <!-- 处理绑定邀请关系 -->
+    <div class="edit-modal edit-modal--rechoose">
+      <el-dialog :title="modalTitle" :visible.sync="infodialogFormVisible">
+        <el-form :inline="true" :model="infoform" class="demo-form-inline">
+          <el-row class="row-filter">
+            <el-col :span="7">
+              <el-form-item label="">
+                <el-select v-model="storeAreaName" placeholder="地区" :disabled="true">
+                  <el-option label="上海" value="shanghai"></el-option>
+                  <el-option label="北京" value="beijing"></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
-            <el-col :span="12">
-              <el-form-item label="性别*" :label-width="formLabelWidth">
-                <el-radio v-model="infoform.sex" label="1">男</el-radio>
-                <el-radio v-model="infoform.sex" label="2">女</el-radio>
+            <el-col :span="8">
+              <el-form-item label="">
+                <el-select v-model="storeName" placeholder="所属门店" :disabled="true">
+                  <el-option label="区域一" value="shanghai"></el-option>
+                  <el-option label="区域二" value="beijing"></el-option>
+                </el-select>
               </el-form-item>
             </el-col>
+            <el-col :span="7" class="col-phone">
+              <el-form-item label="">
+                <el-input v-model="searchKey" placeholder="输入姓名/手机号"></el-input>
+              </el-form-item>
+            </el-col>
+            <div @click="searchStoreUserLists">
+              <el-col :span="2"><el-button type="primary" icon="el-icon-search">搜索</el-button></el-col>
+            </div>
           </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="出生日期*" :label-width="formLabelWidth">
-                <el-date-picker v-model="infoform.birthDate" type="date" placeholder="选择日期"></el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="手机号*" :label-width="formLabelWidth">
-                <el-input v-model="infoform.mobile" auto-complete="on"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="邮箱" :label-width="formLabelWidth">
-                <el-input v-model="infoform.email" auto-complete="on"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="QQ" :label-width="formLabelWidth">
-                <el-input v-model="infoform.qq" auto-complete="on"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="身份证" :label-width="formLabelWidth">
-                <el-input v-model="infoform.idNumber" auto-complete="on" placeholder="18位"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="员工编号*" :label-width="formLabelWidth">
-                <el-input v-model="infoform.sno" auto-complete="on"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <el-form-item label="通讯地址" :label-width="formLabelWidth">
-                <el-input type="textarea" :rows="4" placeholder="限制30字" v-model="infoform.address"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
+
+          <div class="lists-wrap">
+            <el-row v-for="item in storeUserLists" :key="item.id">
+              <el-radio v-model="radio7" :label="item.id" border>
+                <div class="item clearfix">
+                  <div class="th">
+                    <img src="../../assets/images/qq-36.png" alt="">
+                  </div>
+                  <div class="meta">
+                    <div>{{ item.name }}</div>
+                    <div><i class="qq qq-23 qq23-small"></i>{{ item.mobile }}</div>
+                  </div>
+                </div>
+              </el-radio>
+            </el-row>
+          </div>
         </el-form>
+
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
+          <el-button @click="infodialogFormVisible = false">取 消</el-button>
           <el-button type="primary" @click="updateInfo">确 定</el-button>
         </div>
       </el-dialog>
@@ -137,6 +129,8 @@ import CardInfo from '@/components/CardInfo'
 import CardSsgw from '@/components/CardSsgw'
 import CardZyxx from '@/components/CardZyxx'
 import CardAddress from '@/components/CardAddress'
+import CardVipcard from '@/components/CardVipcard'
+import DialogRebind from '@/components/DialogRebind'
 
 export default {
   name: 'counselor-detail',
@@ -146,12 +140,24 @@ export default {
     CardYqxx,
     CardInfo,
     CardSsgw,
-    CardAddress
+    CardZyxx,
+    CardAddress,
+    CardVipcard,
+    DialogRebind
   },
   data() {
     return {
+      modalTitle: '',
+      storeUserType: '',
+      storeName: '',
+      storeAreaName: '',
+      vipcardRecordArray: [],
+      searchKey: '',
+      radio7: '',
       inviters: {
-        counselorCurMonSpreadCustomer: '',
+        total: '',
+        monthly: '',
+        totalcustomers: ''
       },
       infoform: {
         mobile: '',
@@ -160,7 +166,8 @@ export default {
         qq: '',
         idNumber: '',
         sex: '',
-        realityName: ''
+        realityName: '',
+        storeAreaName: ''
       },
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -180,49 +187,143 @@ export default {
       formLabelWidth: '120px',
       employeeDetail: {},
       userFunds: {},
-      yjLists: []
+      yjLists: [],
+      listUserAddress: [],
+      inviterinfo: {},
+      memberVO: {},
+      inMemberVO: {},
+      storeUserLists: []
     }
   },
 
   created() {
-    // 顾问详情
-    this.$API.getcounselordetail({
+    // `顾客详情` 和 `会员详情` 同一个接口 `getcustomerdetail`
+    // 测试时候记得把它改为 `getcustomerdetail`
+    this.$API.getmemberdetail({
       data: {
-        admin: 1,
-        pwd: 2
+        type: 1, // 搜索类型 1:顾客  2:会员
+        userId: '', // 用户id
+        dirInviteId: '', // 直接邀请人id
+        dirInviteRole: '', // 直接邀请人角色
+        inDirInviteId: '', // 间接邀请人id
+        inDirInviteRole: '', // 间接邀请人角色
       }
     }).then((res) => {
-      this.employeeDetail = res.data.employeeDetail
-      this.userFunds = res.data.userFunds
-      this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount
-      this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount
-      this.userFunds.userAmountByUserId = res.data.userAmountByUserId
+      // 收货地址
+      this.listUserAddress = res.data.listUserAddress
 
-      this.inviters.counselorCurMonSpreadCustomer = res.data.counselorCurMonSpreadCustomer
-      this.inviters.counselorCurMonSpreadMember = res.data.counselorCurMonSpreadMember
-      this.inviters.counselorSpreadMember = res.data.counselorSpreadMember
+      // 直接邀请人
+      this.memberVO = res.data.memberVO
 
-      // 同步编辑个人信息数据
-      this.infoform.mobile = res.data.employeeDetail.mobile
-      this.infoform.birthDate = res.data.employeeDetail.birthDate
-      this.infoform.email = res.data.employeeDetail.email
-      this.infoform.qq = res.data.employeeDetail.qq
-      this.infoform.idNumber = res.data.employeeDetail.idNumber
-      this.infoform.realityName = res.data.employeeDetail.realityName
-      this.infoform.sex = res.data.employeeDetail.sex + ''
-      this.infoform.sno = res.data.employeeDetail.sno
-      this.infoform.address = res.data.employeeDetail.address
+      // 间接邀请人
+      this.inMemberVO = res.data.inMemberVO
+
+      // 修改绑定关系弹窗信息
+      this.storeName = res.data.storeName
+      this.storeAreaName = res.data.storeAreaName
+      this.storeId = res.data.storeId
 
       console.log('====== API RESPONSE ======')
       console.log(res)
       console.log('====== END API RESPONSE ======')
+      this.employeeDetail = res.data.user
+      this.userFunds = res.data.userFunds
+
+      // 账户信息数据
+      this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount
+      this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount
+      this.userFunds.userAmountByUserId = res.data.userAmountByUserId
+
+      // 邀请会员数据
+      this.inviters.total = res.data.userSpreadMember
+      this.inviters.monthly = res.data.userCurMonSpreadMember
+      this.inviters.totalcustomers = res.data.userCurMonSpreadCustomer
+
+      // 同步编辑个人信息数据
+      // this.infoform.mobile = res.data.employeeDetail.mobile
+      // this.infoform.birthDate = res.data.employeeDetail.birthDate
+      // this.infoform.email = res.data.employeeDetail.email
+      // this.infoform.qq = res.data.employeeDetail.qq
+      // this.infoform.idNumber = res.data.employeeDetail.idNumber
+      // this.infoform.realityName = res.data.employeeDetail.realityName
+      // this.infoform.sex = res.data.employeeDetail.sex + ''
+      // this.infoform.sno = res.data.employeeDetail.sno
+      // this.infoform.address = res.data.employeeDetail.address
+      // this.infoform.storeAreaName = res.data.storeAreaName
+      // this.infoform.storeName = res.data.storeName
+      // this.infoform.storeId = res.data.storeId
     })
 
     this.getListcounselorcurmonbonus()
+
+    // 会员卡服务记录
+    this.getListcarduse()
+
+    // 获取邀请人
+    // this.getInviterinfo()
+
+    // 获取门店会员列表
+    this.geLlistuserbystoreid()
   },
 
   methods: {
+    changeBind() {
+      this.modalTitle = '更改邀请'
+    },
+
+    rebindChoose() {
+      this.modalTitle = '绑定邀请关系'
+    },
+
+    selectGW() {
+      this.storeUserType = 4
+      this.dialogFormVisible = false
+      this.infodialogFormVisible = true
+    },
+
+    selectMYS() {
+      this.storeUserType = 3
+      this.dialogFormVisible = false
+      this.infodialogFormVisible = true
+    },
+
+    selectVIP() {
+      this.storeUserType = 2
+      this.dialogFormVisible = false
+      this.infodialogFormVisible = true
+    },
+
+    rebindRe(opts) {
+      this.modalTitle = opts.title
+      this.dialogFormVisible = true
+    },
+
+    // 根据userId获取直接邀请人信息
+    getInviterinfo() {
+      this.$API.getinviterinfo({
+        data: {
+          userId: '' // 必须  用户id
+        }
+      }).then(res => {
+        this.inviterinfo = res.data
+      })
+    },
+
+    // 会员卡服务记录
+    getListcarduse() {
+      this.$API.listcarduse({
+        data: {
+          cardId: '', // 会员卡id
+          currPage: '', // 当前页数
+          pageSize: '' //每页显示数量
+        }
+      }).then((res) => {
+        this.vipcardRecordArray = res.data.page
+      })
+    },
+
     updateInfo() {
+      alert(this.radio7)
       this.$API.updatecounselor({
         data: this.infoform
       }).then(res => {
@@ -230,14 +331,52 @@ export default {
       })
       console.log(this.infoform)
     },
+
+    // 当月佣金明细
     getListcounselorcurmonbonus() {
-      // 当月佣金明细
       this.$API.listcounselorcurmonbonus({
         data: {
 
         }
       }).then((res) => {
         this.yjLists = res.data.page
+      })
+    },
+
+    // 获取门店会员列表
+    geLlistuserbystoreid(data) {
+      this.$API.listuserbystoreid({
+        // data: {
+        //   storeId: 34213, //  Long  必须  门店id
+        //   type: 2, //  Int 必须  指定用户角色 2:会员  3:美容师  4:顾问
+        //   key: '23431143' //  String    搜索姓名或手机号
+        // }
+        data: data
+      }).then(res => {
+        this.storeUserLists = res.data
+      })
+    },
+
+    // 修改邀请人信息
+    updateInviter() {
+      this.$API.updateinviter({
+        data: {
+          inviteeUserId: 23435464, // Long  必须  被邀请人id
+          inviterUserId: 2412121, // Long  必须  邀请人id
+          type: 2, // int   邀请人类型
+        }
+      }).then(res => {
+
+      })
+    },
+
+    // 点击搜索
+    searchStoreUserLists() {
+      alert('search')
+      this.geLlistuserbystoreid({
+        storeId: this.storeId,
+        type: this.storeUserType,
+        key: this.searchKey
       })
     }
   }
@@ -253,10 +392,6 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
-}
-
-.grid-content {
-  padding: 0 10px;
 }
 
 .detail-card {

@@ -3,7 +3,7 @@
   <el-card class="box-card detail-card detail-card--userinfo" shadow="never">
     <div slot="header" class="clearfix">
       <span>个人信息</span>
-      <el-button style="float: right; padding: 3px 0" type="text" @click="infodialogFormVisible = true">
+      <el-button style="float: right; padding: 3px 0" type="text" @click="triggerUpdateInfo">
         <div class="icon"></div>
       </el-button>
     </div>
@@ -22,6 +22,12 @@
   export default {
     props: {
       employeeDetail: Object
+    },
+
+    methods: {
+      triggerUpdateInfo() {
+        this.$emit('updateUserInfoDetail', {})
+      }
     }
   }
 </script>

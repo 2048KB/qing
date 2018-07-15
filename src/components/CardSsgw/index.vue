@@ -6,7 +6,7 @@
     <div class="detail-card__body detail-card__body--counselor">
 
       <el-row class="setting" v-if="type === 3">
-        <div><i class="qq qq-38"></i>绑定邀请关系</div>
+        <div @click="triggerParentRebind"><i class="qq qq-38"></i>绑定邀请关系</div>
       </el-row>
 
       <el-row v-else>
@@ -17,10 +17,10 @@
         </el-col>
         <el-col :span="19">
           <div class="meta">
-            <p class="name">{{ employeeDetail.realityName }}</p>
-            <p><i class="qq qq-23"></i>{{ employeeDetail.idNumber }}</p>
+            <p class="name">{{ inviterinfo.nickName || inviterinfo.realityName }}</p>
+            <p><i class="qq qq-23"></i>{{ inviterinfo.mobile }}</p>
             <div>
-              <el-button type="success" plain>顾问</el-button>
+              <el-button type="success" plain>{{ inviterinfo.roleTypeStr }}</el-button>
             </div>
           </div>
         </el-col>
@@ -28,7 +28,8 @@
     </div>
 
     <div class="detail-card__footer clearfix" v-show="type !== 3">
-      <div class="inter" v-if="type === 1"><i class="qq qq-34"></i>更改邀请</div>
+      <!-- <div class="inter" v-if="type === 1"><i class="qq qq-34"></i>更改邀请</div> -->
+      <div class="inter" v-if="inviterinfo.isChange" @click="triggerParentEvent"><i class="qq qq-34"></i>更改邀请</div>
       <div class="exlink"><i class="qq qq-31"></i>详情</div>
     </div>
   </el-card>
@@ -37,10 +38,20 @@
 <script>
   export default {
     props: {
-      employeeDetail: Object,
+      inviterinfo: Object,
       type: {
         type: Number,
         default: 2
+      }
+    },
+
+    methods: {
+      triggerParentEvent() {
+        this.$emit('activeReBind', { title: '更改邀请' })
+      },
+
+      triggerParentRebind() {
+        this.$emit('activeReBind', { title: '绑定邀请关系' })
       }
     }
   }
