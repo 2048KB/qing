@@ -4,7 +4,7 @@
       <span>收货地址</span>
     </div>
     <div class="detail-card__body detail-card__body--address">
-      <el-row class="item" v-for="item in address" :key="item.name">
+      <el-row class="item" v-for="item in address" :key="item.mobile">
         <el-col :span="5">
           <div class="name">
             {{ item.name }}

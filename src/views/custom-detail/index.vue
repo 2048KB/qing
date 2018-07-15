@@ -63,13 +63,14 @@
     </div>
 
     <!-- 处理绑定邀请关系 -->
+    <!-- 处理绑定邀请关系 -->
     <div class="edit-modal edit-modal--rechoose">
-      <el-dialog title="更改邀请关系" :visible.sync="infodialogFormVisible">
+      <el-dialog :title="modalTitle" :visible.sync="infodialogFormVisible">
         <el-form :inline="true" :model="infoform" class="demo-form-inline">
           <el-row class="row-filter">
             <el-col :span="7">
               <el-form-item label="">
-                <el-select v-model="infoform.storeAreaName" placeholder="地区" :disabled="true">
+                <el-select v-model="storeAreaName" placeholder="地区" :disabled="true">
                   <el-option label="上海" value="shanghai"></el-option>
                   <el-option label="北京" value="beijing"></el-option>
                 </el-select>
@@ -77,7 +78,7 @@
             </el-col>
             <el-col :span="8">
               <el-form-item label="">
-                <el-select v-model="infoform.storeName" placeholder="所属门店" :disabled="true">
+                <el-select v-model="storeName" placeholder="所属门店" :disabled="true">
                   <el-option label="区域一" value="shanghai"></el-option>
                   <el-option label="区域二" value="beijing"></el-option>
                 </el-select>
@@ -85,50 +86,24 @@
             </el-col>
             <el-col :span="7" class="col-phone">
               <el-form-item label="">
-                <el-input v-model="form.phone" placeholder="输入姓名/手机号"></el-input>
+                <el-input v-model="searchKey" placeholder="输入姓名/手机号"></el-input>
               </el-form-item>
             </el-col>
-            <el-col :span="2"><el-button type="primary" icon="el-icon-search">搜索</el-button></el-col>
+            <div @click="searchStoreUserLists">
+              <el-col :span="2"><el-button type="primary" icon="el-icon-search">搜索</el-button></el-col>
+            </div>
           </el-row>
 
           <div class="lists-wrap">
-            <el-row>
-              <el-radio v-model="radio7" label="1" border>
+            <el-row v-for="item in storeUserLists" :key="item.id">
+              <el-radio v-model="radio7" :label="item.id" border>
                 <div class="item clearfix">
                   <div class="th">
                     <img src="../../assets/images/qq-36.png" alt="">
                   </div>
                   <div class="meta">
-                    <div>李楚</div>
-                    <div><i class="qq qq-23 qq23-small"></i>18765245634</div>
-                  </div>
-                </div>
-              </el-radio>
-            </el-row>
-
-            <el-row>
-              <el-radio v-model="radio7" label="1" border>
-                <div class="item clearfix">
-                  <div class="th">
-                    <img src="../../assets/images/qq-36.png" alt="">
-                  </div>
-                  <div class="meta">
-                    <div>李楚</div>
-                    <div><i class="qq qq-23 qq23-small"></i>18765245634</div>
-                  </div>
-                </div>
-              </el-radio>
-            </el-row>
-
-            <el-row>
-              <el-radio v-model="radio7" label="1" border>
-                <div class="item clearfix">
-                  <div class="th">
-                    <img src="../../assets/images/qq-36.png" alt="">
-                  </div>
-                  <div class="meta">
-                    <div>李楚</div>
-                    <div><i class="qq qq-23 qq23-small"></i>18765245634</div>
+                    <div>{{ item.name }}</div>
+                    <div><i class="qq qq-23 qq23-small"></i>{{ item.mobile }}</div>
                   </div>
                 </div>
               </el-radio>
@@ -171,6 +146,13 @@ export default {
   },
   data() {
     return {
+      storeAreaName: '',
+      storeUserType: '',
+      storeName: '',
+      searchKey: '',
+      modalTitle: '',
+      storeUserLists: [],
+
       vipcardRecordArray: [],
       radio7: '1',
       inviters: {
@@ -235,7 +217,10 @@ export default {
       // 间接邀请人
       this.inMemberVO = res.data.inMemberVO
 
-      // 修改绑定信息弹窗
+      // 修改绑定关系弹窗信息
+      this.storeName = res.data.storeName
+      this.storeAreaName = res.data.storeAreaName
+      this.storeId = res.data.storeId
 
       this.employeeDetail = res.data.user
       this.userFunds = res.data.userFunds
@@ -248,24 +233,18 @@ export default {
       this.inviters.counselorSpreadMember = res.data.counselorSpreadMember
 
       // 同步编辑个人信息数据
-      this.infoform.mobile = res.data.employeeDetail.mobile
-      this.infoform.birthDate = res.data.employeeDetail.birthDate
-      this.infoform.email = res.data.employeeDetail.email
-      this.infoform.qq = res.data.employeeDetail.qq
-      this.infoform.idNumber = res.data.employeeDetail.idNumber
-      this.infoform.realityName = res.data.employeeDetail.realityName
-      this.infoform.sex = res.data.employeeDetail.sex + ''
-      this.infoform.sno = res.data.employeeDetail.sno
-      this.infoform.address = res.data.employeeDetail.address
-      this.infoform.storeName = res.data.storeName
-      this.infoform.storeAreaName = res.data.storeAreaName
-      this.infoform.storeId = res.data.storeId
-
-
-      console.log('====== API RESPONSE ======')
-      console.log(res)
-      console.log(this.infoform)
-      console.log('====== END API RESPONSE ======')
+      // this.infoform.mobile = res.data.employeeDetail.mobile
+      // this.infoform.birthDate = res.data.employeeDetail.birthDate
+      // this.infoform.email = res.data.employeeDetail.email
+      // this.infoform.qq = res.data.employeeDetail.qq
+      // this.infoform.idNumber = res.data.employeeDetail.idNumber
+      // this.infoform.realityName = res.data.employeeDetail.realityName
+      // this.infoform.sex = res.data.employeeDetail.sex + ''
+      // this.infoform.sno = res.data.employeeDetail.sno
+      // this.infoform.address = res.data.employeeDetail.address
+      // this.infoform.storeName = res.data.storeName
+      // this.infoform.storeAreaName = res.data.storeAreaName
+      // this.infoform.storeId = res.data.storeId
     })
 
     this.getListcounselorcurmonbonus()
@@ -275,6 +254,9 @@ export default {
 
     // 获取邀请人
     // this.getInviterinfo()
+
+    // 获取门店会员列表
+    this.geLlistuserbystoreid()
   },
 
   methods: {
@@ -323,6 +305,20 @@ export default {
       })
     },
 
+    // 获取门店会员列表
+    geLlistuserbystoreid(data) {
+      this.$API.listuserbystoreid({
+        // data: {
+        //   storeId: 34213, //  Long  必须  门店id
+        //   type: 2, //  Int 必须  指定用户角色 2:会员  3:美容师  4:顾问
+        //   key: '23431143' //  String    搜索姓名或手机号
+        // }
+        data: data
+      }).then(res => {
+        this.storeUserLists = res.data
+      })
+    },
+
     // 会员卡服务记录
     getListcarduse() {
       this.$API.listcarduse({
@@ -336,7 +332,9 @@ export default {
       })
     },
 
+    // 换成更新顾客信息接口
     updateInfo() {
+      alert(this.radio7)
       this.$API.updatecounselor({
         data: this.infoform
       }).then(res => {
@@ -353,6 +351,16 @@ export default {
         }
       }).then((res) => {
         this.yjLists = res.data.page
+      })
+    },
+
+    // 点击搜索
+    searchStoreUserLists() {
+      alert('search')
+      this.geLlistuserbystoreid({
+        storeId: this.storeId,
+        type: this.storeUserType,
+        key: this.searchKey
       })
     }
   }
