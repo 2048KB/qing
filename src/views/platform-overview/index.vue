@@ -10,7 +10,13 @@
       </div>
     </div>
     <TableWrapper title="平台概况">
-      ...
+      <div class="card-container">
+        <InfoCard title="资金进出统计" :options="moneyOpt"></InfoCard>
+        <InfoCard title="会员统计" :options="memberOpt"></InfoCard>
+        <InfoCard title="奖励统计" :options="bonusOpt"></InfoCard>
+        <InfoCard title="收取费用统计" :options="feeOpt"></InfoCard>
+        <InfoCard title="当日提现统计" :options="withdrawOpt"></InfoCard>
+      </div>
     </TableWrapper>
   </div>
 </template>
@@ -19,10 +25,12 @@
 import {employeeTypes} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import TableWrapper from '@/components/TableWrapper'
+import InfoCard from '../../components/InfoCard'
 export default {
   components: {
     DatePicker,
-    TableWrapper
+    TableWrapper,
+    InfoCard
   },
   data() {
     return {
@@ -32,48 +40,68 @@ export default {
           end: null
         }
       },
-      listLoading: true
+      listLoading: true,
+      moneyOpt: {},
+      memberOpt: {},
+      bonusOpt: {},
+      feeOpt: {},
+      withdrawOpt: {}
     }
   },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
+
+  methods: {
+    fetchData () {
+      Promise.all([this.$API.getplatformoverview({
+        data: {
+          timeBegin: this.requestData.time.begin,
+          timeEnd: this.requestData.time.end
+        }
+      }), this.$API.getdayplatformoverview()])
+        .then((res) => {
+          this.listLoading = false
+          let data = {
+            ...res[0].data,
+            ...res[1].data
+          }
+          console.log(data)
+          this.moneyOpt = {
+            '购买会员': data.purchaseMemberCardAmount,
+            '成功提现': data.withdrawalAmount,
+            '总计': data.fundTotal
+          }
+          this.memberOpt = {
+            '会员': data.memberCount,
+            '顾客': data.customerCount,
+            '总计': data.userCount
+          }
+          this.bonusOpt = {
+            '顾问奖励': data.adviserAward,
+            '美容师奖励': data.beauticianAward,
+            '会员奖励': data.memberAward,
+            '总计': data.awardTotal
+          }
+          this.feeOpt = {
+            '佣金管理费': data.commissionFee,
+            '提现手续费': data.withdrawFee,
+            '总计': data.FeeTotal
+          }
+          this.withdrawOpt = {
+            '提现人数': data.count,
+            '提现金额': data.amount,
+            '待处理人数': data.count,
+            '待处理金额': data.amount
+          }
+        })
+        .catch((res) => {
+          this.listLoading = false
+        })
+    },
+    handleChange () {
+      this.fetchData()
     }
   },
   created() {
     this.fetchData()
-  },
-  methods: {
-    fetchData () {
-      this.$API.getplatformoverview({
-        data: this.requestData
-      })
-        .then((res) => {
-          this.listLoading = false
-        })
-        .catch((res) => {
-          console.log(res)
-        })
-    },
-    handleChange () {
-      console.log()
-      console.log('requst api')
-    },
-    handleAddMember() {
-      console.log('add-member')
-    },
-    handleToDetail () {
-
-    },
-    handleChangeCurrent (currentPage) {
-      this.requestData.currPage = currentPage
-      this.handleChange()
-    }
   }
 }
 </script>
@@ -114,6 +142,17 @@ export default {
           border-width: 0;
           padding-bottom: 5px;
         }
+      }
+    }
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      padding: 10px;
+      .InfoCard {
+        min-width: 240px;
+        width: 24%;
+        margin-bottom: 20px;
       }
     }
   }
