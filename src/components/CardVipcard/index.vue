@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card detail-card detail-card--vipcard" shadow="never">
+  <el-card class="box-card detail-card detail-card--vipcard">
     <div slot="header" class="clearfix">
       <span>会员卡服务记录</span>
     </div>

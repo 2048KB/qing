@@ -1,6 +1,6 @@
 <template>
   <!-- 个人信息 -->
-  <el-card class="box-card detail-card detail-card--userinfo" shadow="never">
+  <el-card class="box-card detail-card detail-card--userinfo">
     <div slot="header" class="clearfix">
       <span>个人信息</span>
       <el-button style="float: right; padding: 3px 0" type="text" @click="triggerUpdateInfo">

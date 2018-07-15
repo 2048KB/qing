@@ -12,7 +12,7 @@
       <el-col :span="15">
         <div class="grid-content bg-purple">
 
-          <el-card class="box-card detail-card detail-card--user" :shadow="never">
+          <el-card class="box-card detail-card detail-card--user">
             <div slot="header" class="clearfix">
               <span>职业信息</span>
               <el-button style="float: right; padding: 3px 0" type="text">

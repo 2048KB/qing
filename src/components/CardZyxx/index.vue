@@ -1,6 +1,6 @@
 <template>
   <!-- 职业信息 -->
-  <el-card class="box-card detail-card detail-card--user" shadow="never">
+  <el-card class="box-card detail-card detail-card--user">
     <div slot="header" class="clearfix">
       <span><slot>职业信息</slot></span>
       <el-button style="float: right; padding: 3px 0" type="text" v-show="!hideEdit">

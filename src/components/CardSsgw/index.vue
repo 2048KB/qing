@@ -1,5 +1,5 @@
 <template>
-  <el-card class="box-card detail-card detail-card--counselor" shadow="never">
+  <el-card class="box-card detail-card detail-card--counselor">
     <div slot="header" class="clearfix">
       <span><slot>所属顾问</slot></span>
     </div>

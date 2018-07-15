@@ -11,6 +11,7 @@ body {
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
   font-size: 14px;
+  color: $bodyFontColor;
 }
 
 label {
@@ -91,6 +92,7 @@ hr.style-one {
 // reset el-card
 .el-card {
   border-radius: 0;
+  color: $bodyFontColor;
 }
 
 .detail-card {
@@ -98,15 +100,15 @@ hr.style-one {
 }
 
 .el-card__header {
-  background: #34c4d4;
+  background: $mainColor;
   color: #fff;
   border-radius: none;
-  padding: 10px 15px;
+  padding: 12.5px 15px;
   position: relative;
 
   .icon {
     position: absolute;
-    top: 6.5px;
+    top: 8.5px;
     right: 12px;
     display: block;
     width: 22px;
@@ -135,7 +137,8 @@ hr.style-one {
   }
 
   .title {
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 400;
   }
 }
 
@@ -164,6 +167,11 @@ hr.style-one {
     text-align: center;
     margin: auto;
     overflow: hidden;
+
+    .el-button {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
   }
 
   .th img {
@@ -199,7 +207,7 @@ hr.style-one {
   text-align: left;
 
   .th {
-    padding-top: 10px;
+    padding-top: 17px;
   }
 
   .th img {
@@ -415,5 +423,10 @@ hr.style-one {
 }
 
 .grid-content {
-  padding: 0 10px;
+  padding-left: 13px;
+  // padding: 0 10px;
+}
+
+.padding-left-none {
+  padding-left: 0 !important;
 }

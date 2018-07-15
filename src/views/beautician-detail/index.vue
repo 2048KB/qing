@@ -2,7 +2,7 @@
   <div class="counselor-detail-container">
     <el-row>
       <el-col :span="16">
-        <div class="grid-content">
+        <div class="grid-content padding-left-none">
           <!-- 职业信息 -->
           <card-zyxx :employeeDetail="employeeDetail" @updateUserInfo="updateInfo"></card-zyxx>
 

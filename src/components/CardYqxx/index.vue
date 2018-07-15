@@ -1,6 +1,6 @@
 <template>
   <!-- 邀请信息 -->
-  <el-card class="box-card detail-card detail-card--yqxx" shadow="never"">
+  <el-card class="box-card detail-card detail-card--yqxx">
     <div slot="header" class="clearfix">
       <span>邀请信息</span>
     </div>
