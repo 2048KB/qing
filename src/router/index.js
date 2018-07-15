@@ -95,7 +95,7 @@ export const constantRouterMap = [
         meta: { title: '美容师详情', icon: 'table' }
       },
       {
-        path: 'custom-detail',
+        path: 'custom-detail/:id',
         name: 'CustomDetail',
         component: () => import('@/views/custom-detail/index'),
         meta: { title: '会员详情', icon: 'table' }

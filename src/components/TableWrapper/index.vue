@@ -5,17 +5,34 @@
       <span><slot name="right"></slot></span>
     </div>
     <div class="content"><slot></slot></div>
+    <div class="pagination-container" v-if="isShowPaging">
+      <el-pagination
+        @current-change="handleChangeCurrent"
+        layout="prev, pager, next"
+        :total="total">
+      </el-pagination> 
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   props: {
-    title: String
+    title: String,
+    total: [String, Number],
+    isShowPaging: {
+      type: Boolean,
+      default: true
+    }
   },
   data () {
     return {
 
+    }
+  },
+  methods: {
+    handleChangeCurrent (pageNumber) {
+      this.$emit('current-change', pageNumber)
     }
   }
 }

@@ -1,20 +1,18 @@
 <template>
   <div class="app-container consultant-page">
-    <div class="top-bar">
-      <span class="add-member" @click="handleAddMember">添加</span>
-    </div>
+    <div class="top-bar"></div>
     <SearchBox 
       class="search-box"
       @change="handleChange"
-      :options="employeeTypes"
-      v-model="requestData.search"></SearchBox>
+      :options="bounsSearchTypes"
+      v-model="search"></SearchBox>
     <div class="filter-box">
       <div class="filter-item">
         <RadioGroup 
-          title="直接邀请人角色"
+          title="提现状态"
           @change="handleChange"
           :options="withdrawStatuOptions"
-          v-model="requestData.dirInviteRole"></RadioGroup>
+          v-model="requestData.status"></RadioGroup>
       </div>
       <div class="filter-item">
         <DatePicker 
@@ -23,7 +21,7 @@
           title="提现日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="顾问列表">
+    <TableWrapper title="顾问列表" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
         class="list"
@@ -32,26 +30,23 @@
         element-loading-text="Loading" 
         :fit="true"
         border highlight-current-row>
-        <el-table-column min-width="50" align="center" label='员工编号' prop="sno"></el-table-column>
-        <el-table-column min-width="50" align="center" label='姓名' prop="realityName"></el-table-column>
-        <el-table-column min-width="50" align="center" label='性别' prop="sexStr"></el-table-column>
+        <el-table-column min-width="50" align="center" label='交易流水' prop="serviceOrderNo"></el-table-column>
+        <el-table-column min-width="50" align="center" label='昵称' prop="nickName"></el-table-column>
+        <el-table-column min-width="50" align="center" label='真实姓名' prop="realityName"></el-table-column>
         <el-table-column min-width="50" align="center" label='手机号' prop="mobile"></el-table-column>
-        <el-table-column min-width="50" align="center" label='出生日期' prop="birthDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='身份证号' prop="idNumber"></el-table-column>
-        <el-table-column min-width="50" align="center" label='QQ号' prop="qq"></el-table-column>
-        <el-table-column min-width="50" align="center" label='入职日期' prop="entryDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='创建日期' prop=""></el-table-column>
+        <el-table-column min-width="50" align="center" label='提现时账户可提现金额（元）' prop="availableBalance"></el-table-column>
+        <el-table-column min-width="100" align="center" label='提现金额（元）' prop="amount"></el-table-column>
+        <el-table-column min-width="50" align="center" label='提现日期' prop="time"></el-table-column>
+        <el-table-column min-width="50" align="center" label='提现方式' prop="type">
+          <template slot-scope="scope">{{typeMap[list[scope.$index].type]}}</template>
+        </el-table-column>
+        <el-table-column min-width="100" align="center" label='状态' prop="status">
+          <template slot-scope="scope">{{statusMap[list[scope.$index].status]}}</template>
+        </el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
-          <template slot-scope="scope"><span class="detail" @click="handleToDetail">详情</span></template>
+          <template slot-scope="scope"><span class="detail" @click="handleShowModal">{{list[scope.$index].status == 1 ? '审核' : '查看'}}</span></template>
         </el-table-column>
       </el-table>
-      <div class="pagination-container">
-        <el-pagination
-          @current-change="handleChangeCurrent"
-          layout="prev, pager, next"
-          :total="totalCount">
-        </el-pagination> 
-      </div>
     </TableWrapper>
   </div>
 </template>
@@ -59,11 +54,14 @@
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {withdrawStatuOptions, employeeTypes} from '@/views/const'
+import {withdrawStatuOptions, bounsSearchTypes} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
+import listMixins from '../listMixins'
+
 export default {
+  mixins: [listMixins],
   components: {
     RadioGroup,
     DatePicker,
@@ -71,35 +69,51 @@ export default {
     TableWrapper
   },
   data() {
+    let statusMap = {
+      '1': '待审核',
+      '2': '处理中',
+      '3': '成功',
+      '-1': '拒绝',
+    }
+    let typeMap = {
+      '1': '零钱',
+      '2': '银行卡'
+    }
     return {
       requestData: {
-        dirInviteRole: '0',
+        status: '0',
         time: {
           begin: null,
           end: null
         },
-        search: {
-          type: '0',
-          text: ''
-        },
         currPage: 0,
         currPage: 10
       },
+      search: {
+        type: '0',
+        text: ''
+      },
+      searchResult: {},
       list: null,
       listLoading: true,
       withdrawStatuOptions,
-      employeeTypes,
-      totalCount: 0
+      bounsSearchTypes,
+      totalCount: 0,
+      statusMap,
+      typeMap
     }
   },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
+  watch: {
+    search: {
+      handler: function (val) {
+        let select = bounsSearchTypes[val.type]
+        let temp = {}
+        if (select && select.key) {
+          temp[select.key] = val.text
+        }
+        this.searchResult = temp
+      },
+      deep: true
     }
   },
   created() {
@@ -108,7 +122,12 @@ export default {
   methods: {
     fetchData () {
       this.$API.showwithdrawuser({
-        data: this.requestData
+        data: {
+          ...this.requestData,
+          ...this.searchResult,
+          timeStart: this.requestData.time.begin,
+          timeEnd: this.requestData.time.end
+        }
       })
         .then((res) => {
           this.listLoading = false
@@ -122,18 +141,10 @@ export default {
         })
     },
     handleChange () {
-      console.log()
-      console.log('requst api')
+      this.fetchData()
     },
-    handleAddMember() {
-      console.log('add-member')
-    },
-    handleToDetail () {
+    handleShowModal () {
 
-    },
-    handleChangeCurrent (currentPage) {
-      this.requestData.currPage = currentPage
-      this.handleChange()
     }
   }
 }

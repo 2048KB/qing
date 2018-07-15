@@ -35,7 +35,7 @@
           title="创建日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="顾问列表">
+    <TableWrapper title="顾问列表" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
         class="list"
@@ -57,13 +57,6 @@
           <template slot-scope="scope"><span class="detail" @click="handleToDetail(scope.$index)">详情</span></template>
         </el-table-column>
       </el-table>
-      <div class="pagination-container">
-        <el-pagination
-          @current-change="handleChangeCurrent"
-          layout="prev, pager, next"
-          :total="totalCount">
-        </el-pagination> 
-      </div>
     </TableWrapper>
   </div>
 </template>
@@ -75,7 +68,9 @@ import {sexsOptions, employeeTypes} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
+import listMixins from '../listMixins'
 export default {
+  mixins: [listMixins],
   components: {
     RadioGroup,
     DatePicker,
@@ -162,10 +157,6 @@ export default {
       this.$router.push({
         path: `/employee/counselor-detail/${this.list[index].id}`
       })
-    },
-    handleChangeCurrent (currentPage) {
-      this.requestData.currPage = currentPage
-      this.handleChange()
     }
   }
 }

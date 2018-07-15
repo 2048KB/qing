@@ -1,4 +1,9 @@
 /* eslint-disable */
+// 初始化分页参数
+export const pagingParams = {
+  currPage: 0,
+  pageSize: 10
+}
 export const roleOptions = [{
   value: '0',
   label: '全部'
@@ -120,16 +125,20 @@ export const bounsSearchTypes = [{
   label: '全部'
 }, {
   value: '1',
-  label: '交易流水'
+  label: '交易流水',
+  key: 'serviceOrderNo'
 }, {
   value: '2',
-  label: '昵称'
+  label: '昵称',
+  key: 'nickName'
 }, {
   value: '3',
-  label: '真实姓名'
+  label: '真实姓名',
+  key: 'realityName'
 }, {
   value: '4',
-  label: '手机号'
+  label: '手机号',
+  'key': 'mobile'
 }]
 export const logSearchTypes = [{
   value: '0',
@@ -146,4 +155,29 @@ export const logSearchTypes = [{
 }, {
   value: '4',
   label: '操作者手机号'
+}]
+export const listMemberSearchTypes = [{
+  value: '0',
+  label: '全部'
+}, {
+  value: '1',
+  label: 'ID'
+}, {
+  value: '2',
+  label: '昵称'
+}, {
+  value: '3',
+  label: '绑定手机号'
+}, {
+  value: '4',
+  label: '直接邀请人姓名'
+}, {
+  value: '5',
+  label: '直接邀请人手机号'
+}, {
+  value: '6',
+  label: '间接邀请人姓名'
+}, {
+  value: '7',
+  label: '间接邀请人手机号'
 }]
