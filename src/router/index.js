@@ -75,39 +75,65 @@ export const constantRouterMap = [
       {
         path: 'consultant',
         name: 'Consultant',
-        component: () => import('@/views/consultant/index'),
-        meta: { title: '顾问列表', icon: 'table' }
+        component: () => import('@/views/menu/index'),
+        meta: { title: '顾问', icon: 'table' },
+        children: [
+          {
+            path: 'list',
+            name: 'List',
+            component: () => import('@/views/consultant/index'),
+            meta: { title: '顾问列表', icon: 'table' },
+          },
+          {
+            path: 'detail',
+            name: 'Detail',
+            component: () => import('@/views/counselor-detail/index'),
+            meta: { title: '顾问详情', icon: 'table' },
+            hidden: true
+          },
+        ]
       },
       {
         path: 'beautician',
         name: 'Beautician',
-        component: () => import('@/views/beautician/index'),
-        meta: { title: '美容师列表', icon: 'tree' }
-      },
-      {
-        path: 'counselor-detail/:id',
-        name: 'CounselorDetail',
-        component: () => import('@/views/counselor-detail/index'),
-        meta: { title: '顾问详情', icon: 'table' }
-      },
-      {
-        path: 'beautician-detail',
-        name: 'BeauticianDetail',
-        component: () => import('@/views/beautician-detail/index'),
-        meta: { title: '美容师详情', icon: 'table' }
-      },
-      {
-        path: 'custom-detail/:id',
-        name: 'CustomDetail',
-        component: () => import('@/views/custom-detail/index'),
-        meta: { title: '顾客详情', icon: 'table' }
-      },
-      {
-        path: 'vip-detail',
-        name: 'VipDetail',
-        component: () => import('@/views/vip-detail/index'),
-        meta: { title: '会员详情', icon: 'table' }
+        component: () => import('@/views/consultant/index'),
+        meta: { title: '美容师', icon: 'table' },
+        children: [
+          {
+            path: 'list',
+            name: 'BeauticianList',
+            component: () => import('@/views/consultant/index'),
+            meta: { title: '美容师列表', icon: 'table' },
+          },
+          {
+            path: 'detail',
+            name: 'CounselorDetail',
+            component: () => import('@/views/counselor-detail/index'),
+            meta: { title: '美容师详情', icon: 'table' },
+            hidden: true
+          },
+        ]
       }
+      // {
+      //   path: 'beautician',
+      //   name: 'Beautician',
+      //   component: () => import('@/views/consultant/index'),
+      //   meta: { title: '美容师列表', icon: 'tree' }
+      // },
+ 
+      // {
+      //   path: 'beautician-detail',
+      //   name: 'BeauticianDetail',
+      //   component: () => import('@/views/beautician-detail/index'),
+      //   meta: { title: '美容师详情', icon: 'table' }
+      // },
+      // {
+      //   path: 'custom-detail/:id',
+      //   name: 'CustomDetail',
+      //   component: () => import('@/views/custom-detail/index'),
+      //   meta: { title: '会员详情', icon: 'table' }
+      // },
+     
     ]
   },
 
@@ -115,22 +141,58 @@ export const constantRouterMap = [
   {
     path: '/customer',
     component: Layout,
-    redirect: '/customer/listmember',
+    redirect: '/customer/member',
     name: 'Customer',
     meta: { title: '客户管理', icon: 'example' },
     children: [
       {
-        path: 'listmember',
-        name: 'Listmember',
-        component: () => import('@/views/listmember/index'),
-        meta: { title: '注册会员', icon: 'listmember' }
+        path: 'member',
+        name: 'member',
+        component: () => import('@/views/menu/index'),
+        meta: { title: '会员', icon: 'listmember' },
+        children: [
+          {
+            path: 'list',
+            name: 'list',
+            component: () => import('@/views/listmember/index'),
+            meta: { title: '注册会员', icon: 'listmember' }
+          },
+          {
+            path: 'detail',
+            name: 'VipDetail',
+            component: () => import('@/views/vip-detail/index'),
+            meta: { title: '会员详情', icon: 'table' },
+            hidden: true
+          }
+        ]
       },
       {
-        path: 'listcustomer',
-        name: 'Listcustomer',
-        component: () => import('@/views/listcustomer/index'),
-        meta: { title: '顾客', icon: 'listcustomer' }
-      }
+        path: 'customer',
+        name: 'customer',
+        component: () => import('@/views/menu/index'),
+        meta: { title: '顾客', icon: 'listmember' },
+        children: [
+          {
+            path: 'list',
+            name: 'list',
+            component: () => import('@/views/listmember/index'),
+            meta: { title: '顾客列表', icon: 'listmember' }
+          },
+          {
+            path: 'detail',
+            name: 'VipDetail',
+            component: () => import('@/views/vip-detail/index'),
+            meta: { title: '顾客详情', icon: 'table' },
+            hidden: true
+          }
+        ]
+      },
+      // {
+      //   path: 'listcustomer',
+      //   name: 'Listcustomer',
+      //   component: () => import('@/views/listcustomer/index'),
+      //   meta: { title: '顾客', icon: 'listcustomer' }
+      // }
     ]
   },
   // 提现管理
@@ -260,7 +322,7 @@ export const constantRouterMap = [
     ]
   },
 
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 export default new Router({

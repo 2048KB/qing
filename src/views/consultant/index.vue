@@ -110,19 +110,7 @@ export default {
       totalCount: 0
     }
   },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
-  created() {
-    this.fetchData()
-  },
+  
   methods: {
     fetchData () {
       this.$API.listcounselors({
@@ -157,9 +145,17 @@ export default {
     },
     handleToDetail (index) {
       this.$router.push({
-        path: `/employee/counselor-detail/${this.list[index].id}`
+        path: `/employee/consultant/detail`,
+        query: {
+          id: this.list[index].id
+        }
       })
     }
+  },
+  mounted() {
+    this.fetchData()
+    console.log(this.$route)
+    console.log(this.$router)
   }
 }
 </script>

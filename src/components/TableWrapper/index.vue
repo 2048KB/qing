@@ -5,8 +5,8 @@
       <span><slot name="right"></slot></span>
     </div>
     <div class="content"><slot></slot></div>
-    <div class="pagination-container" v-if="isShowPaging">
-      <el-pagination
+    <div class="pagination-container" v-if="isShowPaging && total">
+      <el-pagination 
         @current-change="handleChangeCurrent"
         layout="prev, pager, next"
         :total="total">

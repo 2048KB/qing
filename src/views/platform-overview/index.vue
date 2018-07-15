@@ -63,7 +63,6 @@ export default {
             ...res[0].data,
             ...res[1].data
           }
-          console.log(data)
           this.moneyOpt = {
             '购买会员': '￥' + (data.purchaseMemberCardAmount === undefined ? '' : data.purchaseMemberCardAmount ),
             '成功提现': '￥' + (data.withdrawalAmount === undefined ? '' : data.withdrawalAmount ),
@@ -86,10 +85,10 @@ export default {
             '总计': '￥' + (data.FeeTotal === undefined ? '' : data.FeeTotal )
           }
           this.withdrawOpt = {
-            '提现人数': (data.count === undefined ? '' : data.count ) + '人',
-            '提现金额': '￥' + (data.amount === undefined ? '' : data.amount ),
-            '待处理人数': (data.count === undefined ? '' : data.count ) + '人',
-            '待处理金额': '￥' + (data.amount === undefined ? '' : data.amount )
+            '提现人数': (data.dayWithdrawalPending.count === undefined ? '' : data.dayWithdrawalPending.count ) + '人',
+            '提现金额': '￥' + (data.dayWithdrawalPending.amount === undefined ? '' : data.dayWithdrawalPending.amount ),
+            '待处理人数': (data.dayWithdrawalSuccess.count === undefined ? '' : data.dayWithdrawalSuccess.count ) + '人',
+            '待处理金额': '￥' + (data.dayWithdrawalSuccess.amount === undefined ? '' : data.dayWithdrawalSuccess.amount )
           }
         })
         .catch((res) => {
