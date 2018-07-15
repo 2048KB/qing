@@ -55,7 +55,6 @@ const fetch = function fetch(url = '', options = {}) {
 
     request.success = (data) => {
       if (data.code < 0) {
-
         // 没有登录
         if (data.code == -9999) {
           router.push({
@@ -108,16 +107,18 @@ const fetch = function fetch(url = '', options = {}) {
           return
         }
 
+        // 其它小于 < 0 的错误码
         Message({
           showClose: true,
           message: data.msg || '服务异常，请稍后再试！',
           type: 'error'
         })
+
         reject(data)
         return
       }
 
-
+      // 请求成功
       resolve(data)
     }
 
