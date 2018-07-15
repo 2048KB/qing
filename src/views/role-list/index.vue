@@ -1,7 +1,7 @@
 <template>
   <div class="app-container consultant-page">
     <div class="top-bar">
-      <span class="add-member" @click="handleAddMember">添加</span>
+      <!-- <el-button class="add-member" icon="el-icon-edit" @click="handleAddMember">添加</el-button> -->
     </div>
     <SearchBox 
       class="search-box"

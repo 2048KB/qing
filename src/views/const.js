@@ -12,6 +12,7 @@ export const roleOptions = [{
   value: '4',
   label: '顾问'
 }]
+
 export const employeeTypes = [{
   value: '0',
   label: '全部'
@@ -30,10 +31,16 @@ export const employeeTypes = [{
 }, {
   value: '5',
   label: 'QQ号'
-}, {
-  value: '6',
-  label: '所属顾问'
 }]
+
+export const beauticianSearchTypes = [
+  ...employeeTypes,
+  {
+    value: '6',
+    label: '所属顾问'
+  }
+]
+
 export const sexsOptions = [{
   value: '0',
   label: '全部'

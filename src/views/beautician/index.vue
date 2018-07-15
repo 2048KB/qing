@@ -6,7 +6,7 @@
     <SearchBox 
       class="search-box"
       @change="handleChange"
-      :options="employeeTypes"
+      :options="beauticianSearchTypes"
       v-model="requestData.search"></SearchBox>
     <div class="filter-box">
       <div class="filter-item">
@@ -73,7 +73,7 @@
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {sexsOptions, employeeTypes} from '@/views/const'
+import {sexsOptions, beauticianSearchTypes} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
@@ -110,7 +110,7 @@ export default {
       list: null,
       listLoading: true,
       sexsOptions,
-      employeeTypes,
+      beauticianSearchTypes,
       totalCount: 0
     }
   },

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container consultant-page">
     <div class="top-bar">
-      <span class="add-member" @click="handleAddMember">添加</span>
+      <el-button class="add-member" icon="el-icon-plus" @click="handleAddMember">添加</el-button>
     </div>
     <SearchBox 
       class="search-box"
@@ -11,10 +11,10 @@
     <div class="filter-box">
       <div class="filter-item">
         <RadioGroup 
-          title="直接邀请人角色"
+          title="性别"
           @change="handleChange"
           :options="sexsOptions"
-          v-model="requestData.dirInviteRole"></RadioGroup>
+          v-model="requestData.sex"></RadioGroup>
       </div>
       <div class="filter-item">
         <DatePicker 
@@ -52,9 +52,9 @@
         <el-table-column min-width="100" align="center" label='身份证号' prop="idNumber"></el-table-column>
         <el-table-column min-width="50" align="center" label='QQ号' prop="qq"></el-table-column>
         <el-table-column min-width="50" align="center" label='入职日期' prop="entryDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='创建日期' prop=""></el-table-column>
+        <el-table-column min-width="100" align="center" label='创建日期' prop="time"></el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
-          <template slot-scope="scope"><span class="detail" @click="handleToDetail">详情</span></template>
+          <template slot-scope="scope"><span class="detail" @click="handleToDetail(scope.$index)">详情</span></template>
         </el-table-column>
       </el-table>
       <div class="pagination-container">
@@ -85,7 +85,7 @@ export default {
   data() {
     return {
       requestData: {
-        dirInviteRole: '0',
+        sex: '0',
         creatTime: {
           begin: null,
           end: null
@@ -102,8 +102,10 @@ export default {
           type: '0',
           text: ''
         },
+        // 角色类型：1表示美容师，2表示顾问
+        roleType: 2,
         currPage: 0,
-        currPage: 10
+        pageSize: 10
       },
       list: null,
       listLoading: true,
@@ -128,11 +130,20 @@ export default {
   methods: {
     fetchData () {
       this.$API.listcounselors({
-        data: this.requestData
+        data: {
+          ...this.requestData,
+          type: this.requestData.search.type,
+          typeStr: this.requestData.search.text,
+          birthDateBegin: this.requestData.birthDate.begin,
+          birthDateEnd: this.requestData.birthDate.end,
+          entryDateBegin: this.requestData.entryDate.begin,
+          entryDateEnd: this.requestData.entryDate.end,
+          creatTimeBegin: this.requestData.creatTime.begin,
+          creatTimeEnd: this.requestData.creatTime.end,
+        }
       })
         .then((res) => {
           this.listLoading = false
-          console.log(res)
           let data = res.data || {}
           this.list = data.page
           this.totalCount = data.totalCount
@@ -142,14 +153,15 @@ export default {
         })
     },
     handleChange () {
-      console.log()
-      console.log('requst api')
+      this.fetchData()
     },
     handleAddMember() {
-      console.log('add-member')
+      console.log('to add page...')
     },
-    handleToDetail () {
-
+    handleToDetail (index) {
+      this.$router.push({
+        path: `/employee/counselor-detail/${this.list[index].id}`
+      })
     },
     handleChangeCurrent (currentPage) {
       this.requestData.currPage = currentPage
@@ -183,11 +195,7 @@ export default {
         }
       }
     }
-    .add-member {
-      display: block;
-      color: $c0;
-      cursor: pointer;
-    }
+    
     .list {
       margin: $padding;
       width: auto;
