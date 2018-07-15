@@ -25,6 +25,8 @@ export const constantRouterMap = [
   { path: '/page-index', component: () => import('@/views/page-index/index'), hidden: true },
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
+  { path: '/warning', component: () => import('@/views/warning'), hidden: true },
+  { path: '/500', component: () => import('@/views/500'), hidden: true },
 
   {
     path: '/',
@@ -98,13 +100,13 @@ export const constantRouterMap = [
         path: 'custom-detail',
         name: 'CustomDetail',
         component: () => import('@/views/custom-detail/index'),
-        meta: { title: '会员详情', icon: 'table' }
+        meta: { title: '顾客详情', icon: 'table' }
       },
       {
         path: 'vip-detail',
         name: 'VipDetail',
         component: () => import('@/views/vip-detail/index'),
-        meta: { title: '顾客详情', icon: 'table' }
+        meta: { title: '会员详情', icon: 'table' }
       }
     ]
   },
