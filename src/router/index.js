@@ -83,7 +83,7 @@ export const constantRouterMap = [
         meta: { title: '美容师列表', icon: 'tree' }
       },
       {
-        path: 'counselor-detail',
+        path: 'counselor-detail/:id',
         name: 'CounselorDetail',
         component: () => import('@/views/counselor-detail/index'),
         meta: { title: '顾问详情', icon: 'table' }
