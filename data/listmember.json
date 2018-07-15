@@ -1,6 +1,6 @@
 {
   "msg": "查询成功",
-  "code": -1,
+  "code": 1,
   "data": {
     "conditions": null,
     "currPage": 1,

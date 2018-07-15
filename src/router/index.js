@@ -133,12 +133,7 @@ export const constantRouterMap = [
       //   component: () => import('@/views/custom-detail/index'),
       //   meta: { title: '会员详情', icon: 'table' }
       // },
-      // {
-      //   path: 'vip-detail',
-      //   name: 'VipDetail',
-      //   component: () => import('@/views/vip-detail/index'),
-      //   meta: { title: '顾客详情', icon: 'table' }
-      // }
+     
     ]
   },
 
@@ -146,22 +141,58 @@ export const constantRouterMap = [
   {
     path: '/customer',
     component: Layout,
-    redirect: '/customer/listmember',
+    redirect: '/customer/member',
     name: 'Customer',
     meta: { title: '客户管理', icon: 'example' },
     children: [
       {
-        path: 'listmember',
-        name: 'Listmember',
-        component: () => import('@/views/listmember/index'),
-        meta: { title: '注册会员', icon: 'listmember' }
+        path: 'member',
+        name: 'member',
+        component: () => import('@/views/menu/index'),
+        meta: { title: '会员', icon: 'listmember' },
+        children: [
+          {
+            path: 'list',
+            name: 'list',
+            component: () => import('@/views/listmember/index'),
+            meta: { title: '注册会员', icon: 'listmember' }
+          },
+          {
+            path: 'detail',
+            name: 'VipDetail',
+            component: () => import('@/views/vip-detail/index'),
+            meta: { title: '会员详情', icon: 'table' },
+            hidden: true
+          }
+        ]
       },
       {
-        path: 'listcustomer',
-        name: 'Listcustomer',
-        component: () => import('@/views/listcustomer/index'),
-        meta: { title: '顾客', icon: 'listcustomer' }
-      }
+        path: 'customer',
+        name: 'customer',
+        component: () => import('@/views/menu/index'),
+        meta: { title: '顾客', icon: 'listmember' },
+        children: [
+          {
+            path: 'list',
+            name: 'list',
+            component: () => import('@/views/listmember/index'),
+            meta: { title: '顾客列表', icon: 'listmember' }
+          },
+          {
+            path: 'detail',
+            name: 'VipDetail',
+            component: () => import('@/views/vip-detail/index'),
+            meta: { title: '顾客详情', icon: 'table' },
+            hidden: true
+          }
+        ]
+      },
+      // {
+      //   path: 'listcustomer',
+      //   name: 'Listcustomer',
+      //   component: () => import('@/views/listcustomer/index'),
+      //   meta: { title: '顾客', icon: 'listcustomer' }
+      // }
     ]
   },
   // 提现管理
