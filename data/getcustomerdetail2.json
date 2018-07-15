@@ -2,7 +2,6 @@
   "code": 1,
   "msg": "查询成功",
   "data": {
-    "storeAreaName": "北京区域",
     "memberVO": {
       "nickName": "赵燕",
       "time": null,
@@ -13,18 +12,29 @@
       "roleTypeStr": "顾问",
       "isChange": true
     },
+    "inMemberVO": {
+      "nickName": "赵燕啊啊啊啊",
+      "time": null,
+      "userId": 3,
+      "mobile": "13111111119",
+      "photo": "default123.png",
+      "sexStr": "女",
+      "roleTypeStr": "顾问",
+      "isChange": false
+    },
     "storeName": "北京朝阳门直营店",
-    "storeId": 1,
     "user": {
-      "id": 1,
-      "time": "2018-06-23 15:25:38",
-      "name": "QQMR_SJDBSAKJDB",
+      "photo": null,
+      "nickName": "xiaohei",
       "mobile": "13155555555",
+      "time": "2018-06-23 15:25:38",
+      "card": "",
+      "expireTime": "2068-06-23 15:25:38",
+      "isActive": true,
+      "name": "QQMR_SJDBSAKJDB",
       "password": null,
       "payPassword": null,
       "sex": 0,
-      "nickName": "xiaohei",
-      "photo": null,
       "roleType": 1,
       "employeeId": -1,
       "loginTime": null,
@@ -32,6 +42,21 @@
       "loginIp": null,
       "wxOpenId": null
     },
+    "userFunds": {
+      "availableBalance": 3432.32,
+      "balance": 98.4,
+      "freeze": 235.3,
+      "id": 2,
+      "sign": "55c82b601deae028c1c5e87fd820923d",
+      "time": "2018-07-06 15:22:31",
+      "userId": 3
+    },
+    "counselorCurMonSpreadMember": 1,
+    "userCurMonInDirectAmount": 2500,
+    "counselorSpreadMember": 1,
+    "userCurMonDirectAmount": 3931,
+    "counselorCurMonSpreadCustomer": 0,
+    "userAmountByUserId": 6431,
     "listUserAddress": [
       {
         "name": "马东梅",

@@ -2,9 +2,9 @@
   <div class="counselor-detail-container">
     <el-row>
       <el-col :span="16">
-        <div class="grid-content">
+        <div class="grid-content padding-left-none">
           <!-- 职业信息 -->
-          <card-zyxx :employeeDetail="employeeDetail"></card-zyxx>
+          <card-zyxx :employeeDetail="employeeDetail" @updateUserInfo="updateInfo"></card-zyxx>
 
           <!-- 账户信息 -->
           <card-zhxx :userFunds="userFunds"></card-zhxx>
@@ -21,10 +21,10 @@
       <el-col :span="8">
         <div class="grid-content">
           <!-- 个人信息 -->
-          <card-info :employeeDetail="employeeDetail"></card-info>
+          <card-info :employeeDetail="employeeDetail" @updateUserInfoDetail="updateInfoDetail"></card-info>
 
           <!-- 所属顾问 -->
-          <card-ssgw :employeeDetail="employeeDetail"></card-ssgw>
+          <!-- <card-ssgw :employeeDetail="employeeDetail"></card-ssgw> -->
         </div>
       </el-col>
     </el-row>
@@ -52,7 +52,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="commitInfo">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -119,8 +119,8 @@
           </el-row>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="updateInfo">确 定</el-button>
+          <el-button @click="infodialogFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="commitInfoDetail">确 定</el-button>
         </div>
       </el-dialog>
     </div>
@@ -152,7 +152,9 @@ export default {
   data() {
     return {
       inviters: {
-        counselorCurMonSpreadCustomer: '',
+        total: '',
+        monthly: '',
+        totalcustomers: ''
       },
       infoform: {
         mobile: '',
@@ -195,13 +197,16 @@ export default {
     }).then((res) => {
       this.employeeDetail = res.data.employeeDetail
       this.userFunds = res.data.userFunds
+
+      // 账户信息
       this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount
       this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount
       this.userFunds.userAmountByUserId = res.data.userAmountByUserId
 
-      this.inviters.counselorCurMonSpreadCustomer = res.data.counselorCurMonSpreadCustomer
-      this.inviters.counselorCurMonSpreadMember = res.data.counselorCurMonSpreadMember
-      this.inviters.counselorSpreadMember = res.data.counselorSpreadMember
+      // 邀请会员信息
+      this.inviters.total = res.data.counselorCurMonSpreadCustomer
+      this.inviters.monthly = res.data.counselorCurMonSpreadMember
+      this.inviters.totalcustomers = res.data.counselorSpreadMember
 
       // 同步编辑个人信息数据
       this.infoform.mobile = res.data.employeeDetail.mobile
@@ -223,7 +228,18 @@ export default {
   },
 
   methods: {
-    updateInfo() {
+    // 更新个人信息到服务器
+    commitInfoDetail() {
+      alert('更新个人信息到服务器')
+    },
+    // 展示 更新个人信息弹窗
+    updateInfoDetail() {
+      this.infodialogFormVisible = true
+    },
+
+    // 更新个人信息到服务器
+    commitInfo() {
+      alert('更新职业信息到服务器')
       this.$API.updatecounselor({
         data: this.infoform
       }).then(res => {
@@ -231,6 +247,12 @@ export default {
       })
       console.log(this.infoform)
     },
+
+    // 展示 更新个人信息弹窗
+    updateInfo() {
+      this.dialogFormVisible = true
+    },
+
     getListcounselorcurmonbonus() {
       // 当月佣金明细
       this.$API.listcounselorcurmonbonus({
@@ -254,10 +276,6 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
-}
-
-.grid-content {
-  padding: 0 10px;
 }
 
 .detail-card {

@@ -1,0 +1,92 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "userSpreadMember": 435,
+    "userCurMonSpreadCustomer": 434,
+    "userAmountByUserId": 7576,
+    "userCurMonSpreadMember": 1212,
+    "storeId": 1,
+    "listUserAddress": [
+      {
+        "areaId": 0,
+        "areaName": "东城区",
+        "cityId": 0,
+        "cityName": "北京市",
+        "detail": "东方银座公寓B座21E",
+        "id": 1,
+        "isDefault": false,
+        "isDel": false,
+        "mobile": "12345678900",
+        "name": "大家爱看",
+        "provinceId": 0,
+        "provinceName": "北京",
+        "time": "2018-07-10 18:16:29",
+        "userId": 0
+      }
+    ],
+    "userCurMonInDirectAmount": 1212,
+    "inMemberVO": {
+      "isChange": false,
+      "mobile": "13111111119",
+      "nickName": "赵燕",
+      "photo": "default123.png",
+      "roleTypeStr": "顾问",
+      "sexStr": "女",
+      "time": null,
+      "userId": 3
+    },
+    "storeAreaName": "北京区域",
+    "memberVO": {
+      "isChange": true,
+      "mobile": "16555555555",
+      "nickName": "fdsfs",
+      "photo": "default.png",
+      "roleTypeStr": "会员",
+      "sexStr": "女",
+      "time": null,
+      "userId": 4
+    },
+    "userCurMonDirectAmount": 4357,
+    "storeName": "北京朝阳门直营店",
+    "user": {
+      "employeeId": -1,
+      "id": 6,
+      "loginCount": 0,
+      "loginIp": "",
+      "loginTime": null,
+      "mobile": "16666666666",
+      "name": "meimei",
+      "nickName": "哈哈",
+      "password": "",
+      "payPassword": "",
+      "photo": "",
+      "roleType": 2,
+      "sex": 1,
+      "time": "2018-07-06 18:21:18",
+      "wxOpenId": ""
+    },
+    "card": {
+      "activeTime": "2018-07-09 18:29:19",
+      "cardNo": "748123154",
+      "expireTime": "2020-07-09 17:05:22",
+      "id": 3,
+      "isActive": true,
+      "isExpire": false,
+      "isPayFor": false,
+      "orderId": 0,
+      "remark": "dfsdfsd",
+      "time": "2018-07-09 18:29:24",
+      "userId": 6
+    },
+    "userFunds": {
+        "availableBalance": 23456,
+        "balance": 12345678,
+        "freeze": 324.3,
+        "id": 4,
+        "sign": "585375c1448bfa3494298bdd79408081",
+        "time": "2018-07-07 15:38:28",
+        "userId": 8
+    }
+  }
+}

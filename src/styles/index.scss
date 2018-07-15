@@ -11,6 +11,7 @@ body {
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
   font-size: 14px;
+  color: $bodyFontColor;
 }
 
 label {
@@ -91,6 +92,7 @@ hr.style-one {
 // reset el-card
 .el-card {
   border-radius: 0;
+  color: $bodyFontColor;
 }
 
 .detail-card {
@@ -98,15 +100,15 @@ hr.style-one {
 }
 
 .el-card__header {
-  background: #34c4d4;
+  background: $mainColor;
   color: #fff;
   border-radius: none;
-  padding: 10px 15px;
+  padding: 12.5px 15px;
   position: relative;
 
   .icon {
     position: absolute;
-    top: 6.5px;
+    top: 8.5px;
     right: 12px;
     display: block;
     width: 22px;
@@ -135,7 +137,8 @@ hr.style-one {
   }
 
   .title {
-    font-size: 18px;
+    font-size: 16px;
+    font-weight: 400;
   }
 }
 
@@ -164,6 +167,11 @@ hr.style-one {
     text-align: center;
     margin: auto;
     overflow: hidden;
+
+    .el-button {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
   }
 
   .th img {
@@ -199,7 +207,7 @@ hr.style-one {
   text-align: left;
 
   .th {
-    padding-top: 10px;
+    padding-top: 17px;
   }
 
   .th img {
@@ -277,6 +285,14 @@ hr.style-one {
   background-size: contain;
 }
 
+.qq23-small {
+  height: 18px;
+  width: 18px;
+  background: url(../assets/images/qq-23.png) no-repeat;
+  background-size: contain;
+}
+
+
 .qq-24 {
   background: url(../assets/images/qq-24.png) no-repeat;
   background-size: contain;
@@ -321,4 +337,96 @@ hr.style-one {
   width: 20px;
   background: url(../assets/images/qq-38.png) no-repeat;
   background-size: contain;
+}
+
+.el-dialog__header {
+  // text-align: center;
+  // background: $mainColor;
+  // color: white;
+}
+
+// 弹窗
+.edit-modal--choose .wrap {
+  margin: auto;
+  text-align: center;
+  padding: 40px;
+}
+
+.edit-modal--rechoose .row-filter .el-button {
+  padding-left: 5px;
+  padding-right: 5px;
+  margin-left: -10px;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.edit-modal--rechoose .col-phone .el-input__inner {
+  border-right: 0;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.edit-modal--rechoose .lists-wrap {
+  // overflow-x: hidden;
+  overflow: scroll;
+  height: 260px;
+
+  .el-radio {
+    width: 100%;
+    position: relative;
+    height: 68px;
+    margin-bottom: 20px;
+
+    .el-radio__input {
+      float: right;
+      margin-top: 14px;
+    }
+  }
+
+  .el-radio.is-bordered.is-checked {
+    border-color: $mainColor;
+  }
+
+  .el-radio__input.is-checked+.el-radio__label {
+    color: $mainColor;
+  }
+
+  .el-radio__input.is-checked .el-radio__inner {
+    border-color: $mainColor;
+    background: $mainColor;
+  }
+
+  .el-radio .item {
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    position: absolute;
+    top: 12px;
+    left: 20px;
+
+    > div {
+      float: left;
+    }
+
+    > div.th {
+      margin-top: 3px;
+    }
+
+    > div.meta {
+      margin-left: 20px;
+    }
+
+    > div.meta div {
+      margin-bottom: 5px;
+    }
+  }
+}
+
+.grid-content {
+  padding-left: 13px;
+  // padding: 0 10px;
+}
+
+.padding-left-none {
+  padding-left: 0 !important;
 }

@@ -1,8 +1,10 @@
 /* eslint-disable */
 import $ from 'jquery'
 // import { Loading } from 'element-ui';
-
+import { Message } from 'element-ui';
+import router from '../router'
 // var loadingInstance
+console.log(router)
 
 const fetch = function fetch(url = '', options = {}) {
   return new Promise((resolve, reject) => {
@@ -53,10 +55,70 @@ const fetch = function fetch(url = '', options = {}) {
 
     request.success = (data) => {
       if (data.code < 0) {
+        // 没有登录
+        if (data.code == -9999) {
+          router.push({
+            path: '/login'
+          })
+
+          reject(data)
+          return
+        }
+
+        // 没有权限
+        if (data.code == -9998) {
+          router.push({
+            path: '/warning'
+          })
+
+          reject(data)
+          return
+        }
+
+        // 404
+        if (data.code == -9996) {
+          router.push({
+            path: '/404'
+          })
+
+          reject(data)
+          return
+        }
+
+        // 服务器 500
+        if (data.code == -9995) {
+          router.push({
+            path: '/500'
+          })
+
+          reject(data)
+          return
+        }
+
+        // 请勿重复提交
+        if (data.code == -9997) {
+          Message({
+            showClose: true,
+            message: data.msg || '请勿重复提交！',
+            type: 'error'
+          })
+
+          reject(data)
+          return
+        }
+
+        // 其它小于 < 0 的错误码
+        Message({
+          showClose: true,
+          message: data.msg || '服务异常，请稍后再试！',
+          type: 'error'
+        })
+
         reject(data)
         return
       }
 
+      // 请求成功
       resolve(data)
     }
 

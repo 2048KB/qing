@@ -1,7 +1,7 @@
 <template>
   <div style="background:#f0f2f5;margin-top: -20px;">
     <div class="wscn-http404">
-      <div class="pic-404">
+      <div class="pic-404" style="display: none;">
         <img class="pic-404__parent" :src="img_404" alt="404">
         <img class="pic-404__child left" :src="img_404_cloud" alt="404">
         <img class="pic-404__child mid" :src="img_404_cloud" alt="404">
@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     message() {
-      return '你没有权限进入这个页面......'
+      return '服务器出错了，请稍后再试......'
     }
   }
 }

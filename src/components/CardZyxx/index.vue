@@ -1,10 +1,10 @@
 <template>
   <!-- 职业信息 -->
-  <el-card class="box-card detail-card detail-card--user" shadow="never">
+  <el-card class="box-card detail-card detail-card--user">
     <div slot="header" class="clearfix">
-      <span><slot></slot></span>
-      <el-button style="float: right; padding: 3px 0" type="text" @click="dialogFormVisible = true">
-        <div class="icon"></div>
+      <span><slot>职业信息</slot></span>
+      <el-button style="float: right; padding: 3px 0" type="text" v-show="!hideEdit">
+        <div class="icon" @click="triggerUpdateInfoForm"></div>
       </el-button>
     </div>
 
@@ -13,25 +13,25 @@
         <el-col :span="5">
           <div class="th">
             <div class="img"><img src="../../assets/images/qq-18.png" alt=""></div>
-            <el-button type="primary">更换头像</el-button>
+            <el-button type="primary" v-show="!isVip">更换头像</el-button>
           </div>
         </el-col>
         <el-col :span="19">
           <div class="meta">
             <p class="name">
-              {{ employeeDetail.realityName }}
+              {{ employeeDetail.realityName || employeeDetail.nickName }}
 
-              <span v-if="isCustom">
+              <span v-if="employeeDetail.isActive">
                 <span class="state">已激活</span>
-                <span class="validtime">有效期至2020-05-20 10:00:00</span>
+                <span class="validtime">有效期至{{ employeeDetail.expireTime }}</span>
               </span>
             </p>
-            <p><i class="qq qq-19"></i>{{ employeeDetail.sno }}</p>
-            <p><i class="qq qq-20"></i>{{ employeeDetail.entryDate }}</p>
-            <p><i class="qq qq-21"></i>{{ employeeDetail.remark }}</p>
+            <p><i class="qq qq-19"></i>{{ employeeDetail.sno || employeeDetail.mobile }}</p>
+            <p><i class="qq qq-20"></i>{{ employeeDetail.entryDate || employeeDetail.time }}</p>
+            <p><i class="qq qq-21" v-show="employeeDetail.remark"></i>{{ employeeDetail.remark }}</p>
             <div>
-              <el-button type="success" plain>{{ employeeDetail.storeId }}</el-button>
-              <el-button type="success" plain>{{ employeeDetail.storeName }}</el-button>
+              <el-button type="success" plain v-show="employeeDetail.storeId">{{ employeeDetail.storeId }}</el-button>
+              <el-button type="success" plain v-show="employeeDetail.storeName">{{ employeeDetail.storeName }}</el-button>
             </div>
           </div>
         </el-col>
@@ -47,6 +47,19 @@
       isCustom: {
         Type: Boolean,
         default: false
+      },
+      isVip: {
+        Type: Boolean,
+        default: false
+      },
+      hideEdit: {
+        type: Boolean,
+        default: false
+      }
+    },
+    methods: {
+      triggerUpdateInfoForm() {
+        this.$emit('updateUserInfo', {})
       }
     }
   }

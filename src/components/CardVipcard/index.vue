@@ -1,36 +1,21 @@
 <template>
-  <el-card class="box-card detail-card detail-card--vipcard" shadow="never">
+  <el-card class="box-card detail-card detail-card--vipcard">
     <div slot="header" class="clearfix">
       <span>会员卡服务记录</span>
     </div>
     <div class="detail-card__body detail-card__body--vipcard">
-      <div class="record">
+      <div class="record" v-for="item in cardlist">
         <el-row class="item">
           <el-col :span="5"><div>激活日期</div></el-col>
-          <el-col :span="19" class="de"><div>18765434267</div></el-col>
+          <el-col :span="19" class="de"><div>{{ item.time }}</div></el-col>
         </el-row>
         <el-row class="item">
           <el-col :span="5"><div>服务内容</div></el-col>
-          <el-col :span="19" class="de"><div>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div></el-col>
+          <el-col :span="19" class="de"><div>{{ item.content }}</div></el-col>
         </el-row>
         <el-row class="item">
           <el-col :span="5"><div>备注</div></el-col>
-          <el-col :span="19" class="de"><div>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div></el-col>
-        </el-row>
-      </div>
-
-      <div class="record">
-        <el-row class="item">
-          <el-col :span="5"><div>激活日期</div></el-col>
-          <el-col :span="19" class="de"><div>18765434267</div></el-col>
-        </el-row>
-        <el-row class="item">
-          <el-col :span="5"><div>服务内容</div></el-col>
-          <el-col :span="19" class="de"><div>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div></el-col>
-        </el-row>
-        <el-row class="item">
-          <el-col :span="5"><div>备注</div></el-col>
-          <el-col :span="19" class="de"><div>XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</div></el-col>
+          <el-col :span="19" class="de"><div>{{ item.remark }}</div></el-col>
         </el-row>
       </div>
     </div>
@@ -40,12 +25,9 @@
 <script>
   export default {
     props: {
-      cardlist: Array
-    },
-
-    data() {
-      return {
-        cardlist: []
+      cardlist: {
+        Type: Array,
+        default: []
       }
     }
   }

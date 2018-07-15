@@ -1,6 +1,6 @@
 <template>
   <!-- 账户信息 -->
-  <el-card class="box-card detail-card detail-card--zhxx" shadow="never">
+  <el-card class="box-card detail-card detail-card--zhxx">
     <div slot="header" class="clearfix">
       <span>账户信息</span>
     </div>

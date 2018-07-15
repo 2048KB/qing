@@ -25,6 +25,8 @@ export const constantRouterMap = [
   { path: '/page-index', component: () => import('@/views/page-index/index'), hidden: true },
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
+  { path: '/warning', component: () => import('@/views/warning'), hidden: true },
+  { path: '/500', component: () => import('@/views/500'), hidden: true },
 
   {
     path: '/',
@@ -289,7 +291,7 @@ export const constantRouterMap = [
     ]
   },
 
-  // { path: '*', redirect: '/404', hidden: true }
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 export default new Router({

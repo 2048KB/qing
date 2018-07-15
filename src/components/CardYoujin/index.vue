@@ -1,6 +1,6 @@
 <template>
   <!-- 当月佣金 -->
-  <el-card class="box-card detail-card detail-card--yj" shadow="never">
+  <el-card class="box-card detail-card detail-card--yj">
     <div slot="header" class="clearfix">
       <span>当月佣金明细</span>
     </div>
