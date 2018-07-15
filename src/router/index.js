@@ -38,27 +38,27 @@ export const constantRouterMap = [
     }]
   },
 
-  {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/listmember',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'example' },
-    children: [
-      {
-        path: 'listmember',
-        name: 'Listmember',
-        component: () => import('@/views/listmember/index'),
-        meta: { title: 'listmember', icon: 'listmember' }
-      },
-      {
-        path: 'listcustomer',
-        name: 'listcustomer',
-        component: () => import('@/views/listcustomer/index'),
-        meta: { title: 'listcustomer', icon: 'listcustomer' }
-      }
-    ]
-  },
+  // {
+  //   path: '/example',
+  //   component: Layout,
+  //   redirect: '/example/listmember',
+  //   name: 'Example',
+  //   meta: { title: 'Example', icon: 'example' },
+  //   children: [
+  //     {
+  //       path: 'listmember',
+  //       name: 'Listmember',
+  //       component: () => import('@/views/listmember/index'),
+  //       meta: { title: 'listmember', icon: 'listmember' }
+  //     },
+  //     {
+  //       path: 'listcustomer',
+  //       name: 'listcustomer',
+  //       component: () => import('@/views/listcustomer/index'),
+  //       meta: { title: 'listcustomer', icon: 'listcustomer' }
+  //     }
+  //   ]
+  // },
 
   // 新增 `员工管理`
   // 顾问列表
@@ -164,6 +164,86 @@ export const constantRouterMap = [
   //     }
   //   ]
   // },
+
+  // 平台概况
+  {
+    path: '/overview',
+    component: Layout,
+    redirect: '/overview/platform-overview',
+    name: 'Overview',
+    meta: { title: '平台概况', icon: 'example' },
+    children: [
+      {
+        path: 'platform-overview',
+        name: 'PlatformOverview',
+        component: () => import('@/views/platform-overview/index'),
+        meta: { title: '平台概况', icon: 'platform-overview' }
+      },
+      {
+        path: 'platform-fee',
+        name: 'PlatformFee',
+        component: () => import('@/views/platform-fee/index'),
+        meta: { title: '收取费用列表', icon: 'platform-fee' }
+      }
+    ]
+  },
+
+  // 佣金列表
+  {
+    path: '/bonus',
+    component: Layout,
+    redirect: '/bonus/bonus-list',
+    name: 'bonus',
+    meta: { title: '佣金列表', icon: 'example' },
+    children: [
+      {
+        path: 'bonus-list',
+        name: 'BonusList',
+        component: () => import('@/views/bonus-list/index'),
+        meta: { title: '佣金总表', icon: 'bonus-list' }
+      }
+    ]
+  },
+
+  // 后台日志管理 
+  {
+    path: '/log',
+    component: Layout,
+    redirect: '/log/log-manage',
+    name: 'log',
+    meta: { title: '后台日志管理', icon: 'example' },
+    children: [
+      {
+        path: 'log-manage',
+        name: 'LogManage',
+        component: () => import('@/views/log-manage/index'),
+        meta: { title: '后台操作日志', icon: 'log-manage' }
+      }
+    ]
+  },
+
+  // 系统管理 
+  {
+    path: '/system',
+    component: Layout,
+    redirect: '/system/admin-list',
+    name: 'system',
+    meta: { title: '系统管理', icon: 'example' },
+    children: [
+      {
+        path: 'admin-list',
+        name: 'AdminList',
+        component: () => import('@/views/admin-list/index'),
+        meta: { title: '管理员列表', icon: 'admin-list' }
+      },
+      {
+        path: 'role-list',
+        name: 'RoleList',
+        component: () => import('@/views/role-list/index'),
+        meta: { title: '角色列表', icon: 'role-list' }
+      }
+    ]
+  },
 
   {
     path: '/form',
