@@ -16,7 +16,8 @@ module.exports = {
   getbeauticiandetail: '/employee/getbeauticiandetail', // 获取美容师详情
   listbeauticiancurmonbonus: '/employee/listbeauticiancurmonbonus', // 获取美容师当月佣金明细
   listmember: '/user/listmember', // 获取用户列表
-  getcustomerdetail: '/user/getcustomerdetail', // 获取会员|顾客详情(请求与响应有区别)
+  getcustomerdetail: '/user/getcustomerdetail', // 获取顾客详情
+  getmemberdetail: '/user/getmemberdetail', // 获取会员详情
   listusercurmonbonus: '/user/listusercurmonbonus', // 获取用户当月佣金列表信息
   listcarduse: '/user/listcarduse', // 获取会员卡服务记录
   updateinviter: '/user/updateinviter', // 修改邀请人信息
@@ -50,4 +51,5 @@ module.exports = {
   addstore: '/back/employee/addstore', // 架构管理-添加门店接口
   showstoredetail: '/back/employee/showstoredetail', // 架构管理-查询要编辑的门店接口
   editstore: '/back/employee/editstore', // 架构管理-编辑门店接口
+  listuserbystoreid: '/back/user/listuserbystoreid' // 根据门店id获取门店用户
 }
