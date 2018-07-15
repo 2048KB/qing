@@ -38,6 +38,7 @@
     <TableWrapper title="顾问列表" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
+        empty-text="没有数据"
         class="list"
         :data="list" 
         v-loading.body="listLoading" 
@@ -144,6 +145,7 @@ export default {
           this.totalCount = data.totalCount
         })
         .catch((res) => {
+          this.listLoading = false
           console.log(res)
         })
     },

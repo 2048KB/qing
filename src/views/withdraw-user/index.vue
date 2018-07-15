@@ -24,6 +24,7 @@
     <TableWrapper :title="dialogOpt.title" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
+        empty-text="没有数据"
         class="list"
         :data="list" 
         v-loading.body="listLoading" 
@@ -49,9 +50,19 @@
       </el-table>
     </TableWrapper>
     <el-dialog :title="dialogOpt.title" :visible.sync="isShowDialog">
-      <div class="card-container">
-        <InfoCard :options="dialogOpt.personInfo || {}" title="个人信息"></InfoCard>
-        <InfoCard :options="dialogOpt.withdrawInfo || {}" title="提现信息"></InfoCard>
+      <div v-loading="isShowDialogLoading" element-loading-text="Loading">
+        <div class="card-container">
+          <InfoCard :options="dialogOpt.personInfo || {}" title="个人信息"></InfoCard>
+          <InfoCard :options="dialogOpt.withdrawInfo || {}" title="提现信息"></InfoCard>
+        </div>
+        <template v-if="dialogOpt.status != 1">
+          <div class="checkInfo">
+            <div class="info-item" v-for="key in Object.keys(dialogOpt.checkInfo || {})" :key="key">
+              <span class="key">{{key}}</span>
+              <span class="value">{{dialogOpt.checkInfo && dialogOpt.checkInfo[key]}}</span>
+            </div>
+          </div>
+        </template>
       </div>
       <template v-if="dialogOpt.status == 1">
         <el-form :model="dialogForm" label-width="80px">
@@ -68,14 +79,6 @@
         <div slot="footer" class="dialog-footer" >
           <el-button @click="isShowDialog = false">取 消</el-button>
           <el-button type="primary" @click="handleDialogFormSubmit">确 定</el-button>
-        </div>
-      </template>
-      <template v-else>
-        <div class="checkInfo">
-          <div class="info-item" v-for="key in Object.keys(dialogOpt.checkInfo || {})" :key="key">
-            <span class="key">{{key}}</span>
-            <span class="value">{{dialogOpt.checkInfo && dialogOpt.checkInfo[key]}}</span>
-          </div>
         </div>
       </template>
     </el-dialog>
@@ -136,7 +139,8 @@ export default {
       typeMap,
       dialogOpt: {},
       isShowDialog: false,
-      dialogForm: {}
+      dialogForm: {},
+      isShowDialogLoading: false
     }
   },
   watch: {
@@ -173,7 +177,7 @@ export default {
           this.totalCount = data.totalCount
         })
         .catch((res) => {
-          console.log(res)
+          this.listLoading = false
         })
     },
     handleChange () {
@@ -184,13 +188,13 @@ export default {
       let id = selectData.id
       let status = selectData.status
       let title = status == '1' ? '审核' : '查看'
+      this.isShowDialogLoading = true
 
       this.$API.showwithdrawuserdetail({
         id
       }).then((res) => {
-        let data = res.data || {}
-
         this.isShowDialog = true
+        let data = res.data || {}
         this.dialogForm = {
           auditOpinion: '同意提现',
           remark: ''
@@ -216,6 +220,14 @@ export default {
             '处理日期': data.auditTime
           }
         }
+
+        this.isShowDialogLoading = false
+      }).catch((err) => {
+        this.isShowDialogLoading = false
+        err && err.msg && this.$message({
+          message: err.msg,
+          type: 'error'
+        })
       })
     },
     handleDialogFormSubmit () {

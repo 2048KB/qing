@@ -1,8 +1,6 @@
 <template>
   <div class="app-container platform-overview-page">
-    <div class="top-bar">
-      <span class="add-member" @click="handleAddMember">添加</span>
-    </div>
+    <div class="top-bar"></div>
     <div class="filter-box">
       <div class="filter-item">
         <DatePicker 
