@@ -65,31 +65,31 @@ export default {
           }
           console.log(data)
           this.moneyOpt = {
-            '购买会员': data.purchaseMemberCardAmount,
-            '成功提现': data.withdrawalAmount,
-            '总计': data.fundTotal
+            '购买会员': '￥' + (data.purchaseMemberCardAmount === undefined ? '' : data.purchaseMemberCardAmount ),
+            '成功提现': '￥' + (data.withdrawalAmount === undefined ? '' : data.withdrawalAmount ),
+            '总计': '￥' + (data.fundTotal === undefined ? '' : data.fundTotal )
           }
           this.memberOpt = {
-            '会员': data.memberCount,
-            '顾客': data.customerCount,
-            '总计': data.userCount
+            '会员': (data.memberCount === undefined ? '' : data.memberCount ) + '人',
+            '顾客': (data.customerCount === undefined ? '' : data.customerCount )+ '人',
+            '总计': (data.userCount === undefined ? '' : data.userCount )+ '人'
           }
           this.bonusOpt = {
-            '顾问奖励': data.adviserAward,
-            '美容师奖励': data.beauticianAward,
-            '会员奖励': data.memberAward,
-            '总计': data.awardTotal
+            '顾问奖励': '￥' + (data.adviserAward === undefined ? '' : data.adviserAward ),
+            '美容师奖励': '￥' + (data.beauticianAward === undefined ? '' : data.beauticianAward ),
+            '会员奖励': '￥' + (data.memberAward === undefined ? '' : data.memberAward ),
+            '总计': '￥' + (data.awardTotal === undefined ? '' : data.awardTotal )
           }
           this.feeOpt = {
-            '佣金管理费': data.commissionFee,
-            '提现手续费': data.withdrawFee,
-            '总计': data.FeeTotal
+            '佣金管理费': '￥' + (data.commissionFee === undefined ? '' : data.commissionFee ),
+            '提现手续费': '￥' + (data.withdrawFee === undefined ? '' : data.withdrawFee ),
+            '总计': '￥' + (data.FeeTotal === undefined ? '' : data.FeeTotal )
           }
           this.withdrawOpt = {
-            '提现人数': data.count,
-            '提现金额': data.amount,
-            '待处理人数': data.count,
-            '待处理金额': data.amount
+            '提现人数': (data.count === undefined ? '' : data.count ) + '人',
+            '提现金额': '￥' + (data.amount === undefined ? '' : data.amount ),
+            '待处理人数': (data.count === undefined ? '' : data.count ) + '人',
+            '待处理金额': '￥' + (data.amount === undefined ? '' : data.amount )
           }
         })
         .catch((res) => {
