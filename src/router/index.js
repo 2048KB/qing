@@ -66,7 +66,7 @@ export const constantRouterMap = [
   {
     path: '/employee',
     component: Layout,
-    redirect: '/employee/consultant',
+    redirect: '/employee/consultant/list',
     name: 'Employee',
     meta: { title: '员工管理', icon: 'example' },
     children: [
@@ -74,38 +74,69 @@ export const constantRouterMap = [
         path: 'consultant',
         name: 'Consultant',
         component: () => import('@/views/consultant/index'),
-        meta: { title: '顾问列表', icon: 'table' }
+        meta: { title: '顾问', icon: 'table' },
+        children: [
+          {
+            path: 'list',
+            name: 'List',
+            component: () => import('@/views/consultant/index'),
+            meta: { title: '顾问列表', icon: 'table' },
+          },
+          {
+            path: 'detail/:id',
+            name: 'Detail',
+            component: () => import('@/views/counselor-detail/index'),
+            meta: { title: '顾问详情', icon: 'table' },
+            hidden: true
+          },
+        ]
       },
       {
         path: 'beautician',
         name: 'Beautician',
-        component: () => import('@/views/beautician/index'),
-        meta: { title: '美容师列表', icon: 'tree' }
-      },
-      {
-        path: 'counselor-detail/:id',
-        name: 'CounselorDetail',
-        component: () => import('@/views/counselor-detail/index'),
-        meta: { title: '顾问详情', icon: 'table' }
-      },
-      {
-        path: 'beautician-detail',
-        name: 'BeauticianDetail',
-        component: () => import('@/views/beautician-detail/index'),
-        meta: { title: '美容师详情', icon: 'table' }
-      },
-      {
-        path: 'custom-detail/:id',
-        name: 'CustomDetail',
-        component: () => import('@/views/custom-detail/index'),
-        meta: { title: '会员详情', icon: 'table' }
-      },
-      {
-        path: 'vip-detail',
-        name: 'VipDetail',
-        component: () => import('@/views/vip-detail/index'),
-        meta: { title: '顾客详情', icon: 'table' }
+        component: () => import('@/views/consultant/index'),
+        meta: { title: '美容师', icon: 'table' },
+        children: [
+          {
+            path: 'list',
+            name: 'BeauticianList',
+            component: () => import('@/views/consultant/index'),
+            meta: { title: '美容师列表', icon: 'table' },
+          },
+          {
+            path: 'detail/:id',
+            name: 'CounselorDetail',
+            component: () => import('@/views/counselor-detail/index'),
+            meta: { title: '美容师详情', icon: 'table' },
+            hidden: true
+          },
+        ]
       }
+      // {
+      //   path: 'beautician',
+      //   name: 'Beautician',
+      //   component: () => import('@/views/consultant/index'),
+      //   meta: { title: '美容师列表', icon: 'tree' }
+      // },
+ 
+      // {
+      //   path: 'beautician-detail',
+      //   name: 'BeauticianDetail',
+      //   component: () => import('@/views/beautician-detail/index'),
+      //   meta: { title: '美容师详情', icon: 'table' }
+      // },
+      // {
+      //   path: 'custom-detail/:id',
+      //   name: 'CustomDetail',
+      //   component: () => import('@/views/custom-detail/index'),
+      //   meta: { title: '会员详情', icon: 'table' }
+      // },
+      // {
+      //   path: 'vip-detail',
+      //   name: 'VipDetail',
+      //   component: () => import('@/views/vip-detail/index'),
+      //   meta: { title: '顾客详情', icon: 'table' }
+      // }
     ]
   },
 
@@ -258,7 +289,7 @@ export const constantRouterMap = [
     ]
   },
 
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 export default new Router({
