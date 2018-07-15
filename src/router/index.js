@@ -135,15 +135,15 @@ export const constantRouterMap = [
   {
     path: '/account',
     component: Layout,
-    redirect: '/account/showwithdrawuser',
+    redirect: '/account/withdraw-user',
     name: 'account',
     meta: { title: '提现管理', icon: 'example' },
     children: [
       {
-        path: 'showwithdrawuser',
-        name: 'Showwithdrawuser',
-        component: () => import('@/views/showwithdrawuser/index'),
-        meta: { title: '提现总表', icon: 'showwithdrawuser' }
+        path: 'withdraw-user',
+        name: 'WithdrawUser',
+        component: () => import('@/views/withdraw-user/index'),
+        meta: { title: '提现总表', icon: 'withdraw-user' }
       }
     ]
   },
