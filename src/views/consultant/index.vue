@@ -145,7 +145,10 @@ export default {
     },
     handleToDetail (index) {
       this.$router.push({
-        path: `/employee/counselor-detail/${this.list[index].id}`
+        path: `/employee/consultant/detail`,
+        query: {
+          id: this.list[index].id
+        }
       })
     }
   },

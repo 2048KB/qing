@@ -68,14 +68,14 @@ export const constantRouterMap = [
   {
     path: '/employee',
     component: Layout,
-    redirect: '/employee/consultant/list',
+    redirect: '/employee/consultant',
     name: 'Employee',
     meta: { title: '员工管理', icon: 'example' },
     children: [
       {
         path: 'consultant',
         name: 'Consultant',
-        component: () => import('@/views/consultant/index'),
+        component: () => import('@/views/menu/index'),
         meta: { title: '顾问', icon: 'table' },
         children: [
           {
@@ -85,7 +85,7 @@ export const constantRouterMap = [
             meta: { title: '顾问列表', icon: 'table' },
           },
           {
-            path: 'detail/:id',
+            path: 'detail',
             name: 'Detail',
             component: () => import('@/views/counselor-detail/index'),
             meta: { title: '顾问详情', icon: 'table' },
@@ -106,7 +106,7 @@ export const constantRouterMap = [
             meta: { title: '美容师列表', icon: 'table' },
           },
           {
-            path: 'detail/:id',
+            path: 'detail',
             name: 'CounselorDetail',
             component: () => import('@/views/counselor-detail/index'),
             meta: { title: '美容师详情', icon: 'table' },
@@ -291,7 +291,7 @@ export const constantRouterMap = [
     ]
   },
 
-  { path: '*', redirect: '/404', hidden: true }
+  // { path: '*', redirect: '/404', hidden: true }
 ]
 
 export default new Router({
