@@ -21,7 +21,7 @@
           title="提现日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="顾问列表" :total="totalCount" @current-change="handleChangeCurrent">
+    <TableWrapper :title="dialogOpt.title" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
         class="list"
@@ -44,10 +44,41 @@
           <template slot-scope="scope">{{statusMap[list[scope.$index].status]}}</template>
         </el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
-          <template slot-scope="scope"><span class="detail" @click="handleShowModal">{{list[scope.$index].status == 1 ? '审核' : '查看'}}</span></template>
+          <template slot-scope="scope"><span class="detail" @click="handleShowModal(scope.$index)">{{list[scope.$index].status == 1 ? '审核' : '查看'}}</span></template>
         </el-table-column>
       </el-table>
     </TableWrapper>
+    <el-dialog :title="dialogOpt.title" :visible.sync="isShowDialog">
+      <div class="card-container">
+        <InfoCard :options="dialogOpt.personInfo || {}" title="个人信息"></InfoCard>
+        <InfoCard :options="dialogOpt.withdrawInfo || {}" title="提现信息"></InfoCard>
+      </div>
+      <template v-if="dialogOpt.status == 1">
+        <el-form :model="dialogForm" label-width="80px">
+          <el-form-item label="审核意见" style="margin-bottom: 0;">
+            <el-radio-group v-model="dialogForm.auditOpinion">
+              <el-radio label="同意提现"></el-radio>
+              <el-radio label="拒绝提现"></el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="备注">
+            <el-input type="textarea" v-model="dialogForm.remark"></el-input>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer" >
+          <el-button @click="isShowDialog = false">取 消</el-button>
+          <el-button type="primary" @click="handleDialogFormSubmit">确 定</el-button>
+        </div>
+      </template>
+      <template v-else>
+        <div class="checkInfo">
+          <div class="info-item" v-for="key in Object.keys(dialogOpt.checkInfo || {})" :key="key">
+            <span class="key">{{key}}</span>
+            <span class="value">{{dialogOpt.checkInfo && dialogOpt.checkInfo[key]}}</span>
+          </div>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
@@ -59,6 +90,7 @@ import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
 import listMixins from '../listMixins'
+import InfoCard from '../../components/InfoCard'
 
 export default {
   mixins: [listMixins],
@@ -66,7 +98,8 @@ export default {
     RadioGroup,
     DatePicker,
     SearchBox,
-    TableWrapper
+    TableWrapper,
+    InfoCard
   },
   data() {
     let statusMap = {
@@ -100,7 +133,10 @@ export default {
       bounsSearchTypes,
       totalCount: 0,
       statusMap,
-      typeMap
+      typeMap,
+      dialogOpt: {},
+      isShowDialog: false,
+      dialogForm: {}
     }
   },
   watch: {
@@ -143,8 +179,61 @@ export default {
     handleChange () {
       this.fetchData()
     },
-    handleShowModal () {
+    handleShowModal (index) {
+      let selectData = this.list[index]
+      let id = selectData.id
+      let status = selectData.status
+      let title = status == '1' ? '审核' : '查看'
 
+      this.$API.showwithdrawuserdetail({
+        id
+      }).then((res) => {
+        let data = res.data || {}
+
+        this.isShowDialog = true
+        this.dialogForm = {
+          auditOpinion: '同意提现',
+          remark: ''
+        }
+        this.dialogOpt = {
+          title,
+          status: status,
+          personInfo: {
+            '手机号：': data.mobile,
+            '昵称：': data.nickName,
+            '真实姓名：': data.realityName,
+            '提现时可用金额：': data.availableBalance
+          },
+          withdrawInfo: {
+            '提现金额': data.amount,
+            '提现方式': this.typeMap[data.type],
+            '提现日期': data.time
+          },
+          checkInfo: {
+            '审核意见': data.auditOpinion,
+            '备注': data.remark,
+            '处理人': data.name,
+            '处理日期': data.auditTime
+          }
+        }
+      })
+    },
+    handleDialogFormSubmit () {
+      this.$API.auditwithdrawuser({
+        data: this.dialogForm
+      }).then((res) => {
+        this.$message({
+          message: res.msg,
+          type: 'success'
+        })
+        this.handleChange()
+        this.isShowDialog = false
+      }).catch((err) => {
+        err && err.msg &&this.$message({
+          message: err.msg,
+          type: 'error'
+        })
+      })
     }
   }
 }
@@ -191,6 +280,30 @@ export default {
       display: flex;
       justify-content: flex-end;
       padding-right: 20px;
+    }
+    .card-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      .InfoCard {
+        width: 50%;
+        margin: 10px;
+      }
+    }
+    .el-dialog__body {
+      padding-bottom: 0;
+      padding-top: 0;
+    }
+    .checkInfo {
+      line-height: 28px;
+      padding-left: 30px;
+      padding-right: 20px;
+      padding-bottom: 20px;
+      .key {
+        display: inline-block;
+        min-width: 8em;
+        color: $c4;
+      }
     }
   }
 </style>
