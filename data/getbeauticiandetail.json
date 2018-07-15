@@ -4,21 +4,21 @@
   "data": {
     "userAmountByUserId": 0,
     "employeeDetail": {
-      "address": "",
+      "address": "2345g4t3",
       "belongCounselor": "",
       "birthDate": "1979-07-01 00:00:00",
       "birthDateStr": "",
-      "email": "",
+      "email": "345yt@eweggw",
       "entryDate": "2017-07-01 00:00:00",
       "entryDateStr": "",
       "id": 12,
-      "idNumber": "",
+      "idNumber": "234567",
       "mobile": "17896666666",
       "parentId": 5,
       "photo": "default123.png",
-      "qq": "",
+      "qq": "2345678",
       "realityName": "张雪女",
-      "remark": "",
+      "remark": "sdfhgertdh43546rsfdg",
       "roleType": 1,
       "roleTypeStr": "",
       "sex": 2,
@@ -28,13 +28,13 @@
       "storeName": "北京朝阳门直营店",
       "time": "2018-07-07 15:38:27"
     },
-    "beauticianCurMonSpreadCustomer": 0,
+    "beauticianCurMonSpreadCustomer": 234234,
     "userCurMonDirectAmount": 0,
-    "beauticianCurMonSpreadMember": 0,
+    "beauticianCurMonSpreadMember": 3232233,
     "userCurMonBonus": [],
     "userCurMonInDirectAmount": 0,
     "counselorOfBeautician": {
-      "address": "",
+      "address": "2345678",
       "birthDate": null,
       "email": "",
       "entryDate": null,
@@ -47,6 +47,7 @@
       "realityName": "王五",
       "remark": "",
       "roleType": 0,
+      "roleTypeStr": "顾问",
       "sex": 2,
       "sno": "",
       "storeId": 0,
@@ -61,6 +62,6 @@
       "time": "2018-07-07 15:38:28",
       "userId": 8
     },
-    "beauticianSpreadMember": 0
+    "beauticianSpreadMember": 2343
   }
 }
