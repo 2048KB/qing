@@ -21,3 +21,9 @@ ol, ul {
   border-top: 1px solid #34c4d4;
   background-color: white;
 }
+.add-member-buttom {
+  display: block;
+  color: $c0;
+  cursor: pointer;
+  border-width: 0;
+}

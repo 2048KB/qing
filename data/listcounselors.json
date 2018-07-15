@@ -1,6 +1,6 @@
 {
   "msg": "查询成功",
-  "code": 1,
+  "code": -1,
   "data": {
     "conditions": null,
     "currPage": 1,
@@ -13,11 +13,11 @@
       "entryDate": "2017-07-01 00:00:00",
       "entryDateStr": "",
       "id": 10,
-      "idNumber": "",
+      "idNumber": "777",
       "mobile": "13111111119",
       "parentId": -1,
       "photo": "default123.png",
-      "qq": "",
+      "qq": "222",
       "realityName": "赵燕",
       "remark": "",
       "roleType": 2,

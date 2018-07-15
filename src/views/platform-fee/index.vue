@@ -6,24 +6,38 @@
     <SearchBox 
       class="search-box"
       @change="handleChange"
-      :options="employeeTypes"
+      :options="feeSearchTypes"
       v-model="requestData.search"></SearchBox>
     <div class="filter-box">
       <div class="filter-item">
         <RadioGroup 
-          title="直接邀请人角色"
+          title="性别"
           @change="handleChange"
-          :options="withdrawStatuOptions"
-          v-model="requestData.dirInviteRole"></RadioGroup>
+          :options="sexsOptions"
+          v-model="requestData.sex"></RadioGroup>
+      </div>
+      <div class="filter-item">
+        <RadioGroup 
+          title="角色"
+          @change="handleChange"
+          :options="roleOptions"
+          v-model="requestData.roleType"></RadioGroup>
+      </div>
+      <div class="filter-item">
+        <RadioGroup 
+          title="费用类型"
+          @change="handleChange"
+          :options="feeTypeOptions"
+          v-model="requestData.feeType"></RadioGroup>
       </div>
       <div class="filter-item">
         <DatePicker 
           @change="handleChange" 
           v-model="requestData.time" 
-          title="提现日期"></DatePicker>
+          title="交易日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="顾问列表">
+    <TableWrapper title="收取费用列表">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
         class="list"
@@ -32,15 +46,13 @@
         element-loading-text="Loading" 
         :fit="true"
         border highlight-current-row>
-        <el-table-column min-width="50" align="center" label='员工编号' prop="sno"></el-table-column>
-        <el-table-column min-width="50" align="center" label='姓名' prop="realityName"></el-table-column>
-        <el-table-column min-width="50" align="center" label='性别' prop="sexStr"></el-table-column>
-        <el-table-column min-width="50" align="center" label='手机号' prop="mobile"></el-table-column>
-        <el-table-column min-width="50" align="center" label='出生日期' prop="birthDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='身份证号' prop="idNumber"></el-table-column>
-        <el-table-column min-width="50" align="center" label='QQ号' prop="qq"></el-table-column>
-        <el-table-column min-width="50" align="center" label='入职日期' prop="entryDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='创建日期' prop=""></el-table-column>
+        <el-table-column min-width="50" align="center" label='ID' prop="sno"></el-table-column>
+        <el-table-column min-width="50" align="center" label='昵称' prop="realityName"></el-table-column>
+        <el-table-column min-width="50" align="center" label='绑定手机号' prop="sexStr"></el-table-column>
+        <el-table-column min-width="50" align="center" label='注册日期' prop="mobile"></el-table-column>
+        <el-table-column min-width="50" align="center" label='直接邀请人角色' prop="birthDate"></el-table-column>
+        <el-table-column min-width="100" align="center" label='间接邀请人角色' prop="idNumber"></el-table-column>
+        <el-table-column min-width="50" align="center" label='会员卡状态' prop="qq"></el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
           <template slot-scope="scope"><span class="detail" @click="handleToDetail">详情</span></template>
         </el-table-column>
@@ -59,7 +71,7 @@
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {withdrawStatuOptions, employeeTypes} from '@/views/const'
+import {feeSearchTypes, roleOptions, sexsOptions, feeTypeOptions} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
@@ -73,7 +85,6 @@ export default {
   data() {
     return {
       requestData: {
-        dirInviteRole: '0',
         time: {
           begin: null,
           end: null
@@ -82,14 +93,19 @@ export default {
           type: '0',
           text: ''
         },
+        sex: '0',
         currPage: 0,
-        currPage: 10
+        currPage: 10,
+        feeType: '0',
+        roleType: '0'
       },
       list: null,
+      totalCount: 0,
       listLoading: true,
-      withdrawStatuOptions,
-      employeeTypes,
-      totalCount: 0
+      feeSearchTypes,
+      roleOptions,
+      sexsOptions,
+      feeTypeOptions
     }
   },
   filters: {
@@ -107,7 +123,7 @@ export default {
   },
   methods: {
     fetchData () {
-      this.$API.showwithdrawuser({
+      this.$API.listcustomer({
         data: this.requestData
       })
         .then((res) => {

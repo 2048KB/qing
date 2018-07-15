@@ -1,44 +1,38 @@
 <template>
-  <div class="app-container consultant-page">
+  <div class="app-container bouns-list-page">
     <div class="top-bar">
-      <el-button class="add-member" icon="el-icon-plus" @click="handleAddMember">添加</el-button>
+      <span class="add-member" @click="handleAddMember">添加</span>
     </div>
     <SearchBox 
       class="search-box"
       @change="handleChange"
-      :options="employeeTypes"
+      :options="bounsSearchTypes"
       v-model="requestData.search"></SearchBox>
     <div class="filter-box">
       <div class="filter-item">
         <RadioGroup 
-          title="性别"
+          title="佣金类别"
           @change="handleChange"
-          :options="sexsOptions"
-          v-model="requestData.sex"></RadioGroup>
+          :options="bounsType"
+          v-model="requestData.bonusType"></RadioGroup>
+      </div>
+      <div class="filter-item">
+        <RadioGroup 
+          title="角色"
+          @change="handleChange"
+          :options="roleOptions"
+          v-model="requestData.roleType"></RadioGroup>
       </div>
       <div class="filter-item">
         <DatePicker 
           @change="handleChange" 
-          v-model="requestData.birthDate" 
-          title="出生日期"></DatePicker>
-      </div>
-      <div class="filter-item">
-        <DatePicker 
-          @change="handleChange" 
-          v-model="requestData.entryDate" 
-          title="入职日期"></DatePicker>
-      </div>
-      <div class="filter-item">
-        <DatePicker 
-          @change="handleChange" 
-          v-model="requestData.creatTime" 
-          title="创建日期"></DatePicker>
+          v-model="requestData.time" 
+          title="生成日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="顾问列表" :total="totalCount" @current-change="handleChangeCurrent">
+    <TableWrapper title="佣金列表">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
-        empty-text="没有数据"
         class="list"
         :data="list" 
         v-loading.body="listLoading" 
@@ -53,11 +47,18 @@
         <el-table-column min-width="100" align="center" label='身份证号' prop="idNumber"></el-table-column>
         <el-table-column min-width="50" align="center" label='QQ号' prop="qq"></el-table-column>
         <el-table-column min-width="50" align="center" label='入职日期' prop="entryDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='创建日期' prop="time"></el-table-column>
+        <el-table-column min-width="100" align="center" label='创建日期' prop=""></el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
-          <template slot-scope="scope"><span class="detail" @click="handleToDetail(scope.$index)">详情</span></template>
+          <template slot-scope="scope"><span class="detail" @click="handleToDetail">详情</span></template>
         </el-table-column>
       </el-table>
+      <div class="pagination-container">
+        <el-pagination
+          @current-change="handleChangeCurrent"
+          layout="prev, pager, next"
+          :total="totalCount">
+        </el-pagination> 
+      </div>
     </TableWrapper>
   </div>
 </template>
@@ -65,13 +66,11 @@
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {sexsOptions, employeeTypes} from '@/views/const'
+import {bounsType, bounsSearchTypes, roleOptions} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
-import listMixins from '../listMixins'
 export default {
-  mixins: [listMixins],
   components: {
     RadioGroup,
     DatePicker,
@@ -81,16 +80,9 @@ export default {
   data() {
     return {
       requestData: {
-        sex: '0',
-        creatTime: {
-          begin: null,
-          end: null
-        },
-        birthDate: {
-          begin: null,
-          end: null
-        },
-        entryDate: {
+        bonusType: '0',
+        roleType: '0',
+        time: {
           begin: null,
           end: null
         },
@@ -98,16 +90,15 @@ export default {
           type: '0',
           text: ''
         },
-        // 角色类型：1表示美容师，2表示顾问
-        roleType: 2,
         currPage: 0,
-        pageSize: 10
+        currPage: 10
       },
       list: null,
       listLoading: true,
-      sexsOptions,
-      employeeTypes,
-      totalCount: 0
+      bounsType,
+      bounsSearchTypes,
+      totalCount: 0,
+      roleOptions
     }
   },
   filters: {
@@ -126,39 +117,32 @@ export default {
   methods: {
     fetchData () {
       this.$API.listcounselors({
-        data: {
-          ...this.requestData,
-          type: this.requestData.search.type,
-          typeStr: this.requestData.search.text,
-          birthDateBegin: this.requestData.birthDate.begin,
-          birthDateEnd: this.requestData.birthDate.end,
-          entryDateBegin: this.requestData.entryDate.begin,
-          entryDateEnd: this.requestData.entryDate.end,
-          creatTimeBegin: this.requestData.creatTime.begin,
-          creatTimeEnd: this.requestData.creatTime.end,
-        }
+        data: this.requestData
       })
         .then((res) => {
           this.listLoading = false
+          console.log(res)
           let data = res.data || {}
           this.list = data.page
           this.totalCount = data.totalCount
         })
         .catch((res) => {
-          this.listLoading = false
           console.log(res)
         })
     },
     handleChange () {
-      this.fetchData()
+      console.log()
+      console.log('requst api')
     },
     handleAddMember() {
-      console.log('to add page...')
+      console.log('add-member')
     },
-    handleToDetail (index) {
-      this.$router.push({
-        path: `/employee/counselor-detail/${this.list[index].id}`
-      })
+    handleToDetail () {
+
+    },
+    handleChangeCurrent (currentPage) {
+      this.requestData.currPage = currentPage
+      this.handleChange()
     }
   }
 }
@@ -166,7 +150,7 @@ export default {
 <style lang="scss">
   @import  '../../styles/vars.scss';
   $padding: 20px;
-  .consultant-page {
+  .bouns-list-page {
     padding: 0;
     .search-box {
       margin-right: $padding;
@@ -188,7 +172,11 @@ export default {
         }
       }
     }
-    
+    .add-member {
+      display: block;
+      color: $c0;
+      cursor: pointer;
+    }
     .list {
       margin: $padding;
       width: auto;

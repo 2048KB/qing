@@ -37,6 +37,7 @@
 @import '../../styles/vars.scss';
 .RadioGroup {
   .title {
+    display: inline-block;
     min-width: 8em;
     font-size: 14px;
     padding-right: .5em;
