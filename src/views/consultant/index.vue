@@ -165,7 +165,8 @@ export default {
       this.$router.push({
         path: `/employee/consultant/detail`,
         query: {
-          id: this.list[index].id
+          id: this.list[index].id,
+          role: this.pageData.roleType
         }
       })
     }

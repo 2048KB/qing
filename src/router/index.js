@@ -68,13 +68,14 @@ export const constantRouterMap = [
   {
     path: '/employee',
     component: Layout,
-    redirect: '/employee/consultant',
+    redirect: '/employee/consultant/list',
     name: 'Employee',
     meta: { title: '员工管理', icon: 'example' },
     children: [
       {
         path: 'consultant',
         name: 'Consultant',
+        redirect: '/employee/consultant/list',
         component: () => import('@/views/menu/index'),
         meta: { title: '顾问', icon: 'table' },
         children: [
@@ -96,6 +97,7 @@ export const constantRouterMap = [
       {
         path: 'beautician',
         name: 'Beautician',
+        redirect: '/employee/beautician/list',
         component: () => import('@/views/consultant/index'),
         meta: { title: '美容师', icon: 'table' },
         children: [
@@ -141,25 +143,26 @@ export const constantRouterMap = [
   {
     path: '/customer',
     component: Layout,
-    redirect: '/customer/member',
+    redirect: '/customer/member/list',
     name: 'Customer',
     meta: { title: '客户管理', icon: 'example' },
     children: [
       {
         path: 'member',
-        name: 'member',
+        name: 'Member',
+        redirect: '/customer/member/list',
         component: () => import('@/views/menu/index'),
         meta: { title: '会员', icon: 'listmember' },
         children: [
           {
             path: 'list',
-            name: 'list',
+            name: 'MemberList',
             component: () => import('@/views/listmember/index'),
             meta: { title: '注册会员', icon: 'listmember' }
           },
           {
             path: 'detail',
-            name: 'VipDetail',
+            name: 'MemberDetail',
             component: () => import('@/views/vip-detail/index'),
             meta: { title: '会员详情', icon: 'table' },
             hidden: true
@@ -168,19 +171,20 @@ export const constantRouterMap = [
       },
       {
         path: 'customer',
-        name: 'customer',
+        name: 'Customer',
+        redirect: '/customer/customer/list',
         component: () => import('@/views/menu/index'),
         meta: { title: '顾客', icon: 'listmember' },
         children: [
           {
             path: 'list',
-            name: 'list',
+            name: 'CustomerList',
             component: () => import('@/views/listmember/index'),
             meta: { title: '顾客列表', icon: 'listmember' }
           },
           {
             path: 'detail',
-            name: 'VipDetail',
+            name: 'CustomerDetail',
             component: () => import('@/views/vip-detail/index'),
             meta: { title: '顾客详情', icon: 'table' },
             hidden: true
