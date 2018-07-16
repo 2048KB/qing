@@ -80,13 +80,13 @@ export const constantRouterMap = [
         children: [
           {
             path: 'list',
-            name: 'List',
+            name: 'ConsultantList',
             component: () => import('@/views/consultant/index'),
             meta: { title: '顾问列表', icon: 'table' },
           },
           {
             path: 'detail',
-            name: 'Detail',
+            name: 'ConsultantDetail',
             component: () => import('@/views/counselor-detail/index'),
             meta: { title: '顾问详情', icon: 'table' },
             hidden: true
@@ -107,7 +107,7 @@ export const constantRouterMap = [
           },
           {
             path: 'detail',
-            name: 'CounselorDetail',
+            name: 'BeauticianDetail',
             component: () => import('@/views/counselor-detail/index'),
             meta: { title: '美容师详情', icon: 'table' },
             hidden: true

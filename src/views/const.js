@@ -181,3 +181,8 @@ export const listMemberSearchTypes = [{
   value: '7',
   label: '间接邀请人手机号'
 }]
+
+export const roleType = {
+  'beautician': 1,
+  'consultant': 2
+}
