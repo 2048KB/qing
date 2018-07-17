@@ -40,28 +40,6 @@ export const constantRouterMap = [
     }]
   },
 
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/listmember',
-  //   name: 'Example',
-  //   meta: { title: 'Example', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: 'listmember',
-  //       name: 'Listmember',
-  //       component: () => import('@/views/listmember/index'),
-  //       meta: { title: 'listmember', icon: 'listmember' }
-  //     },
-  //     {
-  //       path: 'listcustomer',
-  //       name: 'listcustomer',
-  //       component: () => import('@/views/listcustomer/index'),
-  //       meta: { title: 'listcustomer', icon: 'listcustomer' }
-  //     }
-  //   ]
-  // },
-
   // 新增 `员工管理`
   // 顾问列表
   // 美容师列表
@@ -116,35 +94,15 @@ export const constantRouterMap = [
           },
         ]
       }
-      // {
-      //   path: 'beautician',
-      //   name: 'Beautician',
-      //   component: () => import('@/views/consultant/index'),
-      //   meta: { title: '美容师列表', icon: 'tree' }
-      // },
- 
-      // {
-      //   path: 'beautician-detail',
-      //   name: 'BeauticianDetail',
-      //   component: () => import('@/views/beautician-detail/index'),
-      //   meta: { title: '美容师详情', icon: 'table' }
-      // },
-      // {
-      //   path: 'custom-detail/:id',
-      //   name: 'CustomDetail',
-      //   component: () => import('@/views/custom-detail/index'),
-      //   meta: { title: '会员详情', icon: 'table' }
-      // },
-     
     ]
   },
 
   // 客户管理
   {
-    path: '/customer',
+    path: '/client',
     component: Layout,
     redirect: '/customer/member/list',
-    name: 'Customer',
+    name: 'Client',
     meta: { title: '客户管理', icon: 'example' },
     children: [
       {
