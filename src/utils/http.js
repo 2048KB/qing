@@ -17,7 +17,11 @@ const fetch = function fetch(url = '', options = {}) {
     // is show spinning when make ajax request
     request.loading = (options.loading === false) !== true
 
-    request.url = url
+    if (options.baseURL) {
+      request.url = options.baseURL + url
+    } else {
+      request.url = url
+    }
 
     const ajaxSettings = {
       type: 'POST',
