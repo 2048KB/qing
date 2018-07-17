@@ -188,3 +188,32 @@ export const roleType = {
   'member': 1,
   'customer': 2
 }
+export const orderStatusTypes = [{
+  value: '0',
+  label: '全部'
+}, {
+  value: '1',
+  label: '待付款'
+}, {
+  value: '2',
+  label: '交易成功'
+}, {
+  value: '-1',
+  label: '交易关闭'
+}]
+export const orderSearchOptions = [{
+  value: '0',
+  label: '全部'
+}, {
+  value: '1',
+  label: '订单号码'
+}, {
+  value: '2',
+  label: '昵称'
+}, {
+  value: '3',
+  label: '真实姓名'
+}, {
+  value: '4',
+  label: '手机号'
+}]
