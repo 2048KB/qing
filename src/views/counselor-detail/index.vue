@@ -194,6 +194,9 @@ export default {
   },
 
   created() {
+    console.log(this.router)
+    console.log(this.$route)
+
     // 顾问详情
     this.$API.getcounselordetail({
       data: {

@@ -1,0 +1,40 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [{
+      "amount": 9900,
+      "goodsName": "会员卡",
+      "id": 2,
+      "mobile": "14555555555",
+      "nickName": "rwefwe",
+      "orderNo": "1324",
+      "payFor": true,
+      "payTime": "2018-07-04 15:10:57.0",
+      "payType": 1,
+      "payTypeStr": 0,
+      "realityName": "--",
+      "status": 2,
+      "time": "2018-07-04 15:11:12.0"
+    }, {
+      "amount": 9900,
+      "goodsName": "会员卡",
+      "id": 1,
+      "mobile": "13111111119",
+      "nickName": "--",
+      "orderNo": "1234",
+      "payFor": false,
+      "payTime": "2018-07-04 14:48:38.0",
+      "payType": 1,
+      "payTypeStr": 0,
+      "realityName": "胡三飞",
+      "status": 2,
+      "time": "2018-07-04 14:48:49.0"
+    }],
+    "pageSize": 10,
+    "totalCount": 2,
+    "totalPageCount": 1
+  }
+}

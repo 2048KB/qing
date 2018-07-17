@@ -1,7 +1,7 @@
 <template>
   <div class="app-container bouns-list-page">
     <div class="top-bar">
-      <span class="add-member" @click="handleAddMember">添加</span>
+      <span class="add-member-buttom" @click="handleAddMember">添加</span>
     </div>
     <SearchBox 
       class="search-box"
@@ -172,11 +172,7 @@ export default {
         }
       }
     }
-    .add-member {
-      display: block;
-      color: $c0;
-      cursor: pointer;
-    }
+    
     .list {
       margin: $padding;
       width: auto;

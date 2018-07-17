@@ -28,7 +28,7 @@
           title="注册日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="注册会员列表" :total="totalCount" @current-change="handleChangeCurrent">
+    <TableWrapper :title="pageData.title" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
         empty-text="没有数据"
@@ -48,7 +48,7 @@
        <el-table-column min-width="50" align="center" label='间接邀请人姓名' prop="inDirInviteName"></el-table-column>
         <el-table-column min-width="50" align="center" label='间接邀请人手机号' prop="inDirInviteMobile"></el-table-column>
         <el-table-column min-width="50" align="center" label='间接邀请人角色' prop="inDirInviteRole"></el-table-column>
-        <el-table-column min-width="50" align="center" label='会员卡状态' prop="isActive"></el-table-column>
+        <el-table-column v-if="pageData.roleType == 1" min-width="50" align="center" label='会员卡状态' prop="isActive"></el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
           <template slot-scope="scope"><span class="detail" @click="handleToDetail(scope.$index)">详情</span></template>
         </el-table-column>
@@ -60,11 +60,25 @@
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {listMemberSearchTypes, roleOptions, pagingParams} from '@/views/const'
+import {listMemberSearchTypes, roleOptions, pagingParams, roleType} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
 import listMixins from '../listMixins'
+const ROLE_MAP = {
+  MemberList: {
+    listApi: 'listmember',
+    title: '注册会员列表',
+    roleType: roleType.member,
+    detailUrl: '/customer/member/detail'
+  },
+  CustomerList: {
+    listApi: 'listcustomer',
+    title: '顾客列表',
+    roleType: roleType.customer,
+    detailUrl: '/customer/customer/detail'
+  }
+}
 export default {
   mixins: [listMixins],
   components: {
@@ -92,31 +106,20 @@ export default {
       listLoading: true,
       listMemberSearchTypes,
       totalCount: 0,
-      roleOptions
+      roleOptions,
+      pageData: ROLE_MAP[this.$route.name]
     }
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
-  created() {
-    this.fetchData()
   },
   methods: {
     fetchData () {
-      this.$API.listmember({
+      this.$API[this.pageData.listApi]({
         data: {
           ...this.requestData,
           type: this.requestData.search.type,
-          typeStr: this.requestData.search.typeStr,
-          timeBegin: this.requestData.time.timeBegin,
-          timeEnd: this.requestData.time.timeEnd
+          typeStr: this.requestData.search.text,
+          timeBegin: this.requestData.time.begin,
+          timeEnd: this.requestData.time.end,
+          roleType: this.pageData.roleType
         }
       })
         .then((res) => {
@@ -136,12 +139,16 @@ export default {
     },
     handleToDetail (index) {
       this.$router.push({
-        path: '/customer/member/detail',
+        path: this.pageData.detailUrl,
         query: {
-          id: this.list[index].id
+          id: this.list[index].id,
+          role: this.pageData.roleType
         }
       })
     }
+  },
+  created() {
+    this.fetchData()
   }
 }
 </script>

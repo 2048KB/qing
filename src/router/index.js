@@ -81,25 +81,26 @@ export const constantRouterMap = [
   {
     path: '/employee',
     component: Layout,
-    redirect: '/employee/consultant',
+    redirect: '/employee/consultant/list',
     name: 'Employee',
     meta: { title: '员工管理', icon: 'example' },
     children: [
       {
         path: 'consultant',
         name: 'Consultant',
+        redirect: '/employee/consultant/list',
         component: () => import('@/views/menu/index'),
         meta: { title: '顾问', icon: 'table' },
         children: [
           {
             path: 'list',
-            name: 'List',
+            name: 'ConsultantList',
             component: () => import('@/views/consultant/index'),
             meta: { title: '顾问列表', icon: 'table' },
           },
           {
             path: 'detail',
-            name: 'Detail',
+            name: 'ConsultantDetail',
             component: () => import('@/views/counselor-detail/index'),
             meta: { title: '顾问详情', icon: 'table' },
             hidden: true
@@ -109,6 +110,7 @@ export const constantRouterMap = [
       {
         path: 'beautician',
         name: 'Beautician',
+        redirect: '/employee/beautician/list',
         component: () => import('@/views/consultant/index'),
         meta: { title: '美容师', icon: 'table' },
         children: [
@@ -120,7 +122,7 @@ export const constantRouterMap = [
           },
           {
             path: 'detail',
-            name: 'CounselorDetail',
+            name: 'BeauticianDetail',
             component: () => import('@/views/counselor-detail/index'),
             meta: { title: '美容师详情', icon: 'table' },
             hidden: true
@@ -151,27 +153,28 @@ export const constantRouterMap = [
 
   // 客户管理
   {
-    path: '/customer',
+    path: '/client',
     component: Layout,
-    redirect: '/customer/member',
-    name: 'Customer',
+    redirect: '/client/member/list',
+    name: 'Client',
     meta: { title: '客户管理', icon: 'example' },
     children: [
       {
         path: 'member',
-        name: 'member',
+        name: 'Member',
+        redirect: '/client/member/list',
         component: () => import('@/views/menu/index'),
         meta: { title: '会员', icon: 'listmember' },
         children: [
           {
             path: 'list',
-            name: 'list',
+            name: 'MemberList',
             component: () => import('@/views/listmember/index'),
             meta: { title: '注册会员', icon: 'listmember' }
           },
           {
             path: 'detail',
-            name: 'VipDetail',
+            name: 'MemberDetail',
             component: () => import('@/views/vip-detail/index'),
             meta: { title: '会员详情', icon: 'table' },
             hidden: true
@@ -180,19 +183,20 @@ export const constantRouterMap = [
       },
       {
         path: 'customer',
-        name: 'customer',
+        name: 'Customer',
+        redirect: '/client/customer/list',
         component: () => import('@/views/menu/index'),
         meta: { title: '顾客', icon: 'listmember' },
         children: [
           {
             path: 'list',
-            name: 'list',
+            name: 'CustomerList',
             component: () => import('@/views/listmember/index'),
             meta: { title: '顾客列表', icon: 'listmember' }
           },
           {
             path: 'detail',
-            name: 'VipDetail',
+            name: 'CustomerDetail',
             component: () => import('@/views/vip-detail/index'),
             meta: { title: '顾客详情', icon: 'table' },
             hidden: true

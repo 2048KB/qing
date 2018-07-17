@@ -23,7 +23,7 @@ ol, ul {
 }
 .add-member-buttom {
   display: block;
-  color: $c0;
+  color: #34c4d4 !important;
   cursor: pointer;
-  border-width: 0;
+  border-width: 0 !important;
 }

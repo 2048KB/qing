@@ -1,12 +1,12 @@
 <template>
   <div class="app-container consultant-page">
     <div class="top-bar">
-      <el-button class="add-member" icon="el-icon-plus" @click="handleAddMember">添加</el-button>
+      <el-button class="add-member-buttom" icon="el-icon-plus" @click="handleAddMember">添加</el-button>
     </div>
     <SearchBox 
       class="search-box"
       @change="handleChange"
-      :options="employeeTypes"
+      :options="pageData.searchOptions"
       v-model="requestData.search"></SearchBox>
     <div class="filter-box">
       <div class="filter-item">
@@ -35,7 +35,7 @@
           title="创建日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="顾问列表" :total="totalCount" @current-change="handleChangeCurrent">
+    <TableWrapper :title="pageData.title" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
         empty-text="没有数据"
@@ -52,6 +52,7 @@
         <el-table-column min-width="50" align="center" label='出生日期' prop="birthDate"></el-table-column>
         <el-table-column min-width="100" align="center" label='身份证号' prop="idNumber"></el-table-column>
         <el-table-column min-width="50" align="center" label='QQ号' prop="qq"></el-table-column>
+        <el-table-column v-if="pageData.roleType == 1" min-width="50" align="center" label='所属顾问姓名' prop="belongCounselor"></el-table-column>
         <el-table-column min-width="50" align="center" label='入职日期' prop="entryDate"></el-table-column>
         <el-table-column min-width="100" align="center" label='创建日期' prop="time"></el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
@@ -65,11 +66,29 @@
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {sexsOptions, employeeTypes} from '@/views/const'
+import {sexsOptions, employeeTypes, beauticianSearchTypes, roleType, pagingParams} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
 import listMixins from '../listMixins'
+const ROLE_MAP = {
+  ConsultantList: {
+    listApi: 'listcounselors',
+    title: '顾问列表',
+    roleType: roleType.consultant,
+    searchOptions: employeeTypes,
+    detailUrl: '/employee/consultant/detail',
+    addUrl: '/employee/consultant/add'
+  },
+  BeauticianList: {
+    listApi: 'listbeauticians',
+    title: '美容师列表',
+    roleType: roleType.beautician,
+    searchOptions: beauticianSearchTypes,
+    detailUrl: '/employee/beautician/detail',
+    addUrl: '/employee/beautician/add'
+  }
+}
 export default {
   mixins: [listMixins],
   components: {
@@ -98,24 +117,22 @@ export default {
           type: '0',
           text: ''
         },
-        // 角色类型：1表示美容师，2表示顾问
-        roleType: 2,
-        currPage: 0,
-        pageSize: 10
+        ...pagingParams
       },
+      pageData: ROLE_MAP[this.$route.name],
       list: null,
       listLoading: true,
       sexsOptions,
-      employeeTypes,
       totalCount: 0
     }
   },
   
   methods: {
     fetchData () {
-      this.$API.listcounselors({
+      this.$API[this.pageData.listApi]({
         data: {
           ...this.requestData,
+          roleType: this.pageData.roleType,
           type: this.requestData.search.type,
           typeStr: this.requestData.search.text,
           birthDateBegin: this.requestData.birthDate.begin,
@@ -147,7 +164,8 @@ export default {
       this.$router.push({
         path: `/employee/consultant/detail`,
         query: {
-          id: this.list[index].id
+          id: this.list[index].id,
+          role: this.pageData.roleType
         }
       })
     }
