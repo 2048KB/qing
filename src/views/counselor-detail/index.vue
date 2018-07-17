@@ -32,27 +32,22 @@
     <!-- 编辑职业信息弹窗 -->
     <div class="edit-modal edit-modal--zyxx">
       <el-dialog title="编辑职业信息" :visible.sync="dialogFormVisible">
-        <el-form :model="form">
+        <!-- <div v-loading="true" element-loading-text="Loading..."></div> -->
+        <el-form :model="infoform">
           <el-form-item label="入职日期" :label-width="formLabelWidth">
             <el-input v-model="form.date" auto-complete="off" :disabled="true"></el-input>
           </el-form-item>
           <el-form-item label="所属门店" :label-width="formLabelWidth">
-            <el-select v-model="form.region" placeholder="请选择活动区域" :disabled="true">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
-            <el-select v-model="form.shopid" placeholder="请选择活动区域" :disabled="true">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
-            </el-select>
+            <el-select v-model="areaName" placeholder="请选择活动区域" :disabled="true"></el-select>
+            <el-select v-model="storeName" placeholder="请选择活动区域" :disabled="true"></el-select>
           </el-form-item>
           <el-form-item label="备注" :label-width="formLabelWidth">
-            <el-input type="textarea" :rows="2" placeholder="请输入备注" v-model="form.remark"></el-input>
+            <el-input type="textarea" :rows="2" placeholder="请输入备注" v-model="infoform.remark"></el-input>
           </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="commitInfo">确 定</el-button>
+          <el-button type="primary" @click="commitInfo" :loading="btnLoading">{{ commitBtnText }}</el-button>
         </div>
       </el-dialog>
     </div>
@@ -120,7 +115,8 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="infodialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="commitInfoDetail">确 定</el-button>
+          <!-- <el-button type="primary" @click="commitInfoDetail">确 定</el-button> -->
+          <el-button type="primary" @click="commitInfo" :loading="btnLoading">{{ commitBtnText }}</el-button>
         </div>
       </el-dialog>
     </div>
@@ -151,19 +147,29 @@ export default {
   },
   data() {
     return {
+      btnLoading: false,
+      commitBtnText: '确 定',
       inviters: {
         total: '',
         monthly: '',
         totalcustomers: ''
       },
+      storeName: '',
+      areaName: '',
       infoform: {
+        photo: '',
+        realityName: '',
+        sex: '',
+        birthDateStr: '',
         mobile: '',
-        birthDate: '',
-        address: '',
+        email: '',
         qq: '',
         idNumber: '',
-        sex: '',
-        realityName: ''
+        sno: '',
+        address: '',
+        entryDateStr: '',
+        storeId: '',
+        remark: ''
       },
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -208,16 +214,25 @@ export default {
       this.inviters.monthly = res.data.counselorCurMonSpreadMember
       this.inviters.totalcustomers = res.data.counselorSpreadMember
 
-      // 同步编辑个人信息数据
+      // 门店区域
+      this.areaName = res.data.employeeDetail.areaName
+      this.storeName = res.data.employeeDetail.storeName
+
+      // 同步编辑个人信息数据（也是更新顾问接口入参）
+      this.infoform.photo = res.data.employeeDetail.photo
+      this.infoform.realityName = res.data.employeeDetail.realityName
+      this.infoform.sex = res.data.employeeDetail.sex + ''
+      this.infoform.birthDateStr = res.data.employeeDetail.birthDate
       this.infoform.mobile = res.data.employeeDetail.mobile
-      this.infoform.birthDate = res.data.employeeDetail.birthDate
       this.infoform.email = res.data.employeeDetail.email
       this.infoform.qq = res.data.employeeDetail.qq
       this.infoform.idNumber = res.data.employeeDetail.idNumber
-      this.infoform.realityName = res.data.employeeDetail.realityName
-      this.infoform.sex = res.data.employeeDetail.sex + ''
       this.infoform.sno = res.data.employeeDetail.sno
       this.infoform.address = res.data.employeeDetail.address
+      this.infoform.entryDateStr = res.data.employeeDetail.entryDate
+      this.infoform.storeId = res.data.employeeDetail.storeId
+      this.infoform.remark = res.data.employeeDetail.remark
+
 
       console.log('====== API RESPONSE ======')
       console.log(res)
@@ -228,6 +243,28 @@ export default {
   },
 
   methods: {
+    setBtnLoading() {
+      this.btnLoading = true
+      this.commitBtnText = '加载中...'
+    },
+
+    resetBtnLoading(code = 0, msg, text = '确 定') {
+      this.btnLoading = false
+      this.commitBtnText = text || '确 定'
+
+      if (+code < 0) {
+        this.$message({
+          message: msg || '服务异常，请稍后再试！',
+          type: 'error'
+        })
+      } else {
+        this.$message({
+          message: msg || '成功',
+          type: 'success'
+        });
+      }
+    },
+
     // 更新个人信息到服务器
     commitInfoDetail() {
       alert('更新个人信息到服务器')
@@ -237,15 +274,16 @@ export default {
       this.infodialogFormVisible = true
     },
 
-    // 更新个人信息到服务器
+    // 更新个人信息、更新职业信息都为同一个接口（入参也一样）
     commitInfo() {
-      alert('更新职业信息到服务器')
+      this.setBtnLoading()
       this.$API.updatecounselor({
         data: this.infoform
       }).then(res => {
-
+        setTimeout(() => {
+          this.resetBtnLoading(res.code, res.msg)
+        }, 2000)
       })
-      console.log(this.infoform)
     },
 
     // 展示 更新个人信息弹窗
@@ -253,8 +291,8 @@ export default {
       this.dialogFormVisible = true
     },
 
+    // 当月佣金明细
     getListcounselorcurmonbonus() {
-      // 当月佣金明细
       this.$API.listcounselorcurmonbonus({
         data: {
 

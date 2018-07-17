@@ -40,27 +40,40 @@ export const constantRouterMap = [
     }]
   },
 
-  // {
-  //   path: '/example',
-  //   component: Layout,
-  //   redirect: '/example/listmember',
-  //   name: 'Example',
-  //   meta: { title: 'Example', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: 'listmember',
-  //       name: 'Listmember',
-  //       component: () => import('@/views/listmember/index'),
-  //       meta: { title: 'listmember', icon: 'listmember' }
-  //     },
-  //     {
-  //       path: 'listcustomer',
-  //       name: 'listcustomer',
-  //       component: () => import('@/views/listcustomer/index'),
-  //       meta: { title: 'listcustomer', icon: 'listcustomer' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/example',
+    component: Layout,
+    redirect: '/example/vip-detail',
+    name: 'Example',
+    hidden: false,
+    meta: { title: '页面入口集合', icon: 'example' },
+    children: [
+      {
+        path: 'vip-detail',
+        name: 'VipDetail',
+        component: () => import('@/views/vip-detail/index'),
+        meta: { title: '会员详情', icon: 'table' },
+      },
+      {
+        path: 'counselor-detail',
+        name: 'CounselorDetail',
+        component: () => import('@/views/counselor-detail/index'),
+        meta: { title: '顾问详情', icon: 'table' },
+      },
+      {
+        path: 'beautician-detail',
+        name: 'BeauticianDetail',
+        component: () => import('@/views/beautician-detail/index'),
+        meta: { title: '美容师详情', icon: 'table' }
+      },
+      {
+        path: 'custom-detail',
+        name: 'CustomDetail',
+        component: () => import('@/views/custom-detail/index'),
+        meta: { title: '会员详情', icon: 'table' }
+      },
+    ]
+  },
 
   // 新增 `员工管理`
   // 顾问列表
@@ -120,7 +133,7 @@ export const constantRouterMap = [
       //   component: () => import('@/views/consultant/index'),
       //   meta: { title: '美容师列表', icon: 'tree' }
       // },
- 
+
       // {
       //   path: 'beautician-detail',
       //   name: 'BeauticianDetail',
@@ -133,7 +146,6 @@ export const constantRouterMap = [
       //   component: () => import('@/views/custom-detail/index'),
       //   meta: { title: '会员详情', icon: 'table' }
       // },
-     
     ]
   },
 
@@ -269,7 +281,7 @@ export const constantRouterMap = [
     ]
   },
 
-  // 后台日志管理 
+  // 后台日志管理
   {
     path: '/log',
     component: Layout,
@@ -286,7 +298,7 @@ export const constantRouterMap = [
     ]
   },
 
-  // 系统管理 
+  // 系统管理
   {
     path: '/system',
     component: Layout,

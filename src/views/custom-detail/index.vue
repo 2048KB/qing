@@ -47,7 +47,7 @@
     </el-row>
 
     <!-- 选择绑定邀请关系 -->
-    <div class="edit-modal edit-modal--choose">
+<!--     <div class="edit-modal edit-modal--choose">
       <el-dialog title="更改邀请关系" :visible.sync="dialogFormVisible">
         <div class="wrap">
           <el-button type="primary" @click="selectGW">指定顾问</el-button>
@@ -60,9 +60,9 @@
           <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
         </div>
       </el-dialog>
-    </div>
+    </div> -->
+    <dialog-rebind :title="modalTitle" @activeDialogForm="showModalForm" :showModal="showModal"></dialog-rebind>
 
-    <!-- 处理绑定邀请关系 -->
     <!-- 处理绑定邀请关系 -->
     <div class="edit-modal edit-modal--rechoose">
       <el-dialog :title="modalTitle" :visible.sync="infodialogFormVisible">
@@ -131,6 +131,7 @@ import CardSsgw from '@/components/CardSsgw'
 import CardZyxx from '@/components/CardZyxx'
 import CardAddress from '@/components/CardAddress'
 import CardVipcard from '@/components/CardVipcard'
+import DialogRebind from '@/components/DialogRebind'
 
 export default {
   name: 'counselor-detail',
@@ -142,7 +143,8 @@ export default {
     CardSsgw,
     CardZyxx,
     CardAddress,
-    CardVipcard
+    CardVipcard,
+    DialogRebind
   },
   data() {
     return {
@@ -152,6 +154,7 @@ export default {
       searchKey: '',
       modalTitle: '',
       storeUserLists: [],
+      showModal: false,
 
       vipcardRecordArray: [],
       radio7: '1',
@@ -260,7 +263,16 @@ export default {
   },
 
   methods: {
-    rebindRe() {
+    // show second modal
+    showModalForm() {
+      this.infodialogFormVisible = true
+      this.showModal = false
+    },
+
+    rebindRe(opts) {
+      this.modalTitle = '更改邀请' // 设置 Modal title
+      this.showModal = true // 展示 Modal
+      this.storeUserType = opts.storeType // 设置更改邀请关系类型
       this.dialogFormVisible = true
     },
 
@@ -290,9 +302,9 @@ export default {
       this.infodialogFormVisible = true
     },
 
-    rebindRe() {
-      this.dialogFormVisible = true
-    },
+    // rebindRe() {
+    //   this.dialogFormVisible = true
+    // },
 
     // 根据userId获取直接邀请人信息
     getInviterinfo() {

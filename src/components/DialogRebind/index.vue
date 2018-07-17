@@ -2,9 +2,9 @@
   <div class="edit-modal edit-modal--choose">
     <el-dialog :title="title" :visible.sync="showModal">
       <div class="wrap">
-        <el-button type="primary" @click="selectGW">指定顾问</el-button>
-        <!-- <el-button type="primary" @click="selectMYS">指定美容师</el-button> -->
-        <!-- <el-button type="primary" @click="selectVIP">指定会员</el-button> -->
+        <el-button type="primary" @click="selectType(4)">指定顾问</el-button>
+        <el-button type="primary" @click="selectType(3)">指定美容师</el-button>
+        <el-button type="primary" @click="selectType(2)">指定会员</el-button>
       </div>
 
       <div slot="footer" class="dialog-footer">
@@ -29,19 +29,14 @@
       }
     },
 
-    computed: {
-      activeModal() {
-        return this.showModal
-      }
-    },
-
     methods: {
       activeModal() {
         return this.showModal
       },
 
-      changeGW() {
-        this.$emit('changeGW', { showModal: true })
+      selectType(type) {
+        alert(type)
+        this.$emit('activeDialogForm', { storeType: type })
       }
     }
   }
