@@ -17,6 +17,7 @@ function getQS(str) {
   output: { nonFreeRegister: `${window.PAB.domain[which-domian]}/bron/bbc/cust/plugin/portal/tpa/nonFreeRegister` }
  */
 Object.keys(apis).forEach((item) => {
+  // 发布时候需要改动
   parsedURLs[item] = `http://127.0.0.1:3000${apis[item]}`
   /*
   const arr = apis[item].split(':')
