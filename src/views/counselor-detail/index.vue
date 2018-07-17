@@ -24,7 +24,7 @@
           <card-info :employeeDetail="employeeDetail" @updateUserInfoDetail="updateInfoDetail"></card-info>
 
           <!-- 所属顾问 -->
-          <!-- <card-ssgw :employeeDetail="employeeDetail"></card-ssgw> -->
+          <card-ssgw :inviterinfo="counselorOfBeautician" v-show="!isEmptyObject(counselorOfBeautician)"></card-ssgw>
         </div>
       </el-col>
     </el-row>
@@ -188,64 +188,127 @@ export default {
       },
       formLabelWidth: '120px',
       employeeDetail: {},
+      counselorOfBeautician: {},
       userFunds: {},
-      yjLists: []
+      yjLists: [],
+      queryRoleType: '',
+      queryId: ''
     }
   },
 
   created() {
-    console.log(this.router)
-    console.log(this.$route)
+    // 从路由拿角色，根据角色来调不同的接口 2 - 顾问，1 - 美容师
+    this.queryRoleType = this.$route.query.role
+    this.queryId = this.$route.query.id
 
     // 顾问详情
-    this.$API.getcounselordetail({
-      data: {
-        admin: 1,
-        pwd: 2
-      }
-    }).then((res) => {
-      this.employeeDetail = res.data.employeeDetail
-      this.userFunds = res.data.userFunds
+    if (this.$route.query.role == 2) {
+      this.$API.getcounselordetail({
+        data: {
+          admin: 1,
+          pwd: 2
+        }
+      }).then((res) => {
+        this.employeeDetail = res.data.employeeDetail
+        this.userFunds = res.data.userFunds
 
-      // 账户信息
-      this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount
-      this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount
-      this.userFunds.userAmountByUserId = res.data.userAmountByUserId
+        // 账户信息
+        this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount // 本月用户直接赚取
+        this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount // 本月用户间接赚取
+        this.userFunds.userAmountByUserId = res.data.userAmountByUserId // 用户累计赚取
 
-      // 邀请会员信息
-      this.inviters.total = res.data.counselorCurMonSpreadCustomer
-      this.inviters.monthly = res.data.counselorCurMonSpreadMember
-      this.inviters.totalcustomers = res.data.counselorSpreadMember
+        // 邀请会员信息
+        this.inviters.total = res.data.counselorCurMonSpreadCustomer // 顾问本月邀请顾客
+        this.inviters.monthly = res.data.counselorCurMonSpreadMember // 顾问本月邀请会员
+        this.inviters.totalcustomers = res.data.counselorSpreadMember // 顾问累计邀请会员
 
-      // 门店区域
-      this.areaName = res.data.employeeDetail.areaName
-      this.storeName = res.data.employeeDetail.storeName
+        // 门店区域
+        this.areaName = res.data.employeeDetail.areaName
+        this.storeName = res.data.employeeDetail.storeName
 
-      // 同步编辑个人信息数据（也是更新顾问接口入参）
-      this.infoform.photo = res.data.employeeDetail.photo
-      this.infoform.realityName = res.data.employeeDetail.realityName
-      this.infoform.sex = res.data.employeeDetail.sex + ''
-      this.infoform.birthDateStr = res.data.employeeDetail.birthDate
-      this.infoform.mobile = res.data.employeeDetail.mobile
-      this.infoform.email = res.data.employeeDetail.email
-      this.infoform.qq = res.data.employeeDetail.qq
-      this.infoform.idNumber = res.data.employeeDetail.idNumber
-      this.infoform.sno = res.data.employeeDetail.sno
-      this.infoform.address = res.data.employeeDetail.address
-      this.infoform.entryDateStr = res.data.employeeDetail.entryDate
-      this.infoform.storeId = res.data.employeeDetail.storeId
-      this.infoform.remark = res.data.employeeDetail.remark
+        // 同步编辑个人信息数据（也是更新顾问接口入参）
+        this.infoform.photo = res.data.employeeDetail.photo
+        this.infoform.realityName = res.data.employeeDetail.realityName
+        this.infoform.sex = res.data.employeeDetail.sex + ''
+        this.infoform.birthDateStr = res.data.employeeDetail.birthDate
+        this.infoform.mobile = res.data.employeeDetail.mobile
+        this.infoform.email = res.data.employeeDetail.email
+        this.infoform.qq = res.data.employeeDetail.qq
+        this.infoform.idNumber = res.data.employeeDetail.idNumber
+        this.infoform.sno = res.data.employeeDetail.sno
+        this.infoform.address = res.data.employeeDetail.address
+        this.infoform.entryDateStr = res.data.employeeDetail.entryDate
+        this.infoform.storeId = res.data.employeeDetail.storeId
+        this.infoform.remark = res.data.employeeDetail.remark
 
 
-      console.log('====== API RESPONSE ======')
-      console.log(res)
-      console.log('====== END API RESPONSE ======')
-    })
+        console.log('====== API RESPONSE ======')
+        console.log(res)
+        console.log('====== END API RESPONSE ======')
+      })
 
-    this.getListcounselorcurmonbonus()
+      this.getListcounselorcurmonbonus()
+    }
+
+
+    // 获取美容师详情
+    if (this.$route.query.role == 1) {
+      this.$API.getbeauticiandetail({
+        data: {
+          id: this.$route.query.id
+        }
+      }).then((res) => {
+        this.employeeDetail = res.data.employeeDetail
+        this.userFunds = res.data.userFunds
+
+        // 美容师所属顾问
+        this.counselorOfBeautician = res.data.counselorOfBeautician
+
+        // 账户信息
+        this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount // 本月用户直接赚取
+        this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount // 本月用户间接赚取
+        this.userFunds.userAmountByUserId = res.data.userAmountByUserId // 用户累计赚取
+
+        // 邀请会员信息
+        this.inviters.total = res.data.beauticianSpreadMember // 美容师累计邀请会员
+        this.inviters.monthly = res.data.beauticianCurMonSpreadMember // 美容师本月邀请会员
+        this.inviters.totalcustomers = res.data.beauticianSpreadMember // 美容师本月邀请顾客
+
+        // 门店区域
+        this.areaName = res.data.employeeDetail.areaName
+        this.storeName = res.data.employeeDetail.storeName
+
+        // 同步编辑个人信息数据（也是更新顾问接口入参）
+        this.infoform.photo = res.data.employeeDetail.photo
+        this.infoform.realityName = res.data.employeeDetail.realityName
+        this.infoform.sex = res.data.employeeDetail.sex + ''
+        this.infoform.birthDateStr = res.data.employeeDetail.birthDate
+        this.infoform.mobile = res.data.employeeDetail.mobile
+        this.infoform.email = res.data.employeeDetail.email
+        this.infoform.qq = res.data.employeeDetail.qq
+        this.infoform.idNumber = res.data.employeeDetail.idNumber
+        this.infoform.sno = res.data.employeeDetail.sno
+        this.infoform.address = res.data.employeeDetail.address
+        this.infoform.entryDateStr = res.data.employeeDetail.entryDate
+        this.infoform.storeId = res.data.employeeDetail.storeId
+        this.infoform.remark = res.data.employeeDetail.remark
+      })
+
+      this.getListcounselorcurmonbonus()
+    }
+
   },
 
   methods: {
+    isEmptyObject(obj) {
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+          return false;
+        }
+      }
+      return true;
+    },
+
     setBtnLoading() {
       this.btnLoading = true
       this.commitBtnText = '加载中...'
@@ -280,13 +343,28 @@ export default {
     // 更新个人信息、更新职业信息都为同一个接口（入参也一样）
     commitInfo() {
       this.setBtnLoading()
-      this.$API.updatecounselor({
-        data: this.infoform
-      }).then(res => {
-        setTimeout(() => {
-          this.resetBtnLoading(res.code, res.msg)
-        }, 2000)
-      })
+
+      // 更新顾问信息
+      if (this.$route.query.role == 2) {
+        this.$API.updatecounselor({
+          data: this.infoform
+        }).then(res => {
+          setTimeout(() => {
+            this.resetBtnLoading(res.code, res.msg)
+          }, 2000)
+        })
+      }
+
+      // 更新美容师信息
+      if (this.$route.query.role ==1) {
+        this.$API.updatebeautician({
+          data: this.infoform
+        }).then(res => {
+          setTimeout(() => {
+            this.resetBtnLoading(res.code, res.msg)
+          }, 2000)
+        })
+      }
     },
 
     // 展示 更新个人信息弹窗
@@ -294,11 +372,26 @@ export default {
       this.dialogFormVisible = true
     },
 
-    // 当月佣金明细
+    // 顾问当月佣金明细
     getListcounselorcurmonbonus() {
       this.$API.listcounselorcurmonbonus({
         data: {
+          id: this.$route.query.id, // Long  必须  员工id
+          currPage: 4, //  Int   当前页数
+          pageSize: 3, //  Int   每页显示数量
+        }
+      }).then((res) => {
+        this.yjLists = res.data.page
+      })
+    },
 
+    // 美容师当月佣金
+    getListcounselorcurmonbonus() {
+      this.$API.listbeauticiancurmonbonus({
+        data: {
+          id: this.$route.query.id, // Long  必须  员工id
+          currPage: 4, //  Int   当前页数
+          pageSize: 3, //  Int   每页显示数量
         }
       }).then((res) => {
         this.yjLists = res.data.page
