@@ -168,22 +168,28 @@ export const constantRouterMap = [
     ]
   },
   // 订单管理
-  // 接口还没给，先注释
-  // {
-  //   path: '/account',
-  //   component: Layout,
-  //   redirect: '/account/showwithdrawuser',
-  //   name: 'account',
-  //   meta: { title: '订单管理', icon: 'example' },
-  //   children: [
-  //     {
-  //       path: 'showwithdrawuser',
-  //       name: 'Showwithdrawuser',
-  //       component: () => import('@/views/showwithdrawuser/index'),
-  //       meta: { title: '订单列表', icon: 'showwithdrawuser' }
-  //     }
-  //   ]
-  // },
+  {
+    path: '/order',
+    component: Layout,
+    redirect: '/order/list',
+    name: 'Order',
+    meta: { title: '订单管理', icon: 'example' },
+    children: [
+      {
+        path: 'list',
+        name: 'OrderList',
+        component: () => import('@/views/order-list/index'),
+        meta: { title: '订单列表'}
+      },
+      {
+        path: 'detail',
+        name: 'OrderDetail',
+        // 后面添了详情路由再改
+        component: () => import('@/views/order-list/index'),
+        meta: { title: '订单详情'}
+      }
+    ]
+  },
 
   // 平台概况
   {

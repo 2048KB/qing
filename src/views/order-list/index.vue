@@ -1,41 +1,27 @@
 <template>
-  <div class="app-container platform-fee-page">
+  <div class="app-container order-list-page">
     <div class="top-bar"></div>
     <SearchBox 
       class="search-box"
       @change="handleChange"
-      :options="feeSearchTypes"
+      :options="orderSearchOptions"
       v-model="requestData.search"></SearchBox>
     <div class="filter-box">
       <div class="filter-item">
         <RadioGroup 
-          title="性别"
+          title="状态"
           @change="handleChange"
-          :options="sexsOptions"
-          v-model="requestData.sex"></RadioGroup>
-      </div>
-      <div class="filter-item">
-        <RadioGroup 
-          title="角色"
-          @change="handleChange"
-          :options="roleOptions"
-          v-model="requestData.roleType"></RadioGroup>
-      </div>
-      <div class="filter-item">
-        <RadioGroup 
-          title="费用类型"
-          @change="handleChange"
-          :options="feeTypeOptions"
-          v-model="requestData.feeType"></RadioGroup>
+          :options="orderStatusTypes"
+          v-model="requestData.orderStatus"></RadioGroup>
       </div>
       <div class="filter-item">
         <DatePicker 
           @change="handleChange" 
           v-model="requestData.time" 
-          title="交易日期"></DatePicker>
+          title="下单日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="收取费用列表" :total="totalCount" @current-change="handleChangeCurrent">
+    <TableWrapper title="订单列表" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
         empty-text="没有数据"
@@ -45,30 +31,37 @@
         element-loading-text="Loading" 
         :fit="true"
         border highlight-current-row>
-        <el-table-column min-width="50" align="center" label='交易流水' prop="orderNo"></el-table-column>
-        <el-table-column min-width="50" align="center" label='划入账户' prop="acount"></el-table-column>
-        <el-table-column min-width="50" align="center" label='扣款人昵称' prop="nickName"></el-table-column>
-        <el-table-column min-width="50" align="center" label='扣款人真实姓名' prop="realityName"></el-table-column>
-        <el-table-column min-width="50" align="center" label='性别' prop="sexStr"></el-table-column>
-        <el-table-column min-width="100" align="center" label='扣款人手机号' prop="mobile"></el-table-column>
-        <el-table-column min-width="50" align="center" label='扣款人角色' prop="roleTypeStr"></el-table-column>
-        <el-table-column min-width="50" align="center" label='扣款金额（元）' prop="amount"></el-table-column>
-        <el-table-column min-width="100" align="center" label='费用类型' prop="typeStr"></el-table-column>
-        <el-table-column min-width="100" align="center" label='交易日期' prop="time"></el-table-column>
+        <el-table-column min-width="50" align="center" label='订单号码' prop="orderNo"></el-table-column>
+        <el-table-column min-width="50" align="center" label='昵称' prop="nickName"></el-table-column>
+        <el-table-column min-width="50" align="center" label='真实姓名' prop="realityName"></el-table-column>
+        <el-table-column min-width="50" align="center" label='手机号' prop="mobile"></el-table-column>
+        <el-table-column min-width="50" align="center" label='商品名称' prop="goodsName"></el-table-column>
+        <el-table-column min-width="100" align="center" label='金额（元）' prop="amount"></el-table-column>
+        <el-table-column min-width="50" align="center" label='下单日期' prop="time"></el-table-column>
+        <el-table-column min-width="50" align="center" label='支付方式' prop="payTypeStr"></el-table-column>
+        <el-table-column min-width="100" align="center" label='付款日期' prop="payTime"></el-table-column>
+        <el-table-column min-width="100" align="center" label='是否代付' prop="isPayFor">
+          <template slot-scope="scope">{{list[scope.$index].isPayFor == 0 ? '不是' : '是'}}</template>
+        </el-table-column>
+        <el-table-column min-width="100" align="center" label='状态' prop="status">
+          <template slot-scope="scope">{{orderStatusMap[list[scope.$index].status]}}</template>
+        </el-table-column>
+        <el-table-column min-width="50" align="center" label='操作'>
+          <template slot-scope="scope"><span class="detail" @click="handleToDetail(scope.$index)">详情</span></template>
+        </el-table-column>
       </el-table>
     </TableWrapper>
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {feeSearchTypes, roleOptions, sexsOptions, feeTypeOptions, pagingParams} from '@/views/const'
+import {orderSearchOptions, orderStatusTypes, pagingParams} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
 import listMixins from '../listMixins'
-
+console.log(orderSearchOptions, 777)
 export default {
   mixins: [listMixins],
   components: {
@@ -78,6 +71,10 @@ export default {
     TableWrapper
   },
   data() {
+    let orderStatusMap = orderStatusTypes.reduce((result, item) => {
+      result[item.value] = item.label
+      return result
+    }, {})
     return {
       requestData: {
         time: {
@@ -88,29 +85,26 @@ export default {
           type: '0',
           text: ''
         },
-        sex: '0',
-        feeType: '0',
-        roleType: '0',
+        orderStatus: '0',
         ...pagingParams
       },
       list: null,
       listLoading: true,
       totalCount: 0,
-      feeSearchTypes,
-      roleOptions,
-      sexsOptions,
-      feeTypeOptions
+      orderSearchOptions,
+      orderStatusTypes,
+      orderStatusMap
     }
   },
   methods: {
     fetchData () {
-      this.$API.listplatformfee({
+      this.$API.listplatformorder({
         data: {
           ...this.requestData,
           type: this.requestData.search.type,
           typeStr: this.requestData.search.text,
-          dealDateBegin: this.requestData.time.begin,
-          dealDateEnd: this.requestData.time.end
+          timeBegin: this.requestData.time.begin,
+          timeEnd: this.requestData.time.end
         }
       })
         .then((res) => {
@@ -126,6 +120,9 @@ export default {
     },
     handleChange () {
       this.fetchData()
+    },
+    handleToDetail (index) {
+      this.$message('功能尚在开发中...')
     }
   },
   mounted() {
@@ -138,7 +135,7 @@ export default {
 <style lang="scss">
   @import  '../../styles/vars.scss';
   $padding: 20px;
-  .platform-fee-page {
+  .order-list-page {
     padding: 0;
     .search-box {
       margin-right: $padding;
