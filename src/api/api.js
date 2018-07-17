@@ -53,15 +53,15 @@ module.exports = {
   editstore: '/back/employee/editstore', // 架构管理-编辑门店接口
   listuserbystoreid: '/back/user/listuserbystoreid', // 根据门店id获取门店用户
 // 32. 根据搜索条件查询平台订单列表
-  listplatformorder: '/back/order/listplatformorder'
+  listplatformorder: '/back/order/listplatformorder',
 // 33.  根据订单id获取订单详情信息
-  getorderdetailbyorderid: '/back/order/getorderdetailbyorderid'
+  getorderdetailbyorderid: '/back/order/getorderdetailbyorderid',
 // 34. 取消订单(接口疑似有问题，已经请对方确认，还没回信，mock数据还没有)
-  order: '/back/order'
+  order: '/back/order',
 // 2.  退出
-  dropout: '/back/dropout'
+  dropout: '/back/dropout',
 // 8.  获取员工最大编号
-  getemployeemaxsno: '/back/employee/getemployeemaxsno'
+  getemployeemaxsno: '/back/employee/getemployeemaxsno',
 // 9.  上传图片文件（尚无mock数据）
   upload: '/image/upload'
 }

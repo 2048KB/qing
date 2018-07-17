@@ -70,13 +70,13 @@ const ROLE_MAP = {
     listApi: 'listmember',
     title: '注册会员列表',
     roleType: roleType.member,
-    detailUrl: '/customer/member/detail'
+    detailUrl: '/client/member/detail'
   },
   CustomerList: {
     listApi: 'listcustomer',
     title: '顾客列表',
     roleType: roleType.customer,
-    detailUrl: '/customer/customer/detail'
+    detailUrl: '/client/customer/detail'
   }
 }
 export default {

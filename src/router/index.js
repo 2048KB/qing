@@ -148,13 +148,7 @@ export const constantRouterMap = [
             hidden: true
           }
         ]
-      },
-      // {
-      //   path: 'listcustomer',
-      //   name: 'Listcustomer',
-      //   component: () => import('@/views/listcustomer/index'),
-      //   meta: { title: '顾客', icon: 'listcustomer' }
-      // }
+      }
     ]
   },
   // 提现管理
