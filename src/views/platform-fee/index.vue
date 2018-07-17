@@ -1,8 +1,6 @@
 <template>
-  <div class="app-container consultant-page">
-    <div class="top-bar">
-      <span class="add-member" @click="handleAddMember">添加</span>
-    </div>
+  <div class="app-container platform-fee-page">
+    <div class="top-bar"></div>
     <SearchBox 
       class="search-box"
       @change="handleChange"
@@ -37,33 +35,27 @@
           title="交易日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="收取费用列表">
+    <TableWrapper title="收取费用列表" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
+        empty-text="没有数据"
         class="list"
         :data="list" 
         v-loading.body="listLoading" 
         element-loading-text="Loading" 
         :fit="true"
         border highlight-current-row>
-        <el-table-column min-width="50" align="center" label='ID' prop="sno"></el-table-column>
-        <el-table-column min-width="50" align="center" label='昵称' prop="realityName"></el-table-column>
-        <el-table-column min-width="50" align="center" label='绑定手机号' prop="sexStr"></el-table-column>
-        <el-table-column min-width="50" align="center" label='注册日期' prop="mobile"></el-table-column>
-        <el-table-column min-width="50" align="center" label='直接邀请人角色' prop="birthDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='间接邀请人角色' prop="idNumber"></el-table-column>
-        <el-table-column min-width="50" align="center" label='会员卡状态' prop="qq"></el-table-column>
-        <el-table-column min-width="50" align="center" label='操作'>
-          <template slot-scope="scope"><span class="detail" @click="handleToDetail">详情</span></template>
-        </el-table-column>
+        <el-table-column min-width="50" align="center" label='交易流水' prop="orderNo"></el-table-column>
+        <el-table-column min-width="50" align="center" label='划入账户' prop="acount"></el-table-column>
+        <el-table-column min-width="50" align="center" label='扣款人昵称' prop="nickName"></el-table-column>
+        <el-table-column min-width="50" align="center" label='扣款人真实姓名' prop="realityName"></el-table-column>
+        <el-table-column min-width="50" align="center" label='性别' prop="sexStr"></el-table-column>
+        <el-table-column min-width="100" align="center" label='扣款人手机号' prop="mobile"></el-table-column>
+        <el-table-column min-width="50" align="center" label='扣款人角色' prop="roleTypeStr"></el-table-column>
+        <el-table-column min-width="50" align="center" label='扣款金额（元）' prop="amount"></el-table-column>
+        <el-table-column min-width="100" align="center" label='费用类型' prop="typeStr"></el-table-column>
+        <el-table-column min-width="100" align="center" label='交易日期' prop="time"></el-table-column>
       </el-table>
-      <div class="pagination-container">
-        <el-pagination
-          @current-change="handleChangeCurrent"
-          layout="prev, pager, next"
-          :total="totalCount">
-        </el-pagination> 
-      </div>
     </TableWrapper>
   </div>
 </template>
@@ -71,11 +63,14 @@
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {feeSearchTypes, roleOptions, sexsOptions, feeTypeOptions} from '@/views/const'
+import {feeSearchTypes, roleOptions, sexsOptions, feeTypeOptions, pagingParams} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
+import listMixins from '../listMixins'
+
 export default {
+  mixins: [listMixins],
   components: {
     RadioGroup,
     DatePicker,
@@ -94,70 +89,56 @@ export default {
           text: ''
         },
         sex: '0',
-        currPage: 0,
-        currPage: 10,
         feeType: '0',
-        roleType: '0'
+        roleType: '0',
+        ...pagingParams
       },
       list: null,
-      totalCount: 0,
       listLoading: true,
+      totalCount: 0,
       feeSearchTypes,
       roleOptions,
       sexsOptions,
       feeTypeOptions
     }
   },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
-  created() {
-    this.fetchData()
-  },
   methods: {
     fetchData () {
-      this.$API.listcustomer({
-        data: this.requestData
+      this.$API.listplatformfee({
+        data: {
+          ...this.requestData,
+          type: this.requestData.search.type,
+          typeStr: this.requestData.search.text,
+          dealDateBegin: this.requestData.time.begin,
+          dealDateEnd: this.requestData.time.end
+        }
       })
         .then((res) => {
           this.listLoading = false
-          console.log(res)
           let data = res.data || {}
           this.list = data.page
           this.totalCount = data.totalCount
         })
         .catch((res) => {
+          this.listLoading = false
           console.log(res)
         })
     },
     handleChange () {
-      console.log()
-      console.log('requst api')
-    },
-    handleAddMember() {
-      console.log('add-member')
-    },
-    handleToDetail () {
-
-    },
-    handleChangeCurrent (currentPage) {
-      this.requestData.currPage = currentPage
-      this.handleChange()
+      this.fetchData()
     }
+  },
+  mounted() {
+    this.fetchData()
+    console.log(this.$route)
+    console.log(this.$router)
   }
 }
 </script>
 <style lang="scss">
   @import  '../../styles/vars.scss';
   $padding: 20px;
-  .consultant-page {
+  .platform-fee-page {
     padding: 0;
     .search-box {
       margin-right: $padding;
@@ -179,11 +160,7 @@ export default {
         }
       }
     }
-    .add-member {
-      display: block;
-      color: $c0;
-      cursor: pointer;
-    }
+    
     .list {
       margin: $padding;
       width: auto;

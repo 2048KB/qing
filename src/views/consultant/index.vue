@@ -66,7 +66,7 @@
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {sexsOptions, employeeTypes, beauticianSearchTypes, roleType} from '@/views/const'
+import {sexsOptions, employeeTypes, beauticianSearchTypes, roleType, pagingParams} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
@@ -117,8 +117,7 @@ export default {
           type: '0',
           text: ''
         },
-        currPage: 0,
-        pageSize: 10
+        ...pagingParams
       },
       pageData: ROLE_MAP[this.$route.name],
       list: null,

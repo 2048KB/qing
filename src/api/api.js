@@ -2,27 +2,27 @@
 module.exports = {
   login: '/back/login', // 登录
   home: '/back/home', // 首页
-  listcounselors: '/employee/listcounselors',   // 顾问列表
-  listbeauticians: '/employee/listbeauticians', // 美容师列表
-  liststoreareas: '/employee/liststoreareas', // 门店区域列表
-  liststores: '/employee/liststores', // 根据区域id查询门店列表
-  savecounselor: '/employee/savecounselor', // 添加顾问
-  savebeautician: '/employee/savebeautician', // 添加美容师
-  getcounselorsofstore: '/employee/getcounselorsofstore', // 根据门店id获取该门店顾问列表
-  updatecounselor: '/employee/updatecounselor', // 编辑顾问信息
-  updatebeautician: '/employee/updatebeautician', // 编辑美容师信息
-  getcounselordetail: '/employee/getcounselordetail', // 获取顾问详情
-  listcounselorcurmonbonus: '/employee/listcounselorcurmonbonus', // 获取顾问当月佣金明细
-  getbeauticiandetail: '/employee/getbeauticiandetail', // 获取美容师详情
-  listbeauticiancurmonbonus: '/employee/listbeauticiancurmonbonus', // 获取美容师当月佣金明细
-  listmember: '/user/listmember', // 获取用户列表
-  getcustomerdetail: '/user/getcustomerdetail', // 获取顾客详情
-  getmemberdetail: '/user/getmemberdetail', // 获取会员详情
-  listusercurmonbonus: '/user/listusercurmonbonus', // 获取用户当月佣金列表信息
-  listcarduse: '/user/listcarduse', // 获取会员卡服务记录
-  updateinviter: '/user/updateinviter', // 修改邀请人信息
-  getinviterinfo: '/user/getinviterinfo', // 根据userId获取直接邀请人信息
-  listcustomer: '/user/listcustomer', // 顾客列表
+  listcounselors: '/back/employee/listcounselors',   // 顾问列表
+  listbeauticians: '/back/employee/listbeauticians', // 美容师列表
+  liststoreareas: '/back/employee/liststoreareas', // 门店区域列表
+  liststores: '/back/employee/liststores', // 根据区域id查询门店列表
+  savecounselor: '/back/employee/savecounselor', // 添加顾问
+  savebeautician: '/back/employee/savebeautician', // 添加美容师
+  getcounselorsofstore: '/back/employee/getcounselorsofstore', // 根据门店id获取该门店顾问列表
+  updatecounselor: '/back/employee/updatecounselor', // 编辑顾问信息
+  updatebeautician: '/back/employee/updatebeautician', // 编辑美容师信息
+  getcounselordetail: '/back/employee/getcounselordetail', // 获取顾问详情
+  listcounselorcurmonbonus: '/back/employee/listcounselorcurmonbonus', // 获取顾问当月佣金明细
+  getbeauticiandetail: '/back/employee/getbeauticiandetail', // 获取美容师详情
+  listbeauticiancurmonbonus: '/back/employee/listbeauticiancurmonbonus', // 获取美容师当月佣金明细
+  listmember: '/back/user/listmember', // 获取用户列表
+  getcustomerdetail: '/back/user/getcustomerdetail', // 获取顾客详情
+  getmemberdetail: '/back/user/getmemberdetail', // 获取会员详情
+  listusercurmonbonus: '/back/user/listusercurmonbonus', // 获取用户当月佣金列表信息
+  listcarduse: '/back/user/listcarduse', // 获取会员卡服务记录
+  updateinviter: '/back/user/updateinviter', // 修改邀请人信息
+  getinviterinfo: '/back/user/getinviterinfo', // 根据userId获取直接邀请人信息
+  listcustomer: '/back/user/listcustomer', // 顾客列表
   getplatformoverview: '/overview/getplatformoverview', // 获取平台概况
   getdayplatformoverview: '/overview/getdayplatformoverview', // 获取平台当日概况
   listplatformfee: '/fee/listplatformfee', // 获取平台管理费列表
@@ -51,5 +51,17 @@ module.exports = {
   addstore: '/back/employee/addstore', // 架构管理-添加门店接口
   showstoredetail: '/back/employee/showstoredetail', // 架构管理-查询要编辑的门店接口
   editstore: '/back/employee/editstore', // 架构管理-编辑门店接口
-  listuserbystoreid: '/back/user/listuserbystoreid' // 根据门店id获取门店用户
+  listuserbystoreid: '/back/user/listuserbystoreid', // 根据门店id获取门店用户
+// 32. 根据搜索条件查询平台订单列表
+  listplatformorder: '/back/order/listplatformorder'
+// 33.  根据订单id获取订单详情信息
+  getorderdetailbyorderid: '/back/order/getorderdetailbyorderid'
+// 34. 取消订单(接口疑似有问题，已经请对方确认，还没回信，mock数据还没有)
+  order: '/back/order'
+// 2.  退出
+  dropout: '/back/dropout'
+// 8.  获取员工最大编号
+  getemployeemaxsno: '/back/employee/getemployeemaxsno'
+// 9.  上传图片文件（尚无mock数据）
+  upload: '/image/upload'
 }

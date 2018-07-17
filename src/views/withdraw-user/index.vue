@@ -88,7 +88,7 @@
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {withdrawStatuOptions, bounsSearchTypes} from '@/views/const'
+import {withdrawStatuOptions, bounsSearchTypes, pagingParams} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
@@ -122,8 +122,7 @@ export default {
           begin: null,
           end: null
         },
-        currPage: 0,
-        currPage: 10
+        ...pagingParams
       },
       search: {
         type: '0',

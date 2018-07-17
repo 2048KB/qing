@@ -101,14 +101,14 @@ export const constantRouterMap = [
   {
     path: '/client',
     component: Layout,
-    redirect: '/customer/member/list',
+    redirect: '/client/member/list',
     name: 'Client',
     meta: { title: '客户管理', icon: 'example' },
     children: [
       {
         path: 'member',
         name: 'Member',
-        redirect: '/customer/member/list',
+        redirect: '/client/member/list',
         component: () => import('@/views/menu/index'),
         meta: { title: '会员', icon: 'listmember' },
         children: [
@@ -130,7 +130,7 @@ export const constantRouterMap = [
       {
         path: 'customer',
         name: 'Customer',
-        redirect: '/customer/customer/list',
+        redirect: '/client/customer/list',
         component: () => import('@/views/menu/index'),
         meta: { title: '顾客', icon: 'listmember' },
         children: [
