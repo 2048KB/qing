@@ -2,7 +2,7 @@
   "msg": "查询成功",
   "code": 1,
   "data": {
-    "userAmountByUserId": 0,
+    "userAmountByUserId": 230,
     "employeeDetail": {
       "address": "2345g4t3",
       "belongCounselor": "",
@@ -29,10 +29,10 @@
       "time": "2018-07-07 15:38:27"
     },
     "beauticianCurMonSpreadCustomer": 234234,
-    "userCurMonDirectAmount": 0,
+    "userCurMonDirectAmount": 122,
     "beauticianCurMonSpreadMember": 3232233,
     "userCurMonBonus": [],
-    "userCurMonInDirectAmount": 0,
+    "userCurMonInDirectAmount": 677,
     "counselorOfBeautician": {
       "address": "2345678",
       "birthDate": null,
@@ -54,9 +54,9 @@
       "time": null
     },
     "userFunds": {
-      "availableBalance": 0,
-      "balance": 0,
-      "freeze": 0,
+      "availableBalance": 33330,
+      "balance": 20,
+      "freeze": 1110,
       "id": 4,
       "sign": "585375c1448bfa3494298bdd79408081",
       "time": "2018-07-07 15:38:28",
