@@ -217,3 +217,8 @@ export const orderSearchOptions = [{
   value: '4',
   label: '手机号'
 }]
+
+export const orderStatusMap = orderStatusTypes.reduce((result, item) => {
+  result[item.value] = item.label
+  return result
+}, {})

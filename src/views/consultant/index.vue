@@ -158,7 +158,7 @@ export default {
       this.fetchData()
     },
     handleAddMember() {
-      console.log('to add page...')
+      this.$message('功能尚在开发中...')
     },
     handleToDetail (index) {
       this.$router.push({

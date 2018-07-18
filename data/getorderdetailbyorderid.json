@@ -3,7 +3,7 @@
   "code": 1,
   "data": {
     "amount": 9900,
-    "cancelTime": null,
+    "cancelTime": "2018-07-18 23:16:12",
     "cancelType": 0,
     "goodsName": "会员卡",
     "goodsPrice": 9900,
@@ -22,7 +22,7 @@
     "payTypeStr": "微信支付",
     "realAmount": 9900,
     "realityName": "--",
-    "status": 2,
-    "time": "2018-07-04 15:11:12"
+    "status": 1,
+    "time": "2018-07-18 23:16:12"
   }
 }

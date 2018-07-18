@@ -82,7 +82,7 @@ export default {
           this.feeOpt = {
             '佣金管理费': '￥' + (data.commissionFee === undefined ? '' : data.commissionFee ),
             '提现手续费': '￥' + (data.withdrawFee === undefined ? '' : data.withdrawFee ),
-            '总计': '￥' + (data.FeeTotal === undefined ? '' : data.FeeTotal )
+            '总计': '￥' + (data.feeTotal === undefined ? '' : data.feeTotal )
           }
           this.withdrawOpt = {
             '提现人数': (data.dayWithdrawalPending.count === undefined ? '' : data.dayWithdrawalPending.count ) + '人',

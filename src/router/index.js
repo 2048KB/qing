@@ -233,14 +233,14 @@ export const constantRouterMap = [
         path: 'list',
         name: 'OrderList',
         component: () => import('@/views/order-list/index'),
-        meta: { title: '订单列表'}
+        meta: { title: '订单列表', icon: 'OrderList'}
       },
       {
         path: 'detail',
         name: 'OrderDetail',
         // 后面添了详情路由再改
-        component: () => import('@/views/order-list/index'),
-        meta: { title: '订单详情'}
+        component: () => import('@/views/order-detail/index'),
+        meta: { title: '订单详情', icon: 'OrderDetail'}
       }
     ]
   },

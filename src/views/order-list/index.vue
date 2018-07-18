@@ -56,7 +56,7 @@
 
 <script>
 import RadioGroup from '@/components/RadioGroup'
-import {orderSearchOptions, orderStatusTypes, pagingParams} from '@/views/const'
+import {orderSearchOptions, orderStatusTypes, pagingParams, orderStatusMap} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
@@ -71,10 +71,6 @@ export default {
     TableWrapper
   },
   data() {
-    let orderStatusMap = orderStatusTypes.reduce((result, item) => {
-      result[item.value] = item.label
-      return result
-    }, {})
     return {
       requestData: {
         time: {

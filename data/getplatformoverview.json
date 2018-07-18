@@ -4,7 +4,7 @@
   "data": {
     "commissionFee": 12872,
     "memberCount": 6,
-    "FeeTotal": 13193,
+    "feeTotal": 13193,
     "fundTotal": 19800,
     "withdrawFee": 321,
     "adviserAward": 6431,
