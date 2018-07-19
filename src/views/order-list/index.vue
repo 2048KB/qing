@@ -118,7 +118,12 @@ export default {
       this.fetchData()
     },
     handleToDetail (index) {
-      this.$message('功能尚在开发中...')
+      this.$router.push({
+        path: '/order/detail',
+        query: {
+          id: this.list[index].id
+        }
+      })
     }
   },
   mounted() {
