@@ -1,0 +1,12 @@
+{
+  "msg": "上传成功",
+  "code": 1,
+  "data": {
+    "size": 46.02,
+    "name": "/data/upload/9b5edb07-980d-4b4d-b08b-8515c6951b0e",
+    "width": 150,
+    "suffix": "jpg",
+    "resolution": "150*150",
+    "height": 150
+  }
+}

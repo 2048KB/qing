@@ -57,7 +57,7 @@ module.exports = {
 // 33.  根据订单id获取订单详情信息
   getorderdetailbyorderid: '/back/order/getorderdetailbyorderid',
 // 34. 取消订单(接口疑似有问题，已经请对方确认，还没回信，mock数据还没有)
-  order: '/back/order',
+  cancelorder: '/back/order/cancelorder',
 // 2.  退出
   dropout: '/back/dropout',
 // 8.  获取员工最大编号

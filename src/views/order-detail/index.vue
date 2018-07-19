@@ -61,7 +61,7 @@
         </el-table-column>
       </el-table>
     </TableWrapper>
-    <TableWrapper title="代付人信息" v-if="detail.status != -1">
+    <TableWrapper title="代付人信息" v-if="detail.status == 1">
       <el-table
         :data="payFor"
         style="width: 100%">
@@ -85,6 +85,10 @@
           prop="image"
           label="商品"
           width="180">
+          <template slot-scope="scope">
+            <img v-if="good[scope.$index].image" :src="good[scope.$index].image" height="22" width="30">
+            <img v-else src="./images/qq-42.png" height="22" width="30">
+          </template>
         </el-table-column>
         <el-table-column
           prop="goodsName"
@@ -126,7 +130,8 @@ export default {
       id: this.$route.query.id,
       detail: {},
       orderStatusMap,
-      statusColorStyle: null
+      statusColorStyle: null,
+      pollUpdateStatus: false
     }
   },
   methods: {
@@ -139,26 +144,26 @@ export default {
         .then((res) => {
           let data = res.data || {}
           this.detail = data
-          this.payType.push({
+          this.payType = [{
             payTypeStr: data.payTypeStr,
             payTime: data.payTime,
             realAmount: data.realAmount
-          })
-          this.payer.push({
+          }]
+          this.payer = [{
             nickName: data.nickName,
             mobile: data.mobile,
             realityName: data.realityName
-          })
-          this.payFor.push({
+          }]
+          this.payFor = [{
             payForNickName: data.payForNickName,
             payForMobile: data.payForMobile
-          })
-          this.good.push({
+          }]
+          this.good = [{
             image: data.image,
             goodsName: data.goodsName,
             number: data.number,
             goodsPrice: data.goodsPrice
-          })
+          }]
           // 重置状态字体颜色
           let color = null
           if (data.status == 1) {
@@ -171,9 +176,21 @@ export default {
           if (color) {
             this.statusColorStyle = { color }
           }
-          // 倒数计时
-          let date = new Date(data.time)
-          this.countdown(date.getTime())
+          if (data.status == 1) {
+            // 轮询更新
+            if (this.pollUpdateStatus) {
+              this.timer = setTimeout(() => {
+                this.fetchData()
+              }, 1000)
+            } else {
+              // 倒数计时
+              let date = new Date(data.time)
+              this.countdown(date.getTime())
+            }
+          } else {
+            this.pollUpdateStatus = false
+            clearTimeout(this.timer)
+          }
         })
     },
     countdown (time) {
@@ -185,6 +202,9 @@ export default {
         setTimeout(() => {
           this.countdown(time)
         }, 1000)
+      } else {
+        this.fetchData()
+        this.pollUpdateStatus = true
       }
     },
     formatTimestamp (timestamp) {
@@ -200,7 +220,12 @@ export default {
       return str.substr(len)
     },
     handleCancel () {
-      this.$message('取消功能尚未实现...')
+      this.$API.cancelorder({
+        data: this.detail.id
+      }).then((res) => {
+        this.fetchData()
+      })
+      // this.$message('取消功能尚未实现...')
     }
   },
   mounted () {
