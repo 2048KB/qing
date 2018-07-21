@@ -30,7 +30,7 @@ const fetch = function fetch(url = '', options = {}) {
       dataType: 'json',
       xhrFields: { withCredentials: true },
       crossDomain: true,
-      beforeSend: function beforeSend() {
+      beforeSend: function beforeSend(xhr) {
         // console.log('start loading...')
         // loadingInstance = Loading.service()
         // if (request.loading && !spinning) {
@@ -125,6 +125,11 @@ const fetch = function fetch(url = '', options = {}) {
       // 请求成功
       resolve(data)
     }
+
+    console.group('请求接口：' + request.url)
+    console.log('========== 接口入参 ==========')
+    console.log(request.data)
+    console.groupEnd()
 
     $.ajax(Object.assign(ajaxSettings, request))
   })
