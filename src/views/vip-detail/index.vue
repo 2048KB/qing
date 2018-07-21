@@ -4,18 +4,18 @@
       <el-col :span="16">
         <div class="grid-content padding-left-none">
           <!-- 职业信息 -->
-          <card-zyxx :employeeDetail="employeeDetail" :isCustom="true" :hideEdit="true">
+          <card-zyxx :employeeDetail="employeeDetail" :isCustom="true" :hideEdit="true" :isVip="isVip">
             <span>个人信息</span>
           </card-zyxx>
 
           <!-- 账户信息 -->
-          <card-zhxx :userFunds="userFunds"></card-zhxx>
+          <card-zhxx :userFunds="userFunds" v-if="!isEmptyObject(userFunds)"></card-zhxx>
 
           <!-- 邀请信息 -->
-          <card-yqxx :obj="inviters"></card-yqxx>
+          <card-yqxx :obj="inviters" v-if="!isEmptyObject(inviters)"></card-yqxx>
 
           <!-- 当月佣金 -->
-          <card-youjin :lists="yjLists"></card-youjin>
+          <card-youjin :lists="yjLists" v-if="!isEmptyObject(inviters)"></card-youjin>
         </div>
       </el-col>
 
@@ -23,25 +23,25 @@
       <el-col :span="8">
         <div class="grid-content">
           <!-- 收货地址 -->
-          <card-address :address="listUserAddress"></card-address>
+          <card-address :address="listUserAddress" v-if="listUserAddress.length > 0"></card-address>
 
           <!-- 直接邀请人 -->
-          <card-ssgw :inviterinfo="memberVO" :type="1" @activeReBind="rebindRe">
+          <card-ssgw :inviterinfo="memberVO" :type="1" @activeReBind="rebindRe" v-if="!isEmptyObject(memberVO)">
             <span>直接邀请人</span>
           </card-ssgw>
 
           <!-- 间接邀请人 -->
-          <card-ssgw :inviterinfo="inMemberVO" :type="2">
+          <card-ssgw :inviterinfo="inMemberVO" :type="2" v-if="!isEmptyObject(inMemberVO)">
             <span>间接邀请人</span>
           </card-ssgw>
 
           <!-- 修改间接邀请人 -->
-          <card-ssgw :inviterinfo="inMemberVO" :type="3" @activeReBind="rebindRe">
+          <card-ssgw :inviterinfo="inMemberVO" :type="3" @activeReBind="rebindRe" v-if="!isEmptyObject(inMemberVO)">
             <span>间接邀请人</span>
           </card-ssgw>
 
           <!-- 会员服务信息 -->
-          <card-vipcard :cardlist="vipcardRecordArray"></card-vipcard>
+          <card-vipcard :cardlist="vipcardRecordArray" v-if="vipcardRecordArray.length > 0"></card-vipcard>
         </div>
       </el-col>
     </el-row>
@@ -154,11 +154,7 @@ export default {
       vipcardRecordArray: [],
       searchKey: '',
       radio7: '',
-      inviters: {
-        total: '',
-        monthly: '',
-        totalcustomers: ''
-      },
+      inviters: {},
       infoform: {
         mobile: '',
         birthDate: '',
@@ -192,81 +188,133 @@ export default {
       inviterinfo: {},
       memberVO: {},
       inMemberVO: {},
-      storeUserLists: []
+      storeUserLists: [],
+      isVip: true
     }
   },
 
   created() {
-    // `顾客详情` 和 `会员详情` 同一个接口 `getcustomerdetail`
-    // 测试时候记得把它改为 `getcustomerdetail`
-    this.$API.getmemberdetail({
-      data: {
-        type: 1, // 搜索类型 1:顾客  2:会员
-        userId: '', // 用户id
-        dirInviteId: '', // 直接邀请人id
-        dirInviteRole: '', // 直接邀请人角色
-        inDirInviteId: '', // 间接邀请人id
-        inDirInviteRole: '', // 间接邀请人角色
-      }
-    }).then((res) => {
-      // 收货地址
-      this.listUserAddress = res.data.listUserAddress
+    // 从路由拿角色，根据角色来调不同的接口 2 - 顾客，1 - 会员
+    this.queryRoleType = this.$route.query.role
+    this.queryId = this.$route.query.id
 
-      // 直接邀请人
-      this.memberVO = res.data.memberVO
+    // 顾客详情
+    if (this.$route.query.role == 2) {
+      this.$API.getcustomerdetail({
+        data: {
+          type: '', //  Int 必须  搜索类型1:顾客  2:会员
+          userId: '', //  Long  必须  用户id
+          dirInviteId: '', // Long    直接邀请人id
+          dirInviteRole: '', // String    直接邀请人角色
+          inDirInviteId: '', // Long    间接邀请人id
+          inDirInviteRole: '' // String    间接邀请人角色
+        }
+      }).then((res) => {
+        // 用户基本信息
+        this.employeeDetail = res.data.user
 
-      // 间接邀请人
-      this.inMemberVO = res.data.inMemberVO
+        // 用户账户信息
+        // this.userFunds = res.data.userFunds
 
-      // 修改绑定关系弹窗信息
-      this.storeName = res.data.storeName
-      this.storeAreaName = res.data.storeAreaName
-      this.storeId = res.data.storeId
+        // 账户信息
+        // this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount // 本月用户直接赚取
+        // this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount // 本月用户间接赚取
+        // this.userFunds.userAmountByUserId = res.data.userAmountByUserId // 用户累计赚取
 
-      console.log('====== API RESPONSE ======')
-      console.log(res)
-      console.log('====== END API RESPONSE ======')
-      this.employeeDetail = res.data.user
-      this.userFunds = res.data.userFunds
+        // 邀请会员信息
+        // this.inviters.total = res.data.userCurMonSpreadCustomer // 本月邀请顾客
+        // this.inviters.monthly = res.data.userCurMonSpreadMember // 本月邀请会员
+        // this.inviters.totalcustomers = res.data.userSpreadMember // 累计邀请会员
 
-      // 账户信息数据
-      this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount
-      this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount
-      this.userFunds.userAmountByUserId = res.data.userAmountByUserId
+        // 门店区域
+        this.storeAreaName = res.data.storeAreaName
+        this.storeName = res.data.storeName
 
-      // 邀请会员数据
-      this.inviters.total = res.data.userSpreadMember
-      this.inviters.monthly = res.data.userCurMonSpreadMember
-      this.inviters.totalcustomers = res.data.userCurMonSpreadCustomer
+        // 用户收货地址
+        this.listUserAddress = res.data.listUserAddress
 
-      // 同步编辑个人信息数据
-      // this.infoform.mobile = res.data.employeeDetail.mobile
-      // this.infoform.birthDate = res.data.employeeDetail.birthDate
-      // this.infoform.email = res.data.employeeDetail.email
-      // this.infoform.qq = res.data.employeeDetail.qq
-      // this.infoform.idNumber = res.data.employeeDetail.idNumber
-      // this.infoform.realityName = res.data.employeeDetail.realityName
-      // this.infoform.sex = res.data.employeeDetail.sex + ''
-      // this.infoform.sno = res.data.employeeDetail.sno
-      // this.infoform.address = res.data.employeeDetail.address
-      // this.infoform.storeAreaName = res.data.storeAreaName
-      // this.infoform.storeName = res.data.storeName
-      // this.infoform.storeId = res.data.storeId
-    })
+        // 直接邀请人
+        this.memberVO = res.data.memberVO
 
-    this.getListcounselorcurmonbonus()
+        // 间接邀请人
+        this.inMemberVO = res.data.inMemberVO
+
+        // 修改绑定关系弹窗信息
+        this.storeName = res.data.storeName
+        this.storeAreaName = res.data.storeAreaName
+        this.storeId = res.data.storeId
+      })
+    }
+
+    // 会员详情
+    if (this.$route.query.role == 1) {
+      this.$API.getmemberdetail({
+        data: {
+          type: '', //  Int 必须  搜索类型1:顾客  2:会员
+          userId: '', //  Long  必须  用户id
+          dirInviteId: '', // Long    直接邀请人id
+          dirInviteRole: '', // String    直接邀请人角色
+          inDirInviteId: '', // Long    间接邀请人id
+          inDirInviteRole: '', // String    间接邀请人角色
+          cardId: '' //  Long    会员卡id
+        }
+      }).then((res) => {
+        // 用户基本信息
+        this.employeeDetail = res.data.user
+
+        // 用户账户信息
+        this.userFunds = res.data.userFunds
+
+        // 账户信息
+        this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount // 本月用户直接赚取
+        this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount // 本月用户间接赚取
+        this.userFunds.userAmountByUserId = res.data.userAmountByUserId // 用户累计赚取
+
+        // 邀请会员信息
+        this.inviters.total = res.data.userSpreadMember // 累计邀请会员
+        this.inviters.monthly = res.data.userCurMonSpreadMember // 本月邀请会员
+        this.inviters.totalcustomers = res.data.userCurMonSpreadCustomer // 本月邀请顾客
+
+        // 门店区域
+        this.storeAreaName = res.data.storeAreaName
+        this.storeName = res.data.storeName
+
+        // 用户收货地址
+        this.listUserAddress = res.data.listUserAddress
+
+        // 直接邀请人
+        this.memberVO = res.data.memberVO
+
+        // 间接邀请人
+        this.inMemberVO = res.data.inMemberVO
+
+        // 修改绑定关系弹窗信息
+        this.storeName = res.data.storeName
+        this.storeAreaName = res.data.storeAreaName
+        this.storeId = res.data.storeId
+      })
+
+      // 获取会员佣金列表
+      this.getListcounselorcurmonbonus()
+    }
 
     // 会员卡服务记录
     this.getListcarduse()
-
-    // 获取邀请人
-    // this.getInviterinfo()
 
     // 获取门店会员列表
     this.geLlistuserbystoreid()
   },
 
   methods: {
+    isEmptyObject(obj) {
+      for (var prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+          return false;
+        }
+      }
+      return true;
+    },
+
     changeBind() {
       this.modalTitle = '更改邀请'
     },
@@ -332,11 +380,13 @@ export default {
       console.log(this.infoform)
     },
 
-    // 当月佣金明细
+    // 获取会员佣金列表（顾客是没有佣金列表的）
     getListcounselorcurmonbonus() {
-      this.$API.listcounselorcurmonbonus({
+      this.$API.listusercurmonbonus({
         data: {
-
+          userId: '', //  Long  必须  用户id
+          currPage: '', //  Int   当前页数
+          pageSize: '' //  Int   每页显示数量
         }
       }).then((res) => {
         this.yjLists = res.data.page
