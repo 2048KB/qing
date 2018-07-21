@@ -11,8 +11,10 @@
       :onChange="handleFileChange"
       :beforeUpload="handleBeforeUpload"
       list-type="picture-card">
-      <i class="custom-icon" v-if="value === ''"></i>
+      <i class="custom-icon" v-if="innerValue === ''"></i>
       <div slot="tip" class="el-upload__tip" v-if="tips">{{tips}}</div>
+      <div slot="tip" class="el-upload__tip upload-error-tip" v-if="error">{{error}}</div>
+      <el-button size="small" type="primary" v-if="showButton">点击上传</el-button>
     </el-upload>
   </div>
 </template>
@@ -26,12 +28,14 @@ export default {
     tips: {
       type: String,
       default: '你可以上传JPG、GIF或PNG格式的文件，大小不能超过2M'
-    }
+    },
+    showButton: Boolean
   },
   data () {
     return {
       innerValue: this.value,
-      uploadAction: getFullPath('upload')
+      uploadAction: getFullPath('upload'),
+      error: null
     }
   },
   watch: {
@@ -43,11 +47,13 @@ export default {
     handleBeforeUpload (img) {
       // if (img.size > 2 * 1024) {
       if (img.size > 2 * 1024 * 1024) {
-        this.$emit('error', new Error('文件大小不能超过2M'))
+        this.error = '文件大小不能超过2M'
+        this.$emit('error', new Error(this.error))
         return false
       }
       if (['image/jpg', 'image/jpeg', 'image/gif', 'image/png'].indexOf(img.type) === -1) {
-        this.$emit('error', new Error('只可以上传JPG、GIF或PNG格式的文件'))
+        this.error = '只可以上传JPG、GIF或PNG格式的文件'
+        this.$emit('error', new Error(this.error))
         return false
       }
       return true
@@ -72,17 +78,20 @@ export default {
 
         // 请勿重复提交
         if (data.code == -9997) {
-          this.$emit('error', new Error(data.msg || '请勿重复提交！'))
+          this.error = data.msg || '请勿重复提交！'
+          this.$emit('error', new Error(this.error))
 
           return
         }
 
         // 其它小于 < 0 的错误码
-        this.$emit('error', new Error(data.msg || '服务异常，请稍后再试！'))
+        this.error = data.msg || '服务异常，请稍后再试！'
+        this.$emit('error', new Error(this.error))
         return
       }
 
       // 请求成功
+      this.error = null
       this.innerValue = data.data.name
       // 以便保证父组件监听success时间时组件值已更新
       setTimeout(() => {
@@ -91,12 +100,16 @@ export default {
     }
   },
   mounted () {
+    this.$on('error', () => {
+      this.innerValue = ''
+    })
   }
 
 }
 </script>
 
 <style lang="scss">
+@import '../../styles/vars.scss';
 .UploadBox {
   text-align: center;
   .custom-icon {
@@ -123,6 +136,23 @@ export default {
       border-width: 0;
       background-color: transparent;
     }
+    .el-upload-list {
+      li {
+        margin: 0 auto;
+        width: 107px;
+        height: 107px;
+        border-radius: 50%;
+      }
+    }
+    .el-button {
+      position: absolute;
+      top: 134px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+  .upload-error-tip {
+    color: $c1;
   }
 }
 </style>
