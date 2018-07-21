@@ -45,14 +45,13 @@ export default {
   },
   methods: {
     handleBeforeUpload (img) {
-      // if (img.size > 2 * 1024) {
-      if (img.size > 2 * 1024 * 1024) {
-        this.error = '文件大小不能超过2M'
+      if (['image/jpg', 'image/jpeg', 'image/gif', 'image/png'].indexOf(img.type) === -1) {
+        this.error = '只可以上传JPG、GIF或PNG格式的文件'
         this.$emit('error', new Error(this.error))
         return false
       }
-      if (['image/jpg', 'image/jpeg', 'image/gif', 'image/png'].indexOf(img.type) === -1) {
-        this.error = '只可以上传JPG、GIF或PNG格式的文件'
+      if (img.size > 2 * 1024 * 1024) {
+        this.error = '文件大小不能超过2M'
         this.$emit('error', new Error(this.error))
         return false
       }
@@ -139,6 +138,7 @@ export default {
     .el-upload-list {
       li {
         margin: 0 auto;
+        margin-top: 20px;
         width: 107px;
         height: 107px;
         border-radius: 50%;
