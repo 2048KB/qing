@@ -10,7 +10,11 @@ function getQS(str) {
 
   return matched ? matched[1] : ''
 }
+const domain = 'http://127.0.0.1:3000'
 
+export function getFullPath (item) {
+  return domain + apis[item]
+}
 /*
   Parse URLS
   input: { nonFreeRegister: 'rsbDomain:/bron/bbc/cust/plugin/portal/tpa/nonFreeRegister' }
@@ -18,7 +22,7 @@ function getQS(str) {
  */
 Object.keys(apis).forEach((item) => {
   // 发布时候需要改动
-  parsedURLs[item] = `http://127.0.0.1:3000${apis[item]}`
+  parsedURLs[item] = getFullPath(item)
   /*
   const arr = apis[item].split(':')
 

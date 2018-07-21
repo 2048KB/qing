@@ -145,16 +145,20 @@ export const logSearchTypes = [{
   label: '全部'
 }, {
   value: '1',
-  label: 'ID'
+  label: 'ID',
+  key: 'id'
 }, {
   value: '2',
-  label: '操作者用户名'
+  label: '操作者用户名',
+  key: 'name'
 }, {
   value: '3',
-  label: '操作者真实姓名'
+  label: '操作者真实姓名',
+  key: 'realityName'
 }, {
   value: '4',
-  label: '操作者手机号'
+  label: '操作者手机号',
+  key: 'mobile'
 }]
 export const listMemberSearchTypes = [{
   value: '0',

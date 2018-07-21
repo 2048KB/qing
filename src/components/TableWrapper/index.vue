@@ -1,5 +1,5 @@
 <template>
-  <div class="TableWrapper">
+  <div class="TableWrapper unify-wrapper">
     <div class="head">
       <span>{{title}}</span>
       <span><slot name="right"></slot></span>

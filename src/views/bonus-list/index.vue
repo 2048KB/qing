@@ -1,8 +1,6 @@
 <template>
-  <div class="app-container bouns-list-page">
-    <div class="top-bar">
-      <span class="add-member-buttom" @click="handleAddMember">添加</span>
-    </div>
+  <div class="app-container bonus-list-page">
+    <div class="top-bar"></div>
     <SearchBox 
       class="search-box"
       @change="handleChange"
@@ -14,7 +12,7 @@
           title="佣金类别"
           @change="handleChange"
           :options="bounsType"
-          v-model="requestData.bonusType"></RadioGroup>
+          v-model="requestData.bounsType"></RadioGroup>
       </div>
       <div class="filter-item">
         <RadioGroup 
@@ -30,47 +28,38 @@
           title="生成日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="佣金列表">
+    <TableWrapper title="佣金列表" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
+        empty-text="没有数据"
         class="list"
         :data="list" 
         v-loading.body="listLoading" 
         element-loading-text="Loading" 
         :fit="true"
         border highlight-current-row>
-        <el-table-column min-width="50" align="center" label='员工编号' prop="sno"></el-table-column>
-        <el-table-column min-width="50" align="center" label='姓名' prop="realityName"></el-table-column>
-        <el-table-column min-width="50" align="center" label='性别' prop="sexStr"></el-table-column>
+        <el-table-column min-width="50" align="center" label='交易流水' prop="orderNo"></el-table-column>
+        <el-table-column min-width="50" align="center" label='昵称' prop="nickName"></el-table-column>
+        <el-table-column min-width="50" align="center" label='真实姓名' prop="realityName"></el-table-column>
         <el-table-column min-width="50" align="center" label='手机号' prop="mobile"></el-table-column>
-        <el-table-column min-width="50" align="center" label='出生日期' prop="birthDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='身份证号' prop="idNumber"></el-table-column>
-        <el-table-column min-width="50" align="center" label='QQ号' prop="qq"></el-table-column>
-        <el-table-column min-width="50" align="center" label='入职日期' prop="entryDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='创建日期' prop=""></el-table-column>
-        <el-table-column min-width="50" align="center" label='操作'>
-          <template slot-scope="scope"><span class="detail" @click="handleToDetail">详情</span></template>
-        </el-table-column>
+        <el-table-column min-width="50" align="center" label='角色' prop="roleTypeStr"></el-table-column>
+        <el-table-column min-width="100" align="center" label='佣金（元）' prop="amount"></el-table-column>
+        <el-table-column min-width="50" align="center" label='佣金类别' prop="typeStr"></el-table-column>
+        <el-table-column min-width="50" align="center" label='生成日期' prop="time"></el-table-column>
       </el-table>
-      <div class="pagination-container">
-        <el-pagination
-          @current-change="handleChangeCurrent"
-          layout="prev, pager, next"
-          :total="totalCount">
-        </el-pagination> 
-      </div>
     </TableWrapper>
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {bounsType, bounsSearchTypes, roleOptions} from '@/views/const'
+import {bounsSearchTypes, bounsType, pagingParams, roleOptions} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
+import listMixins from '../listMixins'
 export default {
+  mixins: [listMixins],
   components: {
     RadioGroup,
     DatePicker,
@@ -80,8 +69,6 @@ export default {
   data() {
     return {
       requestData: {
-        bonusType: '0',
-        roleType: '0',
         time: {
           begin: null,
           end: null
@@ -90,67 +77,52 @@ export default {
           type: '0',
           text: ''
         },
-        currPage: 0,
-        currPage: 10
+        roleType: '0',
+        bounsType: '0',
+        ...pagingParams
       },
       list: null,
       listLoading: true,
-      bounsType,
-      bounsSearchTypes,
       totalCount: 0,
+      bounsSearchTypes,
+      bounsType,
       roleOptions
     }
   },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
-  created() {
-    this.fetchData()
-  },
   methods: {
     fetchData () {
-      this.$API.listcounselors({
-        data: this.requestData
+      this.$API.listbonus({
+        data: {
+          ...this.requestData,
+          type: this.requestData.search.type,
+          typeStr: this.requestData.search.text,
+          timeBegin: this.requestData.time.begin,
+          timeEnd: this.requestData.time.end
+        }
       })
         .then((res) => {
           this.listLoading = false
-          console.log(res)
           let data = res.data || {}
           this.list = data.page
           this.totalCount = data.totalCount
         })
         .catch((res) => {
-          console.log(res)
+          this.listLoading = false
         })
     },
     handleChange () {
-      console.log()
-      console.log('requst api')
-    },
-    handleAddMember() {
-      console.log('add-member')
-    },
-    handleToDetail () {
-
-    },
-    handleChangeCurrent (currentPage) {
-      this.requestData.currPage = currentPage
-      this.handleChange()
+      this.fetchData()
     }
+  },
+  mounted() {
+    this.fetchData()
   }
 }
 </script>
 <style lang="scss">
   @import  '../../styles/vars.scss';
   $padding: 20px;
-  .bouns-list-page {
+  .bonus-list-page {
     padding: 0;
     .search-box {
       margin-right: $padding;
@@ -172,7 +144,6 @@ export default {
         }
       }
     }
-    
     .list {
       margin: $padding;
       width: auto;
