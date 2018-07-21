@@ -240,7 +240,8 @@ export const constantRouterMap = [
         name: 'OrderDetail',
         // 后面添了详情路由再改
         component: () => import('@/views/order-detail/index'),
-        meta: { title: '订单详情', icon: 'OrderDetail'}
+        meta: { title: '订单详情', icon: 'OrderDetail'},
+        hidden: true
       }
     ]
   },
