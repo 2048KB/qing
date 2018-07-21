@@ -158,7 +158,9 @@ export default {
       this.fetchData()
     },
     handleAddMember() {
-      this.$message('功能尚在开发中...')
+      this.$router.push({
+        path: this.pageData.addUrl
+      })
     },
     handleToDetail (index) {
       this.$router.push({
@@ -172,8 +174,6 @@ export default {
   },
   mounted() {
     this.fetchData()
-    console.log(this.$route)
-    console.log(this.$router)
   }
 }
 </script>

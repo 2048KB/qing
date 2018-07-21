@@ -31,3 +31,6 @@ ol, ul {
   cursor: pointer;
   border-width: 0 !important;
 }
+.unify-wrapper {
+  min-width: 1200px;
+}

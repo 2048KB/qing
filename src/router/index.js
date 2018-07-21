@@ -71,7 +71,7 @@ export const constantRouterMap = [
         name: 'CustomDetail',
         component: () => import('@/views/custom-detail/index'),
         meta: { title: '会员详情', icon: 'table' }
-      },
+      }
     ]
   },
 
@@ -105,13 +105,20 @@ export const constantRouterMap = [
             meta: { title: '顾问详情', icon: 'table' },
             hidden: true
           },
+          {
+            path: 'add',
+            name: 'ConsultantAdd',
+            component: () => import('@/views/add/index'),
+            meta: { title: '添加', icon: 'table' },
+            hidden: true
+          }
         ]
       },
       {
         path: 'beautician',
         name: 'Beautician',
         redirect: '/employee/beautician/list',
-        component: () => import('@/views/consultant/index'),
+        component: () => import('@/views/menu/index'),
         meta: { title: '美容师', icon: 'table' },
         children: [
           {
@@ -127,6 +134,13 @@ export const constantRouterMap = [
             meta: { title: '美容师详情', icon: 'table' },
             hidden: true
           },
+          {
+            path: 'add',
+            name: 'BeauticianAdd',
+            component: () => import('@/views/add/index'),
+            meta: { title: '添加', icon: 'table' },
+            hidden: true
+          }
         ]
       }
       // {
