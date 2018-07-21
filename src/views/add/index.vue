@@ -246,6 +246,9 @@ export default {
   .form-container {
     display: flex;
     padding: 0 10px;
+    .TableWrapper {
+      min-width: auto;
+    }
   }
   .career-info-form {
     width: 37.2%;

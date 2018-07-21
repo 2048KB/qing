@@ -1,0 +1,20 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "conditions": null,
+    "currPage": 1,
+    "page": [{
+      "id": 9,
+      "ip": "0:0:0:0:0:0:0:1",
+      "mobile": "15738773742",
+      "name": "ztl",
+      "realityName": "张桃丽",
+      "remark": "编辑管理员",
+      "time": "2018-07-06 15:35:33"
+    }],
+    "pageSize": 5,
+    "totalCount": 1,
+    "totalPageCount": 1
+  }
+}

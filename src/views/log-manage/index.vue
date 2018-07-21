@@ -1,13 +1,11 @@
 <template>
-  <div class="app-container consultant-page">
-    <div class="top-bar">
-      <span class="add-member" @click="handleAddMember">添加</span>
-    </div>
+  <div class="app-container bonus-list-page">
+    <div class="top-bar"></div>
     <SearchBox 
       class="search-box"
       @change="handleChange"
       :options="logSearchTypes"
-      v-model="requestData.search"></SearchBox>
+      v-model="search"></SearchBox>
     <div class="filter-box">
       <div class="filter-item">
         <DatePicker 
@@ -16,49 +14,37 @@
           title="操作时间"></DatePicker>
       </div>
     </div>
-    <TableWrapper title="操作日志列表">
+    <TableWrapper title="佣金列表" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
+        empty-text="没有数据"
         class="list"
         :data="list" 
         v-loading.body="listLoading" 
         element-loading-text="Loading" 
         :fit="true"
         border highlight-current-row>
-        <el-table-column min-width="50" align="center" label='员工编号' prop="sno"></el-table-column>
-        <el-table-column min-width="50" align="center" label='姓名' prop="realityName"></el-table-column>
-        <el-table-column min-width="50" align="center" label='性别' prop="sexStr"></el-table-column>
-        <el-table-column min-width="50" align="center" label='手机号' prop="mobile"></el-table-column>
-        <el-table-column min-width="50" align="center" label='出生日期' prop="birthDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='身份证号' prop="idNumber"></el-table-column>
-        <el-table-column min-width="50" align="center" label='QQ号' prop="qq"></el-table-column>
-        <el-table-column min-width="50" align="center" label='入职日期' prop="entryDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='创建日期' prop=""></el-table-column>
-        <el-table-column min-width="50" align="center" label='操作'>
-          <template slot-scope="scope"><span class="detail" @click="handleToDetail">详情</span></template>
-        </el-table-column>
+        <el-table-column min-width="50" align="center" label='ID' prop="id"></el-table-column>
+        <el-table-column min-width="50" align="center" label='操作者用户名' prop="name"></el-table-column>
+        <el-table-column min-width="50" align="center" label='操作者真实姓名' prop="realityName"></el-table-column>
+        <el-table-column min-width="50" align="center" label='操作者手机号' prop="mobile"></el-table-column>
+        <el-table-column min-width="50" align="center" label='操作时间' prop="time"></el-table-column>
+        <el-table-column min-width="100" align="center" label='操作者IP' prop="ip"></el-table-column>
+        <el-table-column min-width="50" align="center" label='备注' prop="remark"></el-table-column>
       </el-table>
-      <div class="pagination-container">
-        <el-pagination
-          @current-change="handleChangeCurrent"
-          layout="prev, pager, next"
-          :total="totalCount">
-        </el-pagination> 
-      </div>
     </TableWrapper>
   </div>
 </template>
 
 <script>
-import { getList } from '@/api/table'
-import RadioGroup from '@/components/RadioGroup'
-import {withdrawStatuOptions, logSearchTypes} from '@/views/const'
+import {pagingParams, logSearchTypes} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
+import listMixins from '../listMixins'
 export default {
+  mixins: [listMixins],
   components: {
-    RadioGroup,
     DatePicker,
     SearchBox,
     TableWrapper
@@ -66,75 +52,69 @@ export default {
   data() {
     return {
       requestData: {
-        dirInviteRole: '0',
         time: {
           begin: null,
           end: null
         },
-        search: {
-          type: '0',
-          text: ''
-        },
-        currPage: 0,
-        currPage: 10
+        ...pagingParams
       },
+      search: {
+        type: '0',
+        text: ''
+      },
+      logSearchTypes,
       list: null,
       listLoading: true,
-      withdrawStatuOptions,
-      logSearchTypes,
-      totalCount: 0
+      totalCount: 0,
+      searchResult: {}
     }
   },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
+  watch: {
+    search: {
+      handler: function (val) {
+        let select = logSearchTypes[val.type]
+        let temp = {}
+        if (select && select.key) {
+          temp[select.key] = val.text
+        }
+        this.searchResult = temp
+      },
+      deep: true
     }
-  },
-  created() {
-    this.fetchData()
   },
   methods: {
     fetchData () {
-      this.$API.showwithdrawuser({
-        data: this.requestData
+      this.$API.showsupervisoreventlog({
+        data: {
+          ...this.requestData,
+          ...this.searchResult,
+          timeStart: this.requestData.time.begin,
+          timeEnd: this.requestData.time.end
+        }
       })
         .then((res) => {
           this.listLoading = false
-          console.log(res)
           let data = res.data || {}
           this.list = data.page
           this.totalCount = data.totalCount
         })
         .catch((res) => {
-          console.log(res)
+          this.listLoading = false
         })
     },
     handleChange () {
-      console.log()
-      console.log('requst api')
-    },
-    handleAddMember() {
-      console.log('add-member')
-    },
-    handleToDetail () {
-
-    },
-    handleChangeCurrent (currentPage) {
-      this.requestData.currPage = currentPage
-      this.handleChange()
+      this.fetchData()
     }
+  },
+  mounted() {
+    this.fetchData()
   }
 }
 </script>
 <style lang="scss">
   @import  '../../styles/vars.scss';
   $padding: 20px;
-  .consultant-page {
+  .bonus-list-page {
     padding: 0;
     .search-box {
       margin-right: $padding;
@@ -155,11 +135,6 @@ export default {
           padding-bottom: 5px;
         }
       }
-    }
-    .add-member {
-      display: block;
-      color: $c0;
-      cursor: pointer;
     }
     .list {
       margin: $padding;
