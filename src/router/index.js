@@ -46,13 +46,31 @@ export const constantRouterMap = [
     redirect: '/example/vip-detail',
     name: 'Example',
     hidden: false,
-    meta: { title: '页面入口集合', icon: 'example' },
+    meta: { title: '页面入口集合', icon: 'table' },
     children: [
       {
         path: 'vip-detail',
         name: 'VipDetail',
         component: () => import('@/views/vip-detail/index'),
         meta: { title: '会员详情', icon: 'table' },
+      },
+      {
+        path: 'rulesyyset',
+        name: 'RunrulesYyset',
+        component: () => import('@/views/runrules-yyset/index'),
+        meta: { title: '运营规则设置', icon: 'table' },
+      },
+      {
+        path: 'rulesfxset',
+        name: 'RunrulesFxset',
+        component: () => import('@/views/runrules-fxset/index'),
+        meta: { title: '分销规则设置', icon: 'table' },
+      },
+      {
+        path: 'organize',
+        name: 'organize',
+        component: () => import('@/views/organize/index'),
+        meta: { title: '分销规则设置', icon: 'table' },
       },
       {
         path: 'counselor-detail',
@@ -83,7 +101,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/employee/consultant/list',
     name: 'Employee',
-    meta: { title: '员工管理', icon: 'example' },
+    meta: { title: '员工管理', icon: 'table' },
     children: [
       {
         path: 'consultant',
@@ -157,7 +175,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/client/member/list',
     name: 'Client',
-    meta: { title: '客户管理', icon: 'example' },
+    meta: { title: '客户管理', icon: 'table' },
     children: [
       {
         path: 'member',
@@ -205,35 +223,37 @@ export const constantRouterMap = [
       }
     ]
   },
+
   // 提现管理
   {
     path: '/account',
     component: Layout,
     redirect: '/account/withdraw-user',
     name: 'account',
-    meta: { title: '提现管理', icon: 'example' },
+    meta: { title: '提现管理', icon: 'table' },
     children: [
       {
         path: 'withdraw-user',
         name: 'WithdrawUser',
         component: () => import('@/views/withdraw-user/index'),
-        meta: { title: '提现总表', icon: 'withdraw-user' }
+        meta: { title: '提现总表', icon: 'table' }
       }
     ]
   },
+
   // 订单管理
   {
     path: '/order',
     component: Layout,
     redirect: '/order/list',
     name: 'Order',
-    meta: { title: '订单管理', icon: 'example' },
+    meta: { title: '订单管理', icon: 'table' },
     children: [
       {
         path: 'list',
         name: 'OrderList',
         component: () => import('@/views/order-list/index'),
-        meta: { title: '订单列表', icon: 'OrderList'}
+        meta: { title: '订单列表', icon: 'table'}
       },
       {
         path: 'detail',
@@ -252,7 +272,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/overview/platform-overview',
     name: 'Overview',
-    meta: { title: '平台概况', icon: 'example' },
+    meta: { title: '平台概况', icon: 'table' },
     children: [
       {
         path: 'platform-overview',
@@ -275,13 +295,36 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/bonus/bonus-list',
     name: 'bonus',
-    meta: { title: '佣金列表', icon: 'example' },
+    meta: { title: '佣金列表', icon: 'table' },
     children: [
       {
         path: 'bonus-list',
         name: 'BonusList',
         component: () => import('@/views/bonus-list/index'),
-        meta: { title: '佣金总表', icon: 'bonus-list' }
+        meta: { title: '佣金总表', icon: 'table' }
+      }
+    ]
+  },
+
+  // 运营设置
+  {
+    path: '/runrules',
+    component: Layout,
+    redirect: '/runrules/rulesyyset',
+    name: 'Runrules',
+    meta: { title: '运营设置', icon: 'table' },
+    children: [
+      {
+        path: 'rulesyyset',
+        name: 'RunrulesYyset',
+        component: () => import('@/views/runrules-yyset/index'),
+        meta: { title: '运营规则设置', icon: 'table' },
+      },
+      {
+        path: 'rulesfxset',
+        name: 'RunrulesFxset',
+        component: () => import('@/views/runrules-fxset/index'),
+        meta: { title: '分销规则设置', icon: 'table' },
       }
     ]
   },
@@ -292,13 +335,31 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/log/log-manage',
     name: 'log',
-    meta: { title: '后台日志管理', icon: 'example' },
+    meta: { title: '后台日志管理', icon: 'table' },
     children: [
       {
         path: 'log-manage',
         name: 'LogManage',
         component: () => import('@/views/log-manage/index'),
-        meta: { title: '后台操作日志', icon: 'log-manage' }
+        meta: { title: '后台操作日志', icon: 'table' }
+      }
+    ]
+  },
+
+
+  // 组织架构管理
+  {
+    path: '/organize',
+    component: Layout,
+    redirect: '/organize/organize',
+    name: 'Organize',
+    meta: { title: '组织架构管理', icon: 'tablse' },
+    children: [
+      {
+        path: 'organize',
+        name: 'organize',
+        component: () => import('@/views/organize/index'),
+        meta: { title: '组织架构管理', icon: 'table' },
       }
     ]
   },
@@ -309,7 +370,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/system/admin-list',
     name: 'system',
-    meta: { title: '系统管理', icon: 'example' },
+    meta: { title: '系统管理', icon: 'table' },
     children: [
       {
         path: 'admin-list',
@@ -324,20 +385,20 @@ export const constantRouterMap = [
         meta: { title: '角色列表', icon: 'role-list' }
       }
     ]
-  },
+  }
 
-  {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
-  },
+  // {
+  //   path: '/form',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Form',
+  //       component: () => import('@/views/form/index'),
+  //       meta: { title: 'Form', icon: 'form' }
+  //     }
+  //   ]
+  // },
 
   // { path: '*', redirect: '/404', hidden: true }
 ]
