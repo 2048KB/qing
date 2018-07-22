@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container admin-page">
+  <div class="app-container role-page">
     <div class="top-bar">
       <el-button class="add-member-buttom" icon="el-icon-plus" @click="handleShowEditDialog(undefined)">添加</el-button>
     </div>
@@ -158,7 +158,7 @@ export default {
 <style lang="scss">
   @import  '../../styles/vars.scss';
   $padding: 20px;
-  .admin-page {
+  .role-page {
     padding: 0;
     .list {
       margin: $padding;
