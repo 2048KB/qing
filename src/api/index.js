@@ -10,7 +10,16 @@ function getQS(str) {
 
   return matched ? matched[1] : ''
 }
-const domain = 'http://127.0.0.1:3000'
+
+let domain = 'http://127.0.0.1:3000'
+if (getQS('api') == 'prd') {
+  domain = 'https://www.qingqingmeirong.com'
+}
+
+domain = 'http://192.168.0.121:8080'
+
+// 打包测试、生产改接口域名
+// let domain = 'https://www.qingqingmeirong.com'
 
 export function getFullPath (item) {
   return domain + apis[item]

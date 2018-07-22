@@ -15,8 +15,6 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
   name: 'dashboard',
   data() {
@@ -24,14 +22,11 @@ export default {
       user: {}
     }
   },
-  computed: {
-    ...mapGetters([
-      'name',
-      'roles'
-    ])
-  },
   created() {
-    this.$API.home({}).then((res) => {
+    this.$API.home({
+      type: 'GET',
+      data: {}
+    }).then((res) => {
       this.user = res.data
     })
   }

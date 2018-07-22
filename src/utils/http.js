@@ -24,7 +24,7 @@ const fetch = function fetch(url = '', options = {}) {
     }
 
     const ajaxSettings = {
-      type: 'POST',
+      type: request.type || 'POST',
       timeout: 25000,
       contentType: 'application/x-www-form-urlencoded',
       dataType: 'json',

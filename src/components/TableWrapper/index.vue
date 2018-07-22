@@ -1,16 +1,16 @@
 <template>
-  <div class="TableWrapper unify-wrapper">
+  <div class="TableWrapper" :class="unifyWrapper ? 'unify-wrapper' : ''">
     <div class="head">
       <span>{{title}}</span>
       <span><slot name="right"></slot></span>
     </div>
     <div class="content"><slot></slot></div>
     <div class="pagination-container" v-if="isShowPaging && total">
-      <el-pagination 
+      <el-pagination
         @current-change="handleChangeCurrent"
         layout="prev, pager, next"
         :total="total">
-      </el-pagination> 
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -21,6 +21,10 @@ export default {
     title: String,
     total: [String, Number],
     isShowPaging: {
+      type: Boolean,
+      default: true
+    },
+    unifyWrapper: {
       type: Boolean,
       default: true
     }
