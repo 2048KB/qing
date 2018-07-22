@@ -49,15 +49,15 @@
       </table-wrapper>
 
       <!-- 编辑大区 -->
-      <el-dialog title="编辑大区" :visible.sync="dialogFormVisible">
+      <el-dialog title="编辑大区" :visible.sync="editAreaFormVisible">
         <el-form>
             <el-form-item label="大区名字" :label-width="formLabelWidth">
               <el-input v-model="editAreaName" auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
         <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+          <el-button @click="editAreaFormVisible = false">取 消</el-button>
+          <el-button type="primary" @click="commitEditArea" :loading="btnLoading">{{ commitBtnText }}</el-button>
         </div>
       </el-dialog>
 
@@ -70,7 +70,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="addAreaFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addAreaFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="commitAddArea" :loading="btnLoading">确 定</el-button>
         </div>
       </el-dialog>
 
@@ -97,7 +97,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="addShopFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="addShopFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="commitAddShop" :loading="btnLoading">确 定</el-button>
         </div>
       </el-dialog>
 
@@ -115,7 +115,7 @@
         </el-form>
         <div slot="footer" class="dialog-footer">
           <el-button @click="editShopFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="editShopFormVisible = false">确 定</el-button>
+          <el-button type="primary" @click="commitEditStop" :loading="btnLoading">确 定</el-button>
         </div>
       </el-dialog>
 
@@ -128,8 +128,7 @@
   export default {
     data() {
       return {
-        msg: 'Lorem',
-        dialogFormVisible: false,
+        editAreaFormVisible: false,
         addAreaFormVisible: false,
         addShopFormVisible: false,
         editShopFormVisible: false,
@@ -140,20 +139,27 @@
         },
         allShopObj: {},
 
+        // 编辑大区
         editAreaId: '',
         editAreaName: '',
 
+        // 编辑美容店
         editShopId: '',
         editShopName: '',
         editShopType: '',
 
+        // 添加大区
         addAreaname: '',
 
+        // 添加美容店
         addShoptype: '1',
         addShopname: 'test',
         addShoparea: 'aaaa',
 
-        shopCount: 0
+        shopCount: 0,
+
+        btnLoading: false,
+        commitBtnText: '确定'
       }
     },
 
@@ -180,51 +186,85 @@
         }
       },
 
+      commitEditArea() {
+        this.setBtnLoading()
+        this.$API.editstorearea({
+          data: {
+            id: this.editAreaId, //  int 整型  大区id
+            name: this.editAreaName //  String  字符串 大区名称
+          }
+        }).then(res => {
+          setTimeout(() => {
+            this.resetBtnLoading()
+            this.editAreaFormVisible = false
+          }, 1000)
+        })
+      },
+
       // 编辑大区
       editArea(areaId, name) {
         this.editAreaId = areaId
         this.editAreaName = name
-        this.$API.editstorearea({
+        this.editAreaFormVisible = true
+      },
+
+      commitAddShop() {
+        this.setBtnLoading()
+        this.$API.addstore({
           data: {
-            id: '', //  int 整型  大区id
-            name: '' //  String  字符串 大区名称
+            name: this.addShopname, //  String  字符串 门店名称
+            type: this.addShoptype, //  int 整型  门店类型：1直营店，2加盟店
+            areaId: this.addShoparea //  int 整型  所属区域id
           }
+        }).then(res => {
+          this.resetBtnLoading()
+          this.addShopFormVisible = false
         })
-        this.dialogFormVisible = true
       },
 
       // 添加美容店
       addShop() {
-        this.$API.addstore({
+        this.addShopFormVisible = true
+      },
+
+      commitEditStop() {
+        this.setBtnLoading()
+        this.$API.editstore({
           data: {
-            name: '', //  String  字符串 门店名称
-            type: '', //  int 整型  门店类型：1直营店，2加盟店
-            areaId: '' //  int 整型  所属区域id
+            id: this.editShopId, //  int 整型  门店id
+            name: this.editShopName, //  String  字符串 门店名称
+            type: this.editShopType, //  int 整型  门店类型1直营店，2加盟店
+            areaId: this.editShopAreaId //  int 整型  所属区域id
           }
         }).then(res => {
-          console.log(res)
+          setTimeout(() => {
+            this.resetBtnLoading()
+            this.editShopFormVisible = false
+          }, 1000)
         })
-        this.addShopFormVisible = true
       },
 
       // 编辑美容店
       editShop(obj) {
+        this.editShopAreaId = obj.areaId
         this.editShopName = obj.name
         this.editShopId = obj.id
         this.editShopType = obj.type + ''
-
-        this.$API.editstore({
-          // data: {
-          //   id: '', //  int 整型  门店id
-          //   name: '', //  String  字符串 门店名称
-          //   type: '', //  int 整型  门店类型1直营店，2加盟店
-          //   areaId: '' //  int 整型  所属区域id
-          // }
-          data: obj
-        }).then(res => {
-          console.log(res)
-        })
         this.editShopFormVisible = true
+      },
+
+      commitAddArea() {
+        this.setBtnLoading()
+        this.$API.addstorearea({
+          data: {
+            name: this.addAreaname
+          }
+        }).then(res => {
+          setTimeout(() => {
+            this.resetBtnLoading()
+            this.addAreaFormVisible = false
+          }, 1000)
+        })
       },
 
       // 添加大区
@@ -234,8 +274,29 @@
 
       updateYYSet() {
         this.dialogFormVisible = true
-        // alert('ddd')
-      }
+      },
+
+      setBtnLoading() {
+        this.btnLoading = true
+        this.commitBtnText = '加载中...'
+      },
+
+      resetBtnLoading(code = 0, msg, text = '确 定') {
+        this.btnLoading = false
+        this.commitBtnText = text || '确 定'
+
+        if (+code < 0) {
+          this.$message({
+            message: msg || '服务异常，请稍后再试！',
+            type: 'error'
+          })
+        } else {
+          this.$message({
+            message: msg || '成功',
+            type: 'success'
+          });
+        }
+      },
     },
 
     components: {
