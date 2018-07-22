@@ -34,14 +34,14 @@
     </TableWrapper>
     <el-dialog :title="editDialogTitle" :visible.sync="isShowEditDialog">
       <el-form :model="editForm" :rules="rules" ref="editform" class="edit-form">
-        <el-form-item label="用户名">
-          <el-input v-model="editForm.name" :disabled="!!editForm.name"></el-input>
+        <el-form-item label="用户名" prop="name">
+          <el-input placeholder="请输入4-16位字母或字母数字组合的用户名" maxlength="16" v-model="editForm.name" :disabled="editDialogTitle.indexOf('编辑') > -1"></el-input>
         </el-form-item>
         <el-form-item label="真实姓名" prop="realityName">
-          <el-input v-model="editForm.realityName"></el-input>
+          <el-input placeholder="请输入真实姓名" maxlength="16" v-model="editForm.realityName"></el-input>
         </el-form-item>
         <el-form-item label="手机号" prop="mobile">
-          <el-input v-model="editForm.mobile" maxlength="11"></el-input>
+          <el-input placeholder="请输入手机号" v-model="editForm.mobile" maxlength="11"></el-input>
         </el-form-item>
         <el-form-item label="所属角色" prop="roleId">
           <el-select v-model="editForm.roleId" placeholder="请选择">
@@ -49,12 +49,12 @@
           </el-select>
         </el-form-item>
         <el-form-item label="密码" prop="password">
-          <el-input v-model="editForm.password"></el-input>
+          <el-input placeholder="请输入6-15位数字字母组合密码" maxlength="15" v-model="editForm.password"></el-input>
         </el-form-item>
         <el-form-item label="状态" prop="lockStatus">
           <el-radio-group v-model="editForm.lockStatus">
-            <el-radio :label="0">未锁定</el-radio>
-            <el-radio :label="1">锁定</el-radio>
+            <el-radio :label="0">停用</el-radio>
+            <el-radio :label="1">启用</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -89,7 +89,7 @@ const DEFAULT_EDIT_FORM = {
   mobile: '',
   roleId: '',
   password: '',
-  lockStatus: 0
+  lockStatus: 1
 }
 export default {
   mixins: [listMixins],
@@ -114,12 +114,12 @@ export default {
       listRole: {},
       submitApi: 'addsupervisor',
       rules: {
-        name: {name: '用户名', required: true, trigger: 'blur', validator: validateRequired},
-        realityName: {name: '真实姓名', required: true, trigger: 'blur', validator: validateRequired},
-        mobile: {name: '手机号', required: true, trigger: 'blur', validator: validateMobild},
-        roleId: {message: '请选择所属角色', required: true, trigger: 'blur', validator: validateRequired},
-        password: {name: '密码', required: true, trigger: 'blur', validator: validateRequired},
-        lockStatus: {message: '请选择锁定状态', required: true, trigger: 'blur', validator: validateRequired},
+        name: {name: '用户名', minlength: 4, trigger: 'change', validator: validateRequired},
+        realityName: {name: '真实姓名', required: true, trigger: 'change', validator: validateRequired},
+        mobile: {name: '手机号', required: true, trigger: 'change', validator: validateMobild},
+        roleId: {message: '请选择所属角色', required: true, trigger: 'change', validator: validateRequired},
+        password: {name: '密码', minlength: 6, required: true, trigger: 'change', validator: validateRequired},
+        lockStatus: {message: '请选择锁定状态', required: true, trigger: 'change', validator: validateRequired},
       },
       isShowRemoveDialog: false,
       removeIndex: null

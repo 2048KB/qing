@@ -83,7 +83,7 @@ export default {
       editForm: DEFAULT_EDIT_FORM,
       submitApi: 'addrightrole',
       rules: {
-        name: {name: '角色名称', required: true, trigger: 'blur', validator: validateRequired}
+        name: {name: '角色名称', required: true, trigger: 'change', validator: validateRequired}
       }
     }
   },

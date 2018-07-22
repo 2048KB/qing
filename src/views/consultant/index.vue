@@ -64,7 +64,6 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
 import {sexsOptions, employeeTypes, beauticianSearchTypes, roleType, pagingParams} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
@@ -126,7 +125,6 @@ export default {
       totalCount: 0
     }
   },
-  
   methods: {
     fetchData () {
       this.$API[this.pageData.listApi]({

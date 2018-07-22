@@ -7,10 +7,10 @@
       <TableWrapper title="个人信息" class="personal-info-form">
         <el-form :model="formData" :rules="rules" ref="form1">
           <UploadBox v-model="formData.photo"></UploadBox>
-          <el-form-item label="姓名" required prop="realityName">
-            <el-input v-model="formData.realityName"></el-input>
+          <el-form-item label="姓名"  prop="realityName">
+            <el-input placeholder="请输入真实姓名" maxlength="16" v-model="formData.realityName"></el-input>
           </el-form-item>
-          <el-form-item label="性别" required prop="sex">
+          <el-form-item label="性别"  prop="sex">
             <el-radio-group v-model="formData.sex">
               <el-radio label="1">男</el-radio>
               <el-radio label="2">女</el-radio>
@@ -19,32 +19,32 @@
           <el-form-item label="出生日期">
             <el-date-picker type="date" placeholder="选择日期" v-model="formData.birthDateStr"></el-date-picker>
           </el-form-item>
-          <el-form-item label="手机号" required prop="mobile">
-            <el-input v-model="formData.mobile" maxlength="11"></el-input>
+          <el-form-item label="手机号"  prop="mobile">
+            <el-input placeholder="请输入手机号" v-model="formData.mobile" maxlength="11"></el-input>
           </el-form-item>
-          <el-form-item label="邮箱">
-            <el-input v-model="formData.email"></el-input>
+          <el-form-item label="邮箱" prop="email">
+            <el-input maxlength="32" placeholder="请输入常用邮箱" v-model="formData.email"></el-input>
           </el-form-item>
-          <el-form-item label="QQ号">
-            <el-input v-model="formData.qq"></el-input>
+          <el-form-item label="QQ号" prop="qq">
+            <el-input placeholder="请输入5-11位QQ号" minlength="5" maxlength="11" v-model="formData.qq"></el-input>
           </el-form-item>
           <el-form-item label="身份证号">
-            <el-input v-model="formData.idNumber"></el-input>
+            <el-input maxlength="18" placeholder="请输入身份证号" v-model="formData.idNumber"></el-input>
           </el-form-item>
-          <el-form-item label="员工编码" required prop="sno">
-            <el-input v-model="formData.sno"></el-input>
+          <el-form-item label="员工编码"  prop="sno">
+            <el-input placeholder="BJCYMZYD-000001" v-model="formData.sno"></el-input>
           </el-form-item>
           <el-form-item label="通讯地址">
-            <el-input v-model="formData.address" placeholder="30字以内" maxlength="30"></el-input>
+            <el-input placeholder="请输入常用地址" v-model="formData.address" maxlength="60"></el-input>
           </el-form-item>
         </el-form>
       </TableWrapper>
       <TableWrapper title="职业信息" class="career-info-form">
         <el-form :model="formData" :rules="rules" ref="form2">
-          <el-form-item label="入职日期" required prop="entryDateStr">
+          <el-form-item label="入职日期"  prop="entryDateStr">
             <el-date-picker type="date" placeholder="选择日期" v-model="formData.entryDateStr"></el-date-picker>
           </el-form-item>
-          <el-form-item label="所属门店" required prop="storeId" class="store-select-box" ref="selectStore">
+          <el-form-item label="所属门店"  prop="storeId" class="store-select-box" ref="selectStore">
             <el-select placeholder="请选择" v-model="areaStore">
               <el-option v-for="area in storeAreaOptions" :key="area.id" :label="area.name" :value="area.id"></el-option>
             </el-select>
@@ -52,13 +52,13 @@
               <el-option v-for="store in storeOptions" :key="store.id" :label="store.name" :value="store.id"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item v-if="pageData.roleType === 1" label="顾问列表" required prop="parentId">
+          <el-form-item v-if="pageData.roleType === 1" label="顾问列表"  prop="parentId">
             <el-select placeholder="请选择" v-model="formData.parentId">
               <el-option v-for="consultant in consultantListOptions" :key="consultant.id" :label="consultant.realityName" :value="consultant.id"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="备注">
-            <el-input type="textarea" v-model="formData.remark"></el-input>
+            <el-input maxlength="200" type="textarea" v-model="formData.remark"></el-input>
           </el-form-item>
         </el-form>
       </TableWrapper>
@@ -69,7 +69,7 @@
 <script>
 import TableWrapper from '../../components/TableWrapper'
 import UploadBox from '../../components/UploadBox'
-import { validateRequired, validateMobild } from '../validate'
+import { validateRequired, validateMobild, validateRealityName, validateEmail, validateQQ } from '../validate'
 import {roleType} from '@/views/const'
 const DEFAULT_OPTIONS = [{
   id: '',
@@ -113,12 +113,15 @@ export default {
         parentId: ''
       },
       rules: {
-        realityName: {name: '真实姓名', required: true, trigger: 'blur', validator: validateRequired},
+
+        realityName: {name: '姓名', required: true, trigger: 'blur', validator: validateRealityName},
         sex: {name: '性别', required: true, trigger: 'blur', validator: validateRequired},
         mobile: {name: '手机号', required: true, trigger: 'blur', validator: validateMobild},
         sno: {name: '员工编号', required: true, trigger: 'blur', validator: validateRequired},
         entryDateStr: {message: '请选择入职日期', required: true, trigger: 'blur', validator: validateRequired},
-        storeId: {message: '请选择所属门店', required: true, validator: validateRequired}
+        storeId: {message: '请选择所属门店', required: true, validator: validateRequired},
+        email: {trigger: 'blur', validator: validateEmail},
+        qq: {trigger: 'blur', validator: validateQQ}
       },
       storeAreaOptions: DEFAULT_OPTIONS,
       storeOptions: DEFAULT_OPTIONS,
