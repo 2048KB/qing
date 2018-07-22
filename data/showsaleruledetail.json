@@ -1,0 +1,18 @@
+{
+  "msg": "查询成功",
+  "code": 1,
+  "data": {
+    "RULE:3:2": "{\"bonus\":700,\"per\":1}",
+    "RULE:2:3": "{\"bonus\":2000,\"per\":1}",
+    "RULE:1:4": "{\"bonus\":600,\"per\":1}",
+    "RULE:3:1": "{\"bonus\":2700,\"per\":1}",
+    "RULE:1:3": "{\"bonus\":600,\"per\":1}",
+    "RULE:3:4": "{\"bonus\":700,\"per\":1}",
+    "RULE:2:5": "[{\"invite_from\":1,\"invite_to\":3,\"from\":1,\"to\":3,\"per\":1,\"bonus\":0},{\"invite_from\":4,\"invite_to\":7,\"from\":4,\"to\":7,\"per\":1,\"bonus\":100},{\"invite_from\":8,\"invite_to\":15,\"from\":8,\"to\":15,\"per\":1,\"bonus\":300},{\"invite_from\":16,\"invite_to\":-1,\"from\":16,\"to\":-1,\"per\":1,\"bonus\":600}]",
+    "RULE:1:6": "{\"bonus\":1200,\"per\":2}",
+    "RULE:2:4": "{\"bonus\":700,\"per\":1}",
+    "RULE:3:6": "{\"bonus\":0,\"per\":2}",
+    "RULE:3:5": "[{\"invite_from\":1,\"invite_to\":3,\"from\":1,\"to\":3,\"per\":1,\"bonus\":0},{\"invite_from\":4,\"invite_to\":7,\"from\":4,\"to\":7,\"per\":1,\"bonus\":100},{\"invite_from\":8,\"invite_to\":15,\"from\":8,\"to\":15,\"per\":1,\"bonus\":300},{\"invite_from\":16,\"invite_to\":-1,\"from\":16,\"to\":-1,\"per\":1,\"bonus\":600}]",
+    "RULE:2:6": "{\"bonus\":0,\"per\":2}"
+  }
+}
