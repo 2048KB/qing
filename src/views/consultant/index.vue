@@ -168,7 +168,7 @@ export default {
     },
     handleToDetail (index) {
       this.$router.push({
-        path: `/employee/consultant/detail`,
+        path: this.pageData.detailUrl,
         query: {
           id: this.list[index].id,
           role: this.pageData.roleType
