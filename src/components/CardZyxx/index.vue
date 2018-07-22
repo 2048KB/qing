@@ -12,8 +12,9 @@
       <el-row>
         <el-col :span="5">
           <div class="th">
-            <div class="img"><img src="../../assets/images/qq-18.png" alt=""></div>
-            <el-button type="primary" v-show="!isVip">更换头像</el-button>
+            <UploadBox v-model="formData.photo" :showButton="true" tips=""></UploadBox>
+<!--             <div class="img"><img src="../../assets/images/qq-18.png" alt=""></div>
+            <el-button type="primary" v-show="!isVip">更换头像</el-button> -->
           </div>
         </el-col>
         <el-col :span="19">
@@ -41,6 +42,7 @@
 </template>
 
 <script>
+  import UploadBox from '@/components/UploadBox'
   export default {
     props: {
       employeeDetail: Object,
@@ -57,17 +59,28 @@
         default: false
       }
     },
+
+    data() {
+      return {
+        formData: {
+          photo: ''
+        }
+      }
+    },
     methods: {
       triggerUpdateInfoForm() {
         this.$emit('updateUserInfo', {})
       }
+    },
+
+    components: {
+      UploadBox
     }
   }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
   .detail-card__body--user {
-
     .meta .name .state {
       margin-left: 20px;
       font-size: 12px;
@@ -82,5 +95,37 @@
       font-size: 12px;
       font-weight: normal;
     }
+  }
+
+  .detail-card__body--user {
+
+    .UploadBox {
+      height: 200px;
+      /*border: 1px solid red;*/
+    }
+
+    .UploadBox .upload-img .el-upload-list, .UploadBox .upload-img .el-upload {
+      margin-top: -15px;
+    }
+
+    .UploadBox .custom-icon {
+      margin-top: 10px;
+    }
+
+    .UploadBox .upload-img .el-button {
+      top: 140px;
+    }
+  }
+
+  .detail-card--user {
+    padding-bottom: 0
+  }
+
+  .detail-card--user .el-card__body {
+    padding-bottom: 0;
+  }
+
+  .detail-card__body--user .UploadBox .custom-icon {
+    margin-top: 20px;
   }
 </style>

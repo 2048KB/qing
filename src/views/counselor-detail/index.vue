@@ -1,126 +1,128 @@
 <template>
-  <div class="counselor-detail-container">
-    <el-row>
-      <el-col :span="16">
-        <div class="grid-content padding-left-none">
-          <!-- 职业信息 -->
-          <card-zyxx :employeeDetail="employeeDetail" @updateUserInfo="updateInfo"></card-zyxx>
+  <div>
+    <div class="top-bar"></div>
+    <div class="counselor-detail-container">
+      <el-row>
+        <el-col :span="16">
+          <div class="grid-content padding-left-none">
+            <!-- 职业信息 -->
+            <card-zyxx :employeeDetail="employeeDetail" @updateUserInfo="updateInfo"></card-zyxx>
 
-          <!-- 账户信息 -->
-          <card-zhxx :userFunds="userFunds"></card-zhxx>
+            <!-- 账户信息 -->
+            <card-zhxx :userFunds="userFunds"></card-zhxx>
 
-          <!-- 邀请信息 -->
-          <card-yqxx :obj="inviters"></card-yqxx>
+            <!-- 邀请信息 -->
+            <card-yqxx :obj="inviters"></card-yqxx>
 
-          <!-- 当月佣金 -->
-          <card-youjin :lists="yjLists"></card-youjin>
-        </div>
-      </el-col>
+            <!-- 当月佣金 -->
+            <card-youjin :lists="yjLists" :totalPages="pageCount" @triggerPagination="updateYoujin"></card-youjin>
+          </div>
+        </el-col>
 
-      <!-- right column -->
-      <el-col :span="8">
-        <div class="grid-content">
-          <!-- 个人信息 -->
-          <card-info :employeeDetail="employeeDetail" @updateUserInfoDetail="updateInfoDetail"></card-info>
+        <!-- right column -->
+        <el-col :span="8">
+          <div class="grid-content">
+            <!-- 个人信息 -->
+            <card-info :employeeDetail="employeeDetail" @updateUserInfoDetail="updateInfoDetail"></card-info>
 
-          <!-- 所属顾问 -->
-          <card-ssgw :inviterinfo="counselorOfBeautician" v-show="!isEmptyObject(counselorOfBeautician)"></card-ssgw>
-        </div>
-      </el-col>
-    </el-row>
+            <!-- 所属顾问 -->
+            <card-ssgw :inviterinfo="counselorOfBeautician" v-show="!isEmptyObject(counselorOfBeautician)"></card-ssgw>
+          </div>
+        </el-col>
+      </el-row>
 
-    <!-- 编辑职业信息弹窗 -->
-    <div class="edit-modal edit-modal--zyxx">
-      <el-dialog title="编辑职业信息" :visible.sync="dialogFormVisible">
-        <!-- <div v-loading="true" element-loading-text="Loading..."></div> -->
-        <el-form :model="infoform">
-          <el-form-item label="入职日期" :label-width="formLabelWidth">
-            <el-input v-model="form.date" auto-complete="off" :disabled="true"></el-input>
-          </el-form-item>
-          <el-form-item label="所属门店" :label-width="formLabelWidth">
-            <el-select v-model="areaName" placeholder="请选择活动区域" :disabled="true"></el-select>
-            <el-select v-model="storeName" placeholder="请选择活动区域" :disabled="true"></el-select>
-          </el-form-item>
-          <el-form-item label="备注" :label-width="formLabelWidth">
-            <el-input type="textarea" :rows="2" placeholder="请输入备注" v-model="infoform.remark"></el-input>
-          </el-form-item>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">取 消</el-button>
-          <el-button type="primary" @click="commitInfo" :loading="btnLoading">{{ commitBtnText }}</el-button>
-        </div>
-      </el-dialog>
+      <!-- 编辑职业信息弹窗 -->
+      <div class="edit-modal edit-modal--zyxx">
+        <el-dialog title="编辑职业信息" :visible.sync="dialogFormVisible">
+          <!-- <div v-loading="true" element-loading-text="Loading..."></div> -->
+          <el-form :model="infoform">
+            <el-form-item label="入职日期" :label-width="formLabelWidth">
+              <el-input v-model="form.date" auto-complete="off" :disabled="true"></el-input>
+            </el-form-item>
+            <el-form-item label="所属门店" :label-width="formLabelWidth">
+              <el-select v-model="areaName" placeholder="请选择活动区域" :disabled="true"></el-select>
+              <el-select v-model="storeName" placeholder="请选择活动区域" :disabled="true"></el-select>
+            </el-form-item>
+            <el-form-item label="备注" :label-width="formLabelWidth">
+              <el-input type="textarea" :rows="2" placeholder="请输入备注" v-model="infoform.remark"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click="commitInfo" :loading="btnLoading">{{ commitBtnText }}</el-button>
+          </div>
+        </el-dialog>
+      </div>
+
+      <!-- 编辑个人信息弹窗 -->
+      <div class="edit-modal edit-modal--zyxx">
+        <el-dialog title="编辑个人信息" :visible.sync="infodialogFormVisible">
+          <el-form :model="infoform">
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="姓名*" :label-width="formLabelWidth">
+                  <el-input v-model="infoform.realityName" auto-complete="on"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="性别*" :label-width="formLabelWidth">
+                  <el-radio v-model="infoform.sex" label="1">男</el-radio>
+                  <el-radio v-model="infoform.sex" label="2">女</el-radio>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="出生日期*" :label-width="formLabelWidth">
+                  <el-date-picker v-model="infoform.birthDate" type="date" placeholder="选择日期"></el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="手机号*" :label-width="formLabelWidth">
+                  <el-input v-model="infoform.mobile" auto-complete="on"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="邮箱" :label-width="formLabelWidth">
+                  <el-input v-model="infoform.email" auto-complete="on"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="QQ" :label-width="formLabelWidth">
+                  <el-input v-model="infoform.qq" auto-complete="on"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="12">
+                <el-form-item label="身份证" :label-width="formLabelWidth">
+                  <el-input v-model="infoform.idNumber" auto-complete="on" placeholder="18位"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item label="员工编号*" :label-width="formLabelWidth">
+                  <el-input v-model="infoform.sno" auto-complete="on"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row>
+              <el-col :span="24">
+                <el-form-item label="通讯地址" :label-width="formLabelWidth">
+                  <el-input type="textarea" :rows="4" placeholder="限制30字" v-model="infoform.address"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="infodialogFormVisible = false">取 消</el-button>
+            <!-- <el-button type="primary" @click="commitInfoDetail">确 定</el-button> -->
+            <el-button type="primary" @click="commitInfo" :loading="btnLoading">{{ commitBtnText }}</el-button>
+          </div>
+        </el-dialog>
+      </div>
     </div>
-
-    <!-- 编辑个人信息弹窗 -->
-    <div class="edit-modal edit-modal--zyxx">
-      <el-dialog title="编辑个人信息" :visible.sync="infodialogFormVisible">
-        <el-form :model="infoform">
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="姓名*" :label-width="formLabelWidth">
-                <el-input v-model="infoform.realityName" auto-complete="on"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="性别*" :label-width="formLabelWidth">
-                <el-radio v-model="infoform.sex" label="1">男</el-radio>
-                <el-radio v-model="infoform.sex" label="2">女</el-radio>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="出生日期*" :label-width="formLabelWidth">
-                <el-date-picker v-model="infoform.birthDate" type="date" placeholder="选择日期"></el-date-picker>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="手机号*" :label-width="formLabelWidth">
-                <el-input v-model="infoform.mobile" auto-complete="on"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="邮箱" :label-width="formLabelWidth">
-                <el-input v-model="infoform.email" auto-complete="on"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="QQ" :label-width="formLabelWidth">
-                <el-input v-model="infoform.qq" auto-complete="on"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="身份证" :label-width="formLabelWidth">
-                <el-input v-model="infoform.idNumber" auto-complete="on" placeholder="18位"></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="员工编号*" :label-width="formLabelWidth">
-                <el-input v-model="infoform.sno" auto-complete="on"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <el-form-item label="通讯地址" :label-width="formLabelWidth">
-                <el-input type="textarea" :rows="4" placeholder="限制30字" v-model="infoform.address"></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-        </el-form>
-        <div slot="footer" class="dialog-footer">
-          <el-button @click="infodialogFormVisible = false">取 消</el-button>
-          <!-- <el-button type="primary" @click="commitInfoDetail">确 定</el-button> -->
-          <el-button type="primary" @click="commitInfo" :loading="btnLoading">{{ commitBtnText }}</el-button>
-        </div>
-      </el-dialog>
-    </div>
-
   </div>
 </template>
 
@@ -147,6 +149,8 @@ export default {
   },
   data() {
     return {
+      pageSize: 10,
+      pageCount: 40,
       btnLoading: false,
       commitBtnText: '确 定',
       inviters: {
@@ -241,13 +245,13 @@ export default {
         this.infoform.storeId = res.data.employeeDetail.storeId
         this.infoform.remark = res.data.employeeDetail.remark
 
-
-        console.log('====== API RESPONSE ======')
-        console.log(res)
-        console.log('====== END API RESPONSE ======')
+        // 依赖员工ID，所以要在取得员工ID之后再发请求
+        this.getListcounselorcurmonbonus({
+          id: res.data.employeeDetail.sno, // Long  必须  员工id
+          currPage: 1, //  Int   当前页数
+          pageSize: this.pageSize, //  Int   每页显示数量
+        })
       })
-
-      this.getListcounselorcurmonbonus()
     }
 
 
@@ -292,13 +296,40 @@ export default {
         this.infoform.entryDateStr = res.data.employeeDetail.entryDate
         this.infoform.storeId = res.data.employeeDetail.storeId
         this.infoform.remark = res.data.employeeDetail.remark
-      })
 
-      this.getListcounselorcurmonbonus()
+        // 依赖员工ID，所以要在取得员工ID之后再发请求
+        this.getListbeauticiancurmonbonus({
+          id: res.data.employeeDetail.sno, // Long  必须  员工id
+          currPage: 1, //  Int   当前页数
+          pageSize: this.pageSize, //  Int   每页显示数量
+        })
+      })
     }
   },
 
   methods: {
+    updateYoujin(opts) {
+      let data = {
+        id: this.employeeDetail.sno, // Long  必须  员工id
+        currPage: opts.currPage || 1, //  Int   当前页数
+        pageSize: this.pageSize, //  Int   每页显示数量
+      }
+
+      // 更新顾问佣金列表
+      if (opts.role == 2) {
+        this.getListcounselorcurmonbonus({
+          id: this.employeeDetail.sno, // Long  必须  员工id
+          currPage: opts.currPage || 1, //  Int   当前页数
+          pageSize: this.pageSize, //  Int   每页显示数量
+        })
+      }
+
+      // 更新美容师佣金列表
+      if (opts.role == 1) {
+        this.getListbeauticiancurmonbonus(data)
+      }
+    },
+
     isEmptyObject(obj) {
       for (var prop in obj) {
         if (obj.hasOwnProperty(prop)) {
@@ -334,6 +365,7 @@ export default {
     commitInfoDetail() {
       alert('更新个人信息到服务器')
     },
+
     // 展示 更新个人信息弹窗
     updateInfoDetail() {
       this.infodialogFormVisible = true
@@ -349,8 +381,10 @@ export default {
           data: this.infoform
         }).then(res => {
           setTimeout(() => {
+            this.dialogFormVisible = false
+            this.infodialogFormVisible = false
             this.resetBtnLoading(res.code, res.msg)
-          }, 2000)
+          }, 1000)
         })
       }
 
@@ -360,8 +394,10 @@ export default {
           data: this.infoform
         }).then(res => {
           setTimeout(() => {
+            this.dialogFormVisible = false
+            this.infodialogFormVisible = false
             this.resetBtnLoading(res.code, res.msg)
-          }, 2000)
+          }, 1000)
         })
       }
     },
@@ -372,12 +408,12 @@ export default {
     },
 
     // 顾问当月佣金明细
-    getListcounselorcurmonbonus() {
+    getListcounselorcurmonbonus(obj) {
       this.$API.listcounselorcurmonbonus({
         data: {
-          id: this.$route.query.id, // Long  必须  员工id
-          currPage: 4, //  Int   当前页数
-          pageSize: 3, //  Int   每页显示数量
+          id: obj.id || this.employeeDetail.sno, // Long  必须  员工id
+          currPage: obj.currPage || 1, //  Int   当前页数
+          pageSize: this.pageSize, //  Int   每页显示数量
         }
       }).then((res) => {
         this.yjLists = res.data.page
@@ -385,12 +421,12 @@ export default {
     },
 
     // 美容师当月佣金
-    getListcounselorcurmonbonus() {
+    getListbeauticiancurmonbonus(obj) {
       this.$API.listbeauticiancurmonbonus({
         data: {
-          id: this.$route.query.id, // Long  必须  员工id
-          currPage: 4, //  Int   当前页数
-          pageSize: 3, //  Int   每页显示数量
+          id: obj.id || this.employeeDetail.sno, // Long  必须  员工id
+          currPage: obj.currPage || 1, //  Int   当前页数
+          pageSize: this.pageSize, //  Int   每页显示数量
         }
       }).then((res) => {
         this.yjLists = res.data.page

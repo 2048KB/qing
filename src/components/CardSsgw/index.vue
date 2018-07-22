@@ -39,6 +39,8 @@
   export default {
     props: {
       inviterinfo: Object,
+
+      // type 1 - 直接邀请人， 2 - 间接邀请人, 3 - 绑定邀请人关系
       type: {
         type: Number,
         default: 2
@@ -47,11 +49,11 @@
 
     methods: {
       triggerParentEvent() {
-        this.$emit('activeReBind', { title: '更改邀请' })
+        this.$emit('activeReBind', { title: '更改邀请', type: this.type })
       },
 
       triggerParentRebind() {
-        this.$emit('activeReBind', { title: '绑定邀请关系' })
+        this.$emit('activeReBind', { title: '绑定邀请关系', type: this.type })
       }
     }
   }
