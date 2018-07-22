@@ -1,178 +1,192 @@
 <template>
-  <div class="app-container consultant-page">
+  <div class="app-container admin-page">
     <div class="top-bar">
-      <!-- <el-button class="add-member" icon="el-icon-edit" @click="handleAddMember">添加</el-button> -->
+      <el-button class="add-member-buttom" icon="el-icon-plus" @click="handleShowEditDialog(undefined)">添加</el-button>
     </div>
-    <SearchBox 
-      class="search-box"
-      @change="handleChange"
-      :options="logSearchTypes"
-      v-model="requestData.search"></SearchBox>
-    <div class="filter-box">
-      <div class="filter-item">
-        <DatePicker 
-          @change="handleChange" 
-          v-model="requestData.time" 
-          title="操作时间"></DatePicker>
-      </div>
-    </div>
-    <TableWrapper title="操作日志列表">
+    <TableWrapper title="角色列表" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
+        empty-text="没有数据"
         class="list"
         :data="list" 
         v-loading.body="listLoading" 
         element-loading-text="Loading" 
         :fit="true"
         border highlight-current-row>
-        <el-table-column min-width="50" align="center" label='员工编号' prop="sno"></el-table-column>
-        <el-table-column min-width="50" align="center" label='姓名' prop="realityName"></el-table-column>
-        <el-table-column min-width="50" align="center" label='性别' prop="sexStr"></el-table-column>
-        <el-table-column min-width="50" align="center" label='手机号' prop="mobile"></el-table-column>
-        <el-table-column min-width="50" align="center" label='出生日期' prop="birthDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='身份证号' prop="idNumber"></el-table-column>
-        <el-table-column min-width="50" align="center" label='QQ号' prop="qq"></el-table-column>
-        <el-table-column min-width="50" align="center" label='入职日期' prop="entryDate"></el-table-column>
-        <el-table-column min-width="100" align="center" label='创建日期' prop=""></el-table-column>
+        <el-table-column min-width="50" align="center" label='序号' prop="id"></el-table-column>
+        <el-table-column min-width="50" align="center" label='角色名称' prop="name"></el-table-column>
+        <el-table-column min-width="50" align="center" label='角色描述' prop="description"></el-table-column>
+        <el-table-column min-width="50" align="center" label='人数' prop="number"></el-table-column>
+        <el-table-column min-width="50" align="center" label='创建日期' prop="time"></el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
-          <template slot-scope="scope"><span class="detail" @click="handleToDetail">详情</span></template>
+          <template slot-scope="scope">
+            <span class="edit" @click="handlePushPage(scope.$index)">权限分配</span>
+            <span class="edit" @click="handleShowEditDialog(scope.$index)">编辑</span>
+          </template>
         </el-table-column>
       </el-table>
-      <div class="pagination-container">
-        <el-pagination
-          @current-change="handleChangeCurrent"
-          layout="prev, pager, next"
-          :total="totalCount">
-        </el-pagination> 
-      </div>
     </TableWrapper>
+    <el-dialog :title="editDialogTitle" :visible.sync="isShowEditDialog">
+      <el-form :model="editForm" :rules="rules" ref="editform" class="edit-form">
+        <el-form-item label="角色名称" prop="name">
+          <el-input v-model="editForm.name" placeholder="请输入角色名称"></el-input>
+        </el-form-item>
+        <el-form-item label="角色描述">
+          <el-input v-model="editForm.description"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="isShowEditDialog = false">取 消</el-button>
+        <el-button type="primary" @click="handleSubmitEdit">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { getList } from '@/api/table'
 import RadioGroup from '@/components/RadioGroup'
-import {withdrawStatuOptions, logSearchTypes} from '@/views/const'
+import {pagingParams} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
+import listMixins from '../listMixins'
+import InfoCard from '../../components/InfoCard'
+import { validateRequired, validateMobild } from '../validate'
+const DEFAULT_EDIT_FORM = {
+  name: '',
+  description: ''
+}
 export default {
+  mixins: [listMixins],
   components: {
     RadioGroup,
     DatePicker,
     SearchBox,
-    TableWrapper
+    TableWrapper,
+    InfoCard
   },
   data() {
     return {
       requestData: {
-        dirInviteRole: '0',
-        time: {
-          begin: null,
-          end: null
-        },
-        search: {
-          type: '0',
-          text: ''
-        },
-        currPage: 0,
-        currPage: 10
+        ...pagingParams
       },
       list: null,
       listLoading: true,
-      withdrawStatuOptions,
-      logSearchTypes,
-      totalCount: 0
-    }
-  },
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
+      totalCount: 0,
+      isShowEditDialog: false,
+      editDialogTitle: '添加角色',
+      editForm: DEFAULT_EDIT_FORM,
+      submitApi: 'addrightrole',
+      rules: {
+        name: {name: '角色名称', required: true, trigger: 'blur', validator: validateRequired}
       }
-      return statusMap[status]
     }
-  },
-  created() {
-    this.fetchData()
   },
   methods: {
     fetchData () {
-      this.$API.showwithdrawuser({
-        data: this.requestData
+      this.$API.showrightrole({
+        data: {
+          ...this.requestData
+        }
       })
         .then((res) => {
           this.listLoading = false
-          console.log(res)
           let data = res.data || {}
           this.list = data.page
           this.totalCount = data.totalCount
         })
         .catch((res) => {
-          console.log(res)
+          this.listLoading = false
         })
     },
-    handleChange () {
-      console.log()
-      console.log('requst api')
-    },
-    handleAddMember() {
-      console.log('add-member')
-    },
-    handleToDetail () {
+    handleShowEditDialog (index) {
+      let id = null
+      if (index !== undefined) {
+        this.editDialogTitle = '编辑角色'
+        this.submitApi = 'editrightrole'
 
+        let role = this.list[index]
+        id = role.id
+      } else {
+        this.submitApi = 'addrightrole'
+        this.editDialogTitle = '添加角色'
+      }
+      this.$API.showrightroledetail({
+        data: {id}
+      })
+        .then((res) => {
+          if (res.data && Object.keys(res.data).length > 0) {
+            this.editForm = res.data
+          } else {
+            this.editform = DEFAULT_EDIT_FORM
+          }
+        })
+        .then(() => {
+          this.isShowEditDialog = true
+        })
     },
-    handleChangeCurrent (currentPage) {
-      this.requestData.currPage = currentPage
-      this.handleChange()
+    handleSubmitEdit () {
+      this.$refs.editform.validate((valid) => {
+        if (valid) {
+          this.$API[this.submitApi]({
+            data: this.editform
+          })
+          .then(() => {
+            this.fetchData()
+            this.isShowEditDialog = false
+          })
+        }
+      })
+    },
+    handleChange () {
+      this.fetchData()
+    },
+    handlePushPage () {
+      this.$message('功能尚在开发中...')
     }
-  }
+  },
+  mounted() {
+    this.fetchData()
+  },
 }
 </script>
 <style lang="scss">
   @import  '../../styles/vars.scss';
   $padding: 20px;
-  .consultant-page {
+  .admin-page {
     padding: 0;
-    .search-box {
-      margin-right: $padding;
-      margin-bottom: $padding;
-    }
-    .filter-box {
-      margin: $padding;
-      padding: $padding;
-      background-color: white;
-      .filter-item {
-        padding: 15px 0px;
-        border-bottom: 1px solid #ddd;
-        &:first-child {
-          padding-top: 5px;
-        }
-        &:last-child {
-          border-width: 0;
-          padding-bottom: 5px;
-        }
-      }
-    }
-    .add-member {
-      display: block;
-      color: $c0;
-      cursor: pointer;
-    }
     .list {
       margin: $padding;
       width: auto;
     }
-    .detail {
+    .edit, .remove {
+      display: inline-block;
+      padding: 0 5px;
       color: $c0;
       cursor: pointer;
+    }
+    .remove {
+      color: $c1;
     }
     .pagination-container {
       display: flex;
       justify-content: flex-end;
       padding-right: 20px;
+    }
+    .el-dialog__body {
+      padding-bottom: 0;
+      padding-top: 0;
+    }
+    .el-form-item {
+      display: flex;
+    }
+    .el-form-item__content, .el-date-editor {
+      flex: 1;
+      width: 100%;
+    }
+    .el-form-item__label {
+      min-width: 6em;
     }
   }
 </style>

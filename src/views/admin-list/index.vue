@@ -110,7 +110,7 @@ export default {
       totalCount: 0,
       isShowEditDialog: false,
       editDialogTitle: '添加管理员',
-      editForm: {},
+      editForm: DEFAULT_EDIT_FORM,
       listRole: {},
       submitApi: 'addsupervisor',
       rules: {
