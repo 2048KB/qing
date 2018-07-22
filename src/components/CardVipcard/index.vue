@@ -19,6 +19,14 @@
         </el-row>
       </div>
     </div>
+
+    <div class="block pagination">
+      <el-pagination
+        @current-change="handleChangeCurrent"
+        layout="prev, pager, next"
+        :total="totalPages">
+      </el-pagination>
+    </div>
   </el-card>
 </template>
 
@@ -28,6 +36,17 @@
       cardlist: {
         Type: Array,
         default: []
+      },
+
+      totalPages: {
+        type: Number,
+        default: 10
+      }
+    },
+
+    methods: {
+      handleChangeCurrent(currentPage) {
+        this.$emit('triggerVipcardPagination', { currPage: currentPage, role: this.$route.query.role })
       }
     }
   }

@@ -18,8 +18,9 @@
 
       <div class="block pagination">
         <el-pagination
+          @current-change="handleChangeCurrent"
           layout="prev, pager, next"
-          :total="1000">
+          :total="totalPages">
         </el-pagination>
       </div>
     </div>
@@ -29,11 +30,21 @@
 <script>
 export default {
   props: {
-    lists: Array
-  },
-  data () {
-    return {
+    lists: {
+      type: Array,
+      default: []
+    },
 
+    totalPages: {
+      type: Number,
+      default: 10
+    }
+  },
+
+  methods: {
+    handleChangeCurrent(currentPage) {
+      console.log(currentPage)
+      this.$emit('triggerPagination', { currPage: currentPage, role: this.$route.query.role })
     }
   }
 }

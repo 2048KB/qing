@@ -2,6 +2,7 @@
     <div class="runrules-yyset">
       <div class="top-bar">
         <span class="add-member-buttom" @click="updateYYSet">
+          <el-button plain>{{ commitBtnText }}</el-button>
           <i class="el-icon el-icon-loading" v-show="btnLoading"></i>{{ commitBtnText }}
         </span>
       </div>
