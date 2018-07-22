@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container admin-page">
+  <div class="app-container role-page">
     <div class="top-bar">
       <el-button class="add-member-buttom" icon="el-icon-plus" @click="handleShowEditDialog(undefined)">添加</el-button>
     </div>
@@ -83,7 +83,7 @@ export default {
       editForm: DEFAULT_EDIT_FORM,
       submitApi: 'addrightrole',
       rules: {
-        name: {name: '角色名称', required: true, trigger: 'blur', validator: validateRequired}
+        name: {name: '角色名称', required: true, trigger: 'change', validator: validateRequired}
       }
     }
   },
@@ -158,7 +158,7 @@ export default {
 <style lang="scss">
   @import  '../../styles/vars.scss';
   $padding: 20px;
-  .admin-page {
+  .role-page {
     padding: 0;
     .list {
       margin: $padding;

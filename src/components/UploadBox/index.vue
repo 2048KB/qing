@@ -27,7 +27,7 @@ export default {
     value: String,
     tips: {
       type: String,
-      default: '你可以上传JPG、GIF或PNG格式的文件，大小不能超过2M'
+      default: '点击头像上传，你可以上传JPG、GIF或PNG格式的文件，大小不能超过2M'
     },
     showButton: Boolean
   },

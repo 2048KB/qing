@@ -5,7 +5,7 @@
       <span><slot name="right"></slot></span>
     </div>
     <div class="content"><slot></slot></div>
-    <div class="pagination-container" v-if="isShowPaging && total">
+    <div class="pagination-container" v-if="isShowPaging && total && total >= 10">
       <el-pagination
         @current-change="handleChangeCurrent"
         layout="prev, pager, next"
