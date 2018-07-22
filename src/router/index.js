@@ -173,6 +173,7 @@ export const constantRouterMap = [
     redirect: '/account/withdraw-user',
     name: 'account',
     meta: { title: '提现管理', icon: '' },
+    alwaysShow: true,
     children: [
       {
         path: 'withdraw-user',
@@ -190,6 +191,7 @@ export const constantRouterMap = [
     redirect: '/order/list',
     name: 'Order',
     meta: { title: '订单管理', icon: '' },
+    alwaysShow: true,
     children: [
       {
         path: 'list',
@@ -238,6 +240,7 @@ export const constantRouterMap = [
     redirect: '/bonus/bonus-list',
     name: 'bonus',
     meta: { title: '佣金列表', icon: '' },
+    alwaysShow: true,
     children: [
       {
         path: 'bonus-list',
@@ -278,6 +281,7 @@ export const constantRouterMap = [
     redirect: '/log/log-manage',
     name: 'log',
     meta: { title: '后台日志管理', icon: '' },
+    alwaysShow: true,
     children: [
       {
         path: 'log-manage',
@@ -295,7 +299,8 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/organize/organize',
     name: 'Organize',
-    meta: { title: '组织架构管理', icon: 'tablse' },
+    meta: { title: '组织架构管理', icon: '' },
+    alwaysShow: true,
     children: [
       {
         path: 'organize',

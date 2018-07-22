@@ -1,7 +1,7 @@
 /* eslint-disable */
 // 初始化分页参数
 export const pagingParams = {
-  currPage: 0,
+  currPage: 1,
   pageSize: 10
 }
 export const roleOptions = [{
