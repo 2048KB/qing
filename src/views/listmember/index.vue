@@ -87,6 +87,12 @@ export default {
     SearchBox,
     TableWrapper
   },
+  watch: {
+    $route (to, from) {
+      this.pageData = ROLE_MAP[this.$route.name]
+      this.fetchData()
+    }
+  },
   data() {
     return {
       requestData: {

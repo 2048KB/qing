@@ -113,7 +113,6 @@ export default {
         parentId: ''
       },
       rules: {
-
         realityName: {name: '姓名', required: true, trigger: 'blur', validator: validateRealityName},
         sex: {name: '性别', required: true, trigger: 'blur', validator: validateRequired},
         mobile: {name: '手机号', required: true, trigger: 'blur', validator: validateMobild},
@@ -148,6 +147,10 @@ export default {
           }
         })
       }
+    },
+    $route () {
+      this.pageData = ROLE_MAP[this.$route.name]
+      this.fetchData()
     }
   },
   methods: {
@@ -204,6 +207,7 @@ export default {
   },
   mounted () {
     this.fetchData()
+    console.log(this.$route)
   }
 }
 </script>
