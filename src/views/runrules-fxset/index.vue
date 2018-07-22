@@ -28,14 +28,6 @@
                   </el-input>
                 </div>
               </div>
-              <div>
-                <p>美容师直推1位奖励(顾问美容师合作)</p>
-                <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
-                    <template slot="append">元</template>
-                  </el-input>
-                </div>
-              </div>
             </td>
             <td class="yideng">-</td>
             <td class="erdeng">
@@ -138,7 +130,16 @@
           </tr>
           <tr>
             <td class="name">美容师</td>
-            <td class="zhitui">-</td>
+            <td class="zhitui">
+              <div>
+                <p>美容师直推1位奖励(顾问美容师合作)</p>
+                <div style="margin-top: 15px;">
+                  <el-input v-model="input4">
+                    <template slot="append">元</template>
+                  </el-input>
+                </div>
+              </div>
+            </td>
             <td class="yideng">
               <div>
                 <p>每邀请1位奖励</p>

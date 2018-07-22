@@ -217,7 +217,6 @@
             areaId: this.addShoparea //  int 整型  所属区域id
           }
         }).then(res => {
-          console.log('d')
           this.resetBtnLoading()
           this.addShopFormVisible = false
         })
