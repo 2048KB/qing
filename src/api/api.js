@@ -52,6 +52,8 @@ module.exports = {
   showstoredetail: '/back/employee/showstoredetail', // 架构管理-查询要编辑的门店接口
   editstore: '/back/employee/editstore', // 架构管理-编辑门店接口
   listuserbystoreid: '/back/user/listuserbystoreid', // 根据门店id获取门店用户
+  showsaleruledetail: '/back/setting/showsaleruledetail', // 运营设置-查询分销规则接口
+  editsalerule: '/back/setting/editsalerule', // 运营设置-编辑分销规则接口
 // 32. 根据搜索条件查询平台订单列表
   listplatformorder: '/back/order/listplatformorder',
 // 33.  根据订单id获取订单详情信息

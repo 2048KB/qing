@@ -2,8 +2,8 @@
   "msg": "查询成功",
   "code": 1,
   "data": {
-    "withdraw_time": "7天",
+    "withdraw_time": "7",
     "service_award_fee": "10",
-    "award_time": "12:00:00"
+    "award_time": "15:40:30"
   }
 }
