@@ -13,7 +13,11 @@
         element-loading-text="Loading" 
         :fit="true"
         border highlight-current-row>
-        <el-table-column min-width="50" align="center" label='序号' prop="id"></el-table-column>
+        <el-table-column min-width="50" align="center" label='序号' prop="id">
+          <template slot-scope="scope">
+            {{scope.$index + 1 + (requestData.currPage - 1) * requestData.pageSize}}
+          </template>
+        </el-table-column>
         <el-table-column min-width="50" align="center" label='角色名称' prop="name"></el-table-column>
         <el-table-column min-width="50" align="center" label='角色描述' prop="description"></el-table-column>
         <el-table-column min-width="50" align="center" label='人数' prop="number"></el-table-column>
