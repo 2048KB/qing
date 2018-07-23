@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="counselor-detail-page">
     <div class="top-bar"></div>
     <div class="counselor-detail-container">
       <el-row>
@@ -35,15 +35,25 @@
       <div class="edit-modal edit-modal--zyxx">
         <el-dialog title="编辑职业信息" :visible.sync="dialogFormVisible">
           <!-- <div v-loading="true" element-loading-text="Loading..."></div> -->
-          <el-form :model="infoform">
-            <el-form-item label="入职日期" :label-width="formLabelWidth">
+          <el-form class="zh-form" :rules="rules" :model="infoform" ref="form1">
+            <el-form-item label="入职日期">
               <el-input v-model="form.date" auto-complete="off" :disabled="true"></el-input>
             </el-form-item>
-            <el-form-item label="所属门店" :label-width="formLabelWidth">
+            <el-form-item label="所属门店">
               <el-select v-model="areaName" placeholder="请选择活动区域" :disabled="true"></el-select>
               <el-select v-model="storeName" placeholder="请选择活动区域" :disabled="true"></el-select>
             </el-form-item>
-            <el-form-item label="备注" :label-width="formLabelWidth">
+            <el-form-item label="所属顾问" v-if="queryRoleType == 1" prop="parentId">
+              <el-select v-model="infoform.parentId" placeholder="所属顾问">
+                <el-option
+                  v-for="item in consultantList"
+                  :key="item.id"
+                  :label="item.realityName"
+                  :value="item.id">
+                </el-option>
+              </el-select>
+            </el-form-item>
+            <el-form-item label="备注">
               <el-input type="textarea" :rows="2" placeholder="请输入备注" v-model="infoform.remark"></el-input>
             </el-form-item>
           </el-form>
@@ -55,65 +65,39 @@
       </div>
 
       <!-- 编辑个人信息弹窗 -->
-      <div class="edit-modal edit-modal--zyxx">
+      <div class="edit-modal edit-modal--zyxx form2-dialog">
         <el-dialog title="编辑个人信息" :visible.sync="infodialogFormVisible">
-          <el-form :model="infoform">
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="姓名*" :label-width="formLabelWidth">
-                  <el-input v-model="infoform.realityName" auto-complete="on"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="性别*" :label-width="formLabelWidth">
-                  <el-radio v-model="infoform.sex" label="1">男</el-radio>
-                  <el-radio v-model="infoform.sex" label="2">女</el-radio>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="出生日期*" :label-width="formLabelWidth">
-                  <el-date-picker v-model="infoform.birthDate" type="date" placeholder="选择日期"></el-date-picker>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="手机号*" :label-width="formLabelWidth">
-                  <el-input v-model="infoform.mobile" auto-complete="on"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="邮箱" :label-width="formLabelWidth">
-                  <el-input v-model="infoform.email" auto-complete="on"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="QQ" :label-width="formLabelWidth">
-                  <el-input v-model="infoform.qq" auto-complete="on"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="12">
-                <el-form-item label="身份证" :label-width="formLabelWidth">
-                  <el-input v-model="infoform.idNumber" auto-complete="on" placeholder="18位"></el-input>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
-                <el-form-item label="员工编号*" :label-width="formLabelWidth">
-                  <el-input v-model="infoform.sno" auto-complete="on"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
-            <el-row>
-              <el-col :span="24">
-                <el-form-item label="通讯地址" :label-width="formLabelWidth">
-                  <el-input type="textarea" :rows="4" placeholder="限制30字" v-model="infoform.address"></el-input>
-                </el-form-item>
-              </el-col>
-            </el-row>
+          <el-form class="zh-form form2" :model="infoform" ref="form2" :rules="rules">
+            <el-form-item label="姓名" prop="realityName">
+              <el-input v-model="infoform.realityName"></el-input>
+            </el-form-item>
+            <el-form-item label="性别" prop="sex">
+              <el-radio-group v-model="infoform.sex">
+                <el-radio label="1">男</el-radio>
+                <el-radio label="2">女</el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="出生日期" prop="birthDateStr">
+              <el-date-picker :default-time="infoform.birthDateStr" v-model="infoform.birthDateStr" type="date" placeholder="选择日期"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="手机号" prop="mobile">
+              <el-input v-model="infoform.mobile" auto-complete="on"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱">
+              <el-input v-model="infoform.email" auto-complete="on"></el-input>
+            </el-form-item>
+            <el-form-item label="QQ">
+              <el-input v-model="infoform.qq" auto-complete="on"></el-input>
+            </el-form-item>
+            <el-form-item label="身份证">
+              <el-input v-model="infoform.idNumber" auto-complete="on" placeholder="18位"></el-input>
+            </el-form-item>
+            <el-form-item label="员工编号" prop="sno">
+              <el-input v-model="infoform.sno" auto-complete="on"></el-input>
+            </el-form-item>
+            <el-form-item label="通讯地址">
+              <el-input type="textarea" :rows="4" placeholder="限制30字" v-model="infoform.address"></el-input>
+            </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="infodialogFormVisible = false">取 消</el-button>
@@ -135,6 +119,7 @@ import CardInfo from '@/components/CardInfo'
 import CardSsgw from '@/components/CardSsgw'
 import CardZyxx from '@/components/CardZyxx'
 import CardAddress from '@/components/CardAddress'
+import { validateRequired, validateMobild, validateRealityName, validateEmail, validateQQ } from '../validate'
 
 export default {
   name: 'counselor-detail',
@@ -178,7 +163,8 @@ export default {
         address: '',
         entryDateStr: '',
         storeId: '',
-        remark: ''
+        remark: '',
+        parentId: ''
       },
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -195,13 +181,21 @@ export default {
         desc: '',
         remark: ''
       },
-      formLabelWidth: '120px',
       employeeDetail: {},
       counselorOfBeautician: {},
       userFunds: {},
       yjLists: [],
       queryRoleType: '',
-      queryId: ''
+      queryId: '',
+      consultantList: {},
+      rules: {
+        parentId: {message: '请选择所属顾问', required: true, validator: validateRequired},
+        realityName: {name: '姓名', required: true, validator: validateRequired},
+        sex: {message: '请选择性别', required: true, validator: validateRequired},
+        mobile: {required: true, validator: validateMobild},
+        birthDateStr: {message: '请选择出生日期', required: true, validator: validateRequired},
+        sno: {name: '员工编号', required: true, validator: validateRequired}
+      }
     }
   },
 
@@ -313,6 +307,11 @@ export default {
             pageSize: this.pageSize, //  Int   每页显示数量
           })
         })
+
+        this.$API.listcounselors()
+          .then((res) => {
+            this.consultantList = res.data.page
+          })
       }
     },
     updateYoujin(opts) {
@@ -380,32 +379,41 @@ export default {
 
     // 更新个人信息、更新职业信息都为同一个接口（入参也一样）
     commitInfo() {
-      this.setBtnLoading()
-
-      // 更新顾问信息
+      // 更新美容师|顾问详情
+      
+      let api = null
       if (this.$route.query.role == 2) {
-        this.$API.updatecounselor({
-          data: this.infoform
-        }).then(res => {
-          setTimeout(() => {
-            this.dialogFormVisible = false
-            this.infodialogFormVisible = false
-            this.resetBtnLoading(res.code, res.msg)
-          }, 1000)
-        })
+        api = 'updatecounselor'
       }
-
-      // 更新美容师信息
-      if (this.$route.query.role ==1) {
-        this.$API.updatebeautician({
-          data: this.infoform
-        }).then(res => {
-          setTimeout(() => {
-            this.dialogFormVisible = false
-            this.infodialogFormVisible = false
-            this.resetBtnLoading(res.code, res.msg)
-          }, 1000)
-        })
+      if (this.$route.query.role == 1) {
+        api = 'updatebeautician'
+      }
+      if (api) {
+        let updatePromise = () => {
+          this.setBtnLoading()
+          this.$API[api]({
+            data: this.infoform
+          }).then(res => {
+            setTimeout(() => {
+              this.dialogFormVisible = false
+              this.infodialogFormVisible = false
+              this.resetBtnLoading(res.code, res.msg)
+            }, 1000)
+          })
+        }
+        if (this.dialogFormVisible === true) {
+          this.$refs.form1.validate((valid) => {
+            if (valid) {
+              updatePromise()
+            }
+          })
+        } else if (this.infodialogFormVisible = true) {
+          this.$refs.form2.validate((valid) => {
+            if (valid) {
+              updatePromise()
+            }
+          })
+        }
       }
     },
 
@@ -443,8 +451,8 @@ export default {
 }
 </script>
 
-<style rel="stylesheet/scss" lang="scss" scoped>
-.dashboard {
+<style rel="stylesheet/scss" lang="scss">
+.counselor-detail-page {
   &-container {
     margin: 30px;
   }
@@ -452,13 +460,52 @@ export default {
     font-size: 30px;
     line-height: 46px;
   }
+  .detail-card {
+    margin-bottom: 30px;
+  }
+
+  .zh-form {
+
+    .el-form-item {
+      display: flex;
+      .el-form-item__label {
+        display: inline-block;
+        min-width: 6em;
+      }
+      .el-form-item__content {
+        flex: 1;
+        display: flex;
+        .el-select {
+          flex: 1;
+          &:first-child {
+            margin-right: 10px;
+          }
+        }
+      }
+      .el-date-editor {
+        width: 100%;
+      }
+    }
+  }
+  .form2-dialog {
+    min-width: 840px;
+    .form2 {
+      display: flex;
+      flex-wrap: wrap;
+      .el-form-item {
+        width: 50%;
+        padding: 0 10px;
+        &:last-child {
+          width: auto;
+          flex: 1;
+        }
+      }
+    }
+    .el-radio-group {
+      line-height: inherit;
+      font-size: inherit;
+    }
+  }
 }
 
-.detail-card {
-  margin-bottom: 30px;
-}
-
-.el-card__header {
-  background: red !important;
-}
 </style>
