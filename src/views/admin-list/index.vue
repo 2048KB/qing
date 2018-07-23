@@ -20,14 +20,14 @@
         <el-table-column min-width="50" align="center" label='角色' prop="roleName"></el-table-column>
         <el-table-column min-width="100" align="center" label='状态' prop="lockStatus">
           <template slot-scope="scope">
-            {{list[scope.$index].lockStatus == 0 ? '未锁定' : '锁定'}}
+            {{list[scope.$index].lockStatus == 0 ? '启用' : '停用'}}
           </template>
         </el-table-column>
         <el-table-column min-width="50" align="center" label='创建日期' prop="time"></el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
           <template slot-scope="scope">
             <span class="edit" @click="handleShowEditDialog(scope.$index)">编辑</span>
-            <span class="remove" @click="handleShowRemoveDialog(scope.$index)">删除</span>
+            <span class="remove" v-if="list[scope.$index].roleId != 1" @click="handleShowRemoveDialog(scope.$index)">删除</span>
           </template>
         </el-table-column>
       </el-table>

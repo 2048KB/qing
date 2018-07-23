@@ -1,5 +1,5 @@
 <template>
-  <div class="app-container consultant-page">
+  <div class="app-container withdraw-user-page">
     <div class="top-bar"></div>
     <SearchBox 
       class="search-box"
@@ -190,7 +190,7 @@ export default {
       this.isShowDialogLoading = true
 
       this.$API.showwithdrawuserdetail({
-        id
+        data: { id }
       }).then((res) => {
         this.isShowDialog = true
         let data = res.data || {}
@@ -252,7 +252,7 @@ export default {
 <style lang="scss">
   @import  '../../styles/vars.scss';
   $padding: 20px;
-  .consultant-page {
+  .withdraw-user-page {
     padding: 0;
     .search-box {
       margin-right: $padding;
@@ -300,10 +300,6 @@ export default {
         width: 50%;
         margin: 10px;
       }
-    }
-    .el-dialog__body {
-      padding-bottom: 0;
-      padding-top: 0;
     }
     .checkInfo {
       line-height: 28px;

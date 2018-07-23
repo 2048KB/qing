@@ -23,10 +23,10 @@ module.exports = {
   updateinviter: '/back/user/updateinviter', // 修改邀请人信息
   getinviterinfo: '/back/user/getinviterinfo', // 根据userId获取直接邀请人信息
   listcustomer: '/back/user/listcustomer', // 顾客列表
-  getplatformoverview: '/overview/getplatformoverview', // 获取平台概况
-  getdayplatformoverview: '/overview/getdayplatformoverview', // 获取平台当日概况
-  listplatformfee: '/fee/listplatformfee', // 获取平台管理费列表
-  listbonus: '/bonus/listbonus', // 后台佣金列表
+  getplatformoverview: '/back/overview/getplatformoverview', // 获取平台概况
+  getdayplatformoverview: '/back/overview/getdayplatformoverview', // 获取平台当日概况
+  listplatformfee: '/back/fee/listplatformfee', // 获取平台管理费列表
+  listbonus: '/back/bonus/listbonus', // 后台佣金列表
   showsupervisor: '/back/supervisor/showsupervisor', // 系统管理-管理员列表接口
   showsupervisordetail: '/back/supervisor/showsupervisordetail', // 系统管理-管理员添加和更新的回显信息
   editsupervisor: '/back/supervisor/editsupervisor', // 系统管理-更新管理员接口

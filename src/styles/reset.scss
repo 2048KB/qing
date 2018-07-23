@@ -1,0 +1,69 @@
+@import './vars.scss';
+body {
+  background-color: #f8f8f8;
+  color: #333;
+  font-size: 16px !important;
+}
+ol, ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.el-button--primary {
+  background-color: $c0 !important;
+  border-color: $c0 !important;
+}
+
+.el-button--primary:hover {
+  opacity: 0.7;
+}
+.top-bar {
+  display: flex;
+  padding-right: 20px;
+  justify-content: flex-end;
+  align-items: center;
+  height: 50px;
+  margin-bottom: 20px;
+  border-top: 1px solid $c0;
+  background-color: white;
+}
+.add-member-buttom {
+  display: block;
+  color: $c0 !important;
+  cursor: pointer;
+  border-width: 0 !important;
+}
+.unify-wrapper {
+  min-width: 1200px;
+}
+/* 重写模态框样式 */
+.el-dialog__wrapper {
+  .el-dialog__header {
+    text-align: center;
+    background-color: $c0;
+  }
+  .el-dialog__title, .el-dialog__close {
+    color: white !important;
+  }
+  .el-dialog__body {
+    background-color: #f6f8f9;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+  .el-card__header {
+    color: #676a6c;
+    background-color: #e5e5e5;
+  }
+}
+.el-radio-group {
+  .is-checked {
+    .el-radio__inner {
+      border-color: $c0 !important;
+      background-color: $c0 !important;
+    }
+    .el-radio__label {
+      color:  $c0 !important;
+    }
+  }
+}
