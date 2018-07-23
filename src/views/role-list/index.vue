@@ -178,10 +178,6 @@ export default {
       justify-content: flex-end;
       padding-right: 20px;
     }
-    .el-dialog__body {
-      padding-bottom: 0;
-      padding-top: 0;
-    }
     .el-form-item {
       display: flex;
     }
@@ -191,6 +187,9 @@ export default {
     }
     .el-form-item__label {
       min-width: 6em;
+    }
+    .edit-form {
+      padding-top: 10px;
     }
   }
 </style>

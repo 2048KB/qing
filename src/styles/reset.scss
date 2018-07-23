@@ -39,6 +39,7 @@ ol, ul {
 /* 重写模态框样式 */
 .el-dialog__wrapper {
   .el-dialog__header {
+    padding: 15px 20px;
     text-align: center;
     background-color: $c0;
   }
