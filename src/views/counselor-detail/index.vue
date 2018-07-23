@@ -219,8 +219,7 @@ export default {
       if (this.$route.name === 'ConsultantDetail') {
         this.$API.getcounselordetail({
           data: {
-            admin: 1,
-            pwd: 2
+            id: this.$route.query.id //  Long  必须  员工id
           }
         }).then((res) => {
           this.employeeDetail = res.data.employeeDetail
