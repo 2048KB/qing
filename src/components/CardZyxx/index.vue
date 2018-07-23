@@ -12,9 +12,9 @@
       <el-row>
         <el-col :span="5">
           <div class="th">
-            <UploadBox v-model="formData.photo" :showButton="true" tips=""></UploadBox>
-<!--             <div class="img"><img src="../../assets/images/qq-18.png" alt=""></div>
-            <el-button type="primary" v-show="!isVip">更换头像</el-button> -->
+            <UploadBox v-model="formData.photo" :showButton="true" tips="" v-show="!disableUploadImg"></UploadBox>
+            <div class="img"><img src="../../assets/images/qq-18.png" alt="" v-show="disableUploadImg"></div>
+            <!-- <el-button type="primary" v-show="!isVip">更换头像</el-button> -->
           </div>
         </el-col>
         <el-col :span="19">
@@ -50,7 +50,7 @@
         Type: Boolean,
         default: false
       },
-      isVip: {
+      disableUploadImg: {
         Type: Boolean,
         default: false
       },
@@ -119,10 +119,6 @@
 
   .detail-card--user {
     padding-bottom: 0
-  }
-
-  .detail-card--user .el-card__body {
-    padding-bottom: 0;
   }
 
   .detail-card__body--user .UploadBox .custom-icon {

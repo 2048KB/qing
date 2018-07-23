@@ -6,7 +6,7 @@
         <el-col :span="16">
           <div class="grid-content padding-left-none">
             <!-- 职业信息 -->
-            <card-zyxx :employeeDetail="employeeDetail" :isCustom="true" :hideEdit="true" :isVip="isVip">
+            <card-zyxx :employeeDetail="employeeDetail" :isCustom="true" :hideEdit="true" :disableUploadImg="disableUploadImg">
               <span>个人信息</span>
             </card-zyxx>
 
@@ -166,6 +166,7 @@ export default {
       commitBtnText: '确 定',
       modalTitle: '',
       storeUserType: '',
+      storeId: '',
       storeName: '',
       storeAreaName: '',
       vipcardRecordArray: [],
@@ -206,7 +207,7 @@ export default {
       memberVO: {},
       inMemberVO: {},
       storeUserLists: [],
-      isVip: true,
+      disableUploadImg: true,
       vipcard: {}
     }
   },
@@ -220,12 +221,8 @@ export default {
     if (this.$route.query.role == 2) {
       this.$API.getcustomerdetail({
         data: {
-          type: '', //  Int 必须  搜索类型1:顾客  2:会员
-          userId: '', //  Long  必须  用户id
-          dirInviteId: '', // Long    直接邀请人id
-          dirInviteRole: '', // String    直接邀请人角色
-          inDirInviteId: '', // Long    间接邀请人id
-          inDirInviteRole: '' // String    间接邀请人角色
+          type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
+          userId: this.$route.query.id //  Long  必须  用户id
         }
       }).then((res) => {
         // 用户基本信息
@@ -268,13 +265,8 @@ export default {
     if (this.$route.query.role == 1) {
       this.$API.getmemberdetail({
         data: {
-          type: '', //  Int 必须  搜索类型1:顾客  2:会员
-          userId: '', //  Long  必须  用户id
-          dirInviteId: '', // Long    直接邀请人id
-          dirInviteRole: '', // String    直接邀请人角色
-          inDirInviteId: '', // Long    间接邀请人id
-          inDirInviteRole: '', // String    间接邀请人角色
-          cardId: '' //  Long    会员卡id
+          type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
+          userId: this.$route.query.id //  Long  必须  用户id
         }
       }).then((res) => {
         // 用户基本信息
@@ -323,7 +315,11 @@ export default {
     }
 
     // 获取门店会员列表
-    this.geLlistuserbystoreid()
+    this.geLlistuserbystoreid({
+      storeId: this.storeId,
+      type: this.storeUserType,
+      key: this.searchKey
+    })
   },
 
   methods: {
@@ -390,7 +386,7 @@ export default {
       this.changeRebindType = opts.type
     },
 
-    // 根据userId获取直接邀请人信息
+    // 根据userId获取直接邀请人信息（方法未使用）
     getInviterinfo() {
       this.$API.getinviterinfo({
         data: {
@@ -459,11 +455,6 @@ export default {
     // 获取门店会员列表
     geLlistuserbystoreid(data) {
       this.$API.listuserbystoreid({
-        // data: {
-        //   storeId: 34213, //  Long  必须  门店id
-        //   type: 2, //  Int 必须  指定用户角色 2:会员  3:美容师  4:顾问
-        //   key: '23431143' //  String    搜索姓名或手机号
-        // }
         data: data
       }).then(res => {
         this.storeUserLists = res.data
@@ -474,9 +465,9 @@ export default {
     updateInviter() {
       this.$API.updateinviter({
         data: {
-          inviteeUserId: 23435464, // Long  必须  被邀请人id
-          inviterUserId: 2412121, // Long  必须  邀请人id
-          type: 2, // int   邀请人类型
+          inviteeUserId: inviteeUserId, // Long  必须  被邀请人id
+          inviterUserId: this.employeeDetail.employeeId, // Long  必须  邀请人id
+          type: this.storeUserType //  int   邀请人类型
         }
       }).then(res => {
         this.resetBtnLoading()
@@ -513,5 +504,9 @@ export default {
 
 .el-card__header {
   background: red !important;
+}
+
+.detail-card--user .el-card__body {
+  padding-bottom: 15px;
 }
 </style>
