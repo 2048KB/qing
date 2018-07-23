@@ -16,7 +16,7 @@
               <el-radio label="2">女</el-radio>
             </el-radio-group>
           </el-form-item>
-          <el-form-item label="出生日期">
+          <el-form-item label="出生日期" prop="birthDateStr">
             <el-date-picker type="date" placeholder="选择日期" v-model="formData.birthDateStr"></el-date-picker>
           </el-form-item>
           <el-form-item label="手机号"  prop="mobile">
@@ -115,12 +115,14 @@ export default {
       rules: {
         realityName: {name: '姓名', required: true, trigger: 'blur', validator: validateRealityName},
         sex: {name: '性别', required: true, trigger: 'blur', validator: validateRequired},
+        birthDateStr: {message: '请选择出生日期', required: true, trigger: 'blur', validator: validateRequired},
         mobile: {name: '手机号', required: true, trigger: 'blur', validator: validateMobild},
         sno: {name: '员工编号', required: true, trigger: 'blur', validator: validateRequired},
         entryDateStr: {message: '请选择入职日期', required: true, trigger: 'blur', validator: validateRequired},
         storeId: {message: '请选择所属门店', required: true, validator: validateRequired},
         email: {trigger: 'blur', validator: validateEmail},
-        qq: {trigger: 'blur', validator: validateQQ}
+        qq: {trigger: 'blur', validator: validateQQ},
+        parentId: {message: '请选择所属顾问', required: true, validator: validateRequired}
       },
       storeAreaOptions: DEFAULT_OPTIONS,
       storeOptions: DEFAULT_OPTIONS,
@@ -155,7 +157,7 @@ export default {
   },
   methods: {
     fetchData () {
-      this.$API.liststores()
+      this.$API.liststoreareas()
         .then((res) => {
           this.storeAreaOptions = DEFAULT_OPTIONS.concat(res.data)
         })
@@ -229,7 +231,7 @@ export default {
       width: 100%;
     }
     .el-form-item__label {
-      min-width: 5em;
+      min-width: 6em;
     }
   }
   .personal-info-form {

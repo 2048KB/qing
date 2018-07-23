@@ -31,7 +31,7 @@
       "isPasswordLocked": false,
       "lastLoginIp": "0:0:0:0:0:0:0:1",
       "lastLoginTime": "2018-07-02 20:31:45",
-      "lockStatus": 0,
+      "lockStatus": 1,
       "loginCount": 2362,
       "mobile": "13911764496",
       "name": "admin",

@@ -20,14 +20,14 @@
         <el-table-column min-width="50" align="center" label='角色' prop="roleName"></el-table-column>
         <el-table-column min-width="100" align="center" label='状态' prop="lockStatus">
           <template slot-scope="scope">
-            {{list[scope.$index].lockStatus == 0 ? '未锁定' : '锁定'}}
+            {{list[scope.$index].lockStatus == 0 ? '启用' : '停用'}}
           </template>
         </el-table-column>
         <el-table-column min-width="50" align="center" label='创建日期' prop="time"></el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
           <template slot-scope="scope">
             <span class="edit" @click="handleShowEditDialog(scope.$index)">编辑</span>
-            <span class="remove" @click="handleShowRemoveDialog(scope.$index)">删除</span>
+            <span class="remove" v-if="list[scope.$index].roleId != 1" @click="handleShowRemoveDialog(scope.$index)">删除</span>
           </template>
         </el-table-column>
       </el-table>
@@ -63,7 +63,7 @@
         <el-button type="primary" @click="handleSubmitEdit">确 定</el-button>
       </div>
     </el-dialog>
-    <el-dialog title="删除管理员" :visible.sync="isShowRemoveDialog">
+    <el-dialog class="remove-dialog" title="删除管理员" :visible.sync="isShowRemoveDialog">
       <span>您确定要删除该管理员吗？</span>
       <div slot="footer" class="dialog-footer">
         <el-button @click="handleCancelRemove">取 消</el-button>
@@ -233,10 +233,6 @@ export default {
       justify-content: flex-end;
       padding-right: 20px;
     }
-    .el-dialog__body {
-      padding-bottom: 0;
-      padding-top: 0;
-    }
     .edit-form {
       display: flex;
       flex-wrap: wrap;
@@ -251,6 +247,13 @@ export default {
         .el-form-item__label {
           min-width: 6em;
         }
+      }
+    }
+    .remove-dialog {
+      .el-dialog__body {
+        text-align: center;
+        padding-top: 60px;
+        padding-bottom: 60px;
       }
     }
   }
