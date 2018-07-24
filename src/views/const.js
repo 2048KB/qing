@@ -189,8 +189,8 @@ export const listMemberSearchTypes = [{
 export const roleType = {
   'beautician': 1,
   'consultant': 2,
-  'member': 1,
-  'customer': 2
+  'member': 2,
+  'customer': 1
 }
 export const orderStatusTypes = [{
   value: '0',
