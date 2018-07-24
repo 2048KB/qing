@@ -11,7 +11,7 @@
       :onChange="handleFileChange"
       :beforeUpload="handleBeforeUpload"
       list-type="picture-card">
-      <i class="custom-icon" v-if="innerValue === ''"></i>
+      <i class="custom-icon" :style="customStyle" v-if="innerValue === ''"></i>
       <div slot="tip" class="el-upload__tip" v-if="tips">{{tips}}</div>
       <div slot="tip" class="el-upload__tip upload-error-tip" v-if="error">{{error}}</div>
       <el-button size="small" type="primary" v-if="showButton">点击上传</el-button>
@@ -29,13 +29,15 @@ export default {
       type: String,
       default: '点击头像上传，你可以上传JPG、GIF或PNG格式的文件，大小不能超过2M'
     },
-    showButton: Boolean
+    showButton: Boolean,
+    photo: String
   },
   data () {
     return {
       innerValue: this.value,
       uploadAction: getFullPath('upload'),
-      error: null
+      error: null,
+      customStyle: {}
     }
   },
   watch: {
@@ -102,6 +104,12 @@ export default {
     this.$on('error', () => {
       this.innerValue = ''
     })
+
+    if (this.photo) {
+      this.customStyle = {
+        backgroundImage: `url(${this.photo})`
+      }
+    }
   }
 
 }
@@ -116,7 +124,10 @@ export default {
     display: block;
     width: 98px;
     height: 98px;
+    border-radius: 50%;
     background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
     background-image: url(./images/qq-16.png);
   }
   .upload-img {
