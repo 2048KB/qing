@@ -30,7 +30,7 @@
     <div class="detail-card__footer clearfix" v-show="type !== 3">
       <!-- <div class="inter" v-if="type === 1"><i class="qq qq-34"></i>更改邀请</div> -->
       <div class="inter" v-if="inviterinfo.isChange" @click="triggerParentEvent"><i class="qq qq-34"></i>更改邀请</div>
-      <div class="exlink"><i class="qq qq-31"></i>详情</div>
+      <div class="exlink" @click="goDetailPage"><i class="qq qq-31"></i>详情</div>
     </div>
   </el-card>
 </template>
@@ -47,7 +47,31 @@
       }
     },
 
+    data() {
+      return {
+        path: ''
+      }
+    },
+
     methods: {
+      goDetailPage() {
+        if (this.inviterinfo.roleTypeStr == '会员') { // role = 2
+          this.path = '/client/member/detail'
+        }
+
+        if (this.inviterinfo.roleTypeStr == '顾问') { // role = 2
+          this.path = '/employee/consultant/detail'
+        }
+
+        this.$router.push({
+          path: this.path,
+          query: {
+            id: this.inviterinfo.id || this.inviterinfo.userId || '',
+            role: 2
+          }
+        })
+      },
+
       triggerParentEvent() {
         this.$emit('activeReBind', { title: '更改邀请', type: this.type })
       },

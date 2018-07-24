@@ -443,7 +443,7 @@ export default {
     getListcounselorcurmonbonus(obj = {}) {
       this.$API.listusercurmonbonus({
         data: {
-          userId: this.employeeDetail.employeeId, //  Long  必须  用户id
+          userId: this.employeeDetail.id, //  Long  必须  用户id
           currPage: obj.currPage || 1, //  Int   当前页数
           pageSize: 10 //  Int   每页显示数量
         }

@@ -4,21 +4,24 @@
   "data": {
     "conditions": null,
     "currPage": 1,
-    "page": [{
-      "typeStr": "人头奖",
-      "amount": 500.00,
-      "time": 1533049200000,
-      "type": 5
-    }, {
-      "inviterMobile": "13111111119",
-      "inviterRealName": "赵燕",
-      "typeStr": "双人奖",
-      "amount": 1200.00,
-      "inviteeName": "dsadasqw",
-      "inviteeMobile": "12345678999",
-      "time": 1530954629000,
-      "type": 6
-    }],
+    "page": [
+      {
+        "typeStr": "人头奖",
+        "amount": 500.00,
+        "time": 1533049200000,
+        "type": 5
+      },
+      {
+        "inviterMobile": "13111111119",
+        "inviterRealName": "赵燕",
+        "typeStr": "双人奖",
+        "amount": 1200.00,
+        "inviteeName": "dsadasqw",
+        "inviteeMobile": "12345678999",
+        "time": 1530954629000,
+        "type": 6
+      }
+    ],
     "pageSize": 2,
     "totalCount": 6,
     "totalPageCount": 3
