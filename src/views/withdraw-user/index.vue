@@ -139,7 +139,8 @@ export default {
       dialogOpt: {},
       isShowDialog: false,
       dialogForm: {},
-      isShowDialogLoading: false
+      isShowDialogLoading: false,
+      selectId: null
     }
   },
   watch: {
@@ -188,6 +189,7 @@ export default {
       let status = selectData.status
       let title = status == '1' ? '审核' : '查看'
       this.isShowDialogLoading = true
+      this.selectId = selectData.id
 
       this.$API.showwithdrawuserdetail({
         data: { id }
@@ -231,12 +233,16 @@ export default {
     },
     handleDialogFormSubmit () {
       this.$API.auditwithdrawuser({
-        data: this.dialogForm
+        data: {
+          ...this.dialogForm,
+          id: this.selectId
+        }
       }).then((res) => {
         this.$message({
           message: res.msg,
           type: 'success'
         })
+        this.selectId = null
         this.handleChange()
         this.isShowDialog = false
       }).catch((err) => {
