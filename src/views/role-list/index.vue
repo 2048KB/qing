@@ -31,7 +31,7 @@
       </el-table>
     </TableWrapper>
     <el-dialog :title="editDialogTitle" :visible.sync="isShowEditDialog">
-      <el-form :model="editForm" :rules="rules" ref="editform" class="edit-form">
+      <el-form :model="editForm" :rules="rules" ref="editForm" class="edit-form">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="editForm.name" placeholder="请输入角色名称"></el-input>
         </el-form-item>
@@ -123,7 +123,7 @@ export default {
           if (res.data && Object.keys(res.data).length > 0) {
             this.editForm = res.data
           } else {
-            this.editform = DEFAULT_EDIT_FORM
+            this.editForm = DEFAULT_EDIT_FORM
           }
         })
         .then(() => {
@@ -131,10 +131,10 @@ export default {
         })
     },
     handleSubmitEdit () {
-      this.$refs.editform.validate((valid) => {
+      this.$refs.editForm.validate((valid) => {
         if (valid) {
           this.$API[this.submitApi]({
-            data: this.editform
+            data: this.editForm
           })
           .then(() => {
             this.fetchData()

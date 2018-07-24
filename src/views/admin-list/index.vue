@@ -33,7 +33,7 @@
       </el-table>
     </TableWrapper>
     <el-dialog :title="editDialogTitle" :visible.sync="isShowEditDialog">
-      <el-form :model="editForm" :rules="rules" ref="editform" class="edit-form">
+      <el-form :model="editForm" :rules="rules" ref="editForm" class="edit-form">
         <el-form-item label="用户名" prop="name">
           <el-input placeholder="请输入4-16位字母或字母数字组合的用户名" maxlength="16" v-model="editForm.name" :disabled="editDialogTitle.indexOf('编辑') > -1"></el-input>
         </el-form-item>
@@ -53,8 +53,8 @@
         </el-form-item>
         <el-form-item label="状态" prop="lockStatus">
           <el-radio-group v-model="editForm.lockStatus">
-            <el-radio :label="0">停用</el-radio>
-            <el-radio :label="1">启用</el-radio>
+            <el-radio :label="0">启用</el-radio>
+            <el-radio :label="1">停用</el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -180,10 +180,10 @@ export default {
       this.removeIndex = null
     },
     handleSubmitEdit () {
-      this.$refs.editform.validate((valid) => {
+      this.$refs.editForm.validate((valid) => {
         if (valid) {
           this.$API[this.submitApi]({
-            data: this.editform
+            data: this.editForm
           })
           .then(() => {
             this.fetchData()

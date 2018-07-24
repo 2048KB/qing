@@ -17,7 +17,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item label="出生日期" prop="birthDateStr">
-            <el-date-picker type="date" placeholder="选择日期" v-model="formData.birthDateStr"></el-date-picker>
+            <el-date-picker value-format="yyyy-MM-dd" type="date" placeholder="选择日期" v-model="formData.birthDateStr"></el-date-picker>
           </el-form-item>
           <el-form-item label="手机号"  prop="mobile">
             <el-input placeholder="请输入手机号" v-model="formData.mobile" maxlength="11"></el-input>
@@ -42,7 +42,7 @@
       <TableWrapper title="职业信息" class="career-info-form">
         <el-form :model="formData" :rules="rules" ref="form2">
           <el-form-item label="入职日期"  prop="entryDateStr">
-            <el-date-picker type="date" placeholder="选择日期" v-model="formData.entryDateStr"></el-date-picker>
+            <el-date-picker value-format="yyyy-MM-dd" type="date" placeholder="选择日期" v-model="formData.entryDateStr"></el-date-picker>
           </el-form-item>
           <el-form-item label="所属门店"  prop="storeId" class="store-select-box" ref="selectStore">
             <el-select placeholder="请选择" v-model="areaStore">
