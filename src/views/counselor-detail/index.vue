@@ -78,7 +78,7 @@
               </el-radio-group>
             </el-form-item>
             <el-form-item label="出生日期" prop="birthDateStr">
-              <el-date-picker :default-time="infoform.birthDateStr" v-model="infoform.birthDateStr" type="date" placeholder="选择日期"></el-date-picker>
+              <el-date-picker value-format="yyyy-MM-dd" :default-time="infoform.birthDateStr" v-model="infoform.birthDateStr" type="date" placeholder="选择日期"></el-date-picker>
             </el-form-item>
             <el-form-item label="手机号" prop="mobile">
               <el-input v-model="infoform.mobile" auto-complete="on"></el-input>
