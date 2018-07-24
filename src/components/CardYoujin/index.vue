@@ -43,7 +43,6 @@ export default {
 
   methods: {
     handleChangeCurrent(currentPage) {
-      console.log(currentPage)
       this.$emit('triggerPagination', { currPage: currentPage, role: this.$route.query.role })
     }
   }

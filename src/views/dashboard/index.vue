@@ -23,10 +23,7 @@ export default {
     }
   },
   created() {
-    this.$API.home({
-      type: 'GET',
-      data: {}
-    }).then((res) => {
+    this.$API.home().then((res) => {
       this.user = res.data
     })
   }

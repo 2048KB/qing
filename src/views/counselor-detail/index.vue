@@ -213,8 +213,7 @@ export default {
       if (this.$route.name === 'ConsultantDetail') {
         this.$API.getcounselordetail({
           data: {
-            admin: 1,
-            pwd: 2
+            id: this.$route.query.id //  Long  必须  员工id
           }
         }).then((res) => {
           this.employeeDetail = res.data.employeeDetail
@@ -309,10 +308,10 @@ export default {
           })
         })
 
-        this.$API.listcounselors()
-          .then((res) => {
-            this.consultantList = res.data.page
-          })
+        // 获取顾问列表
+        this.$API.listcounselors().then((res) => {
+          this.consultantList = res.data.page
+        })
       }
     },
     updateYoujin(opts) {
@@ -381,7 +380,7 @@ export default {
     // 更新个人信息、更新职业信息都为同一个接口（入参也一样）
     commitInfo() {
       // 更新美容师|顾问详情
-      
+
       let api = null
       if (this.$route.query.role == 2) {
         api = 'updatecounselor'
@@ -509,4 +508,7 @@ export default {
   }
 }
 
+.detail-card--user .el-card__body {
+  padding-bottom: 0;
+}
 </style>

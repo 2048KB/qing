@@ -4,7 +4,6 @@ import $ from 'jquery'
 import { Message } from 'element-ui';
 import router from '../router'
 // var loadingInstance
-console.log(router)
 
 const fetch = function fetch(url = '', options = {}) {
   return new Promise((resolve, reject) => {

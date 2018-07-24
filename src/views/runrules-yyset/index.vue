@@ -30,7 +30,7 @@
                   </el-time-picker>
                 </el-form-item>
               </el-col>
-              <el-col :span="14" class="desc">23:00:00表示在每月最后一天的23时0分0秒进行结算</el-col>
+              <el-col :span="14" class="desc">00:00:00表示在每月月初的0时0分0秒进行结算</el-col>
             </el-row>
 
             <el-row class="row">
