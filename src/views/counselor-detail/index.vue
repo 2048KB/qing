@@ -250,7 +250,7 @@ export default {
 
           // 依赖员工ID，所以要在取得员工ID之后再发请求
           this.getListcounselorcurmonbonus({
-            id: res.data.employeeDetail.sno, // Long  必须  员工id
+            id: res.data.employeeDetail.id, // Long  必须  员工id
             currPage: 1, //  Int   当前页数
             pageSize: this.pageSize, //  Int   每页显示数量
           })
@@ -324,7 +324,7 @@ export default {
       // 更新顾问佣金列表
       if (opts.role == 2) {
         this.getListcounselorcurmonbonus({
-          id: this.employeeDetail.sno, // Long  必须  员工id
+          id: this.employeeDetail.id, // Long  必须  员工id
           currPage: opts.currPage || 1, //  Int   当前页数
           pageSize: this.pageSize, //  Int   每页显示数量
         })
@@ -426,7 +426,7 @@ export default {
     getListcounselorcurmonbonus(obj) {
       this.$API.listcounselorcurmonbonus({
         data: {
-          id: obj.id || this.employeeDetail.sno, // Long  必须  员工id
+          id: obj.id || this.employeeDetail.id, // Long  必须  员工id
           currPage: obj.currPage || 1, //  Int   当前页数
           pageSize: this.pageSize, //  Int   每页显示数量
         }

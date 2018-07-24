@@ -37,7 +37,7 @@
       return {
         msg: 'Lorem',
         btnLoading: false,
-        commitBtnText: '保存',
+        commitBtnText: '保 存',
         form: {
           type: []
         },
@@ -46,14 +46,45 @@
     },
 
     created() {
-      this.$API.showright({}).then(res => {
-        this.rightLists = res.data.allRight
-      })
+      this.fetchRights()
     },
 
     methods: {
+      fetchRights() {
+        this.$API.showright({}).then(res => {
+          this.rightLists = res.data.allRight
+          this.roleId = res.data.roleId
+
+          this.handleRightCheckedList(res.data.allRight)
+        })
+      },
+
+      handleRightCheckedList(obj) {
+        for (let key in obj) {
+          for (let index in  obj[key]) {
+            this.form.type.push(obj[key][index].id)
+          }
+        }
+      },
+
       updateRights() {
-        console.log(this.form)
+        this.btnLoading = true
+        this.commitBtnText = '保存中...'
+
+        this.$API.editright({
+          roleId: this.roleId, //  int 整型  角色id
+          rights: this.form.type //  Long[]  数组  选择的权限信息
+        }).then((res) => {
+          this.$message({
+            message: res.msg || '成功',
+            type: 'success'
+          });
+
+          this.fetchRights()
+        }).finally(() => {
+          this.btnLoading = false
+          this.commitBtnText = '保 存'
+        })
       }
     },
 

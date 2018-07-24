@@ -153,8 +153,8 @@
 
         // 添加美容店
         addShoptype: '1',
-        addShopname: 'test',
-        addShoparea: 'aaaa',
+        addShopname: '',
+        addShoparea: '',
 
         shopCount: 0,
 
@@ -164,18 +164,21 @@
     },
 
     created() {
-      this.$API.liststoreandareas({}).then(res => {
-        console.log(res)
-        this.allShopObj = res.data
-
-        // 计算门店数量
-        for (let key in res.data) {
-          this.shopCount += res.data[key].length
-        }
-      })
+      this.fetchListstoreandareas()
     },
 
     methods: {
+      fetchListstoreandareas() {
+        this.$API.liststoreandareas().then(res => {
+          this.allShopObj = res.data
+
+          // 计算门店数量
+          for (let key in res.data) {
+            this.shopCount += res.data[key].length
+          }
+        })
+      },
+
       handleCommand(command) {
         if (command === 'area') {
           this.addArea()
@@ -194,10 +197,16 @@
             name: this.editAreaName //  String  字符串 大区名称
           }
         }).then(res => {
-          setTimeout(() => {
-            this.resetBtnLoading()
-            this.editAreaFormVisible = false
-          }, 1000)
+          this.$message({
+            message: res.msg || '成功',
+            type: 'success'
+          });
+          this.editAreaFormVisible = false
+
+          // 重新调接口拉数据
+          this.fetchListstoreandareas()
+        }).finally(() => {
+          this.resetBtnLoading()
         })
       },
 
@@ -217,8 +226,16 @@
             areaId: this.addShoparea //  int 整型  所属区域id
           }
         }).then(res => {
-          this.resetBtnLoading()
+          this.$message({
+            message: res.msg || '成功',
+            type: 'success'
+          })
           this.addShopFormVisible = false
+
+          // 重新调接口拉数据
+          this.fetchListstoreandareas()
+        }).finally(() => {
+          this.resetBtnLoading()
         })
       },
 
@@ -237,10 +254,16 @@
             areaId: this.editShopAreaId //  int 整型  所属区域id
           }
         }).then(res => {
-          setTimeout(() => {
-            this.resetBtnLoading()
-            this.editShopFormVisible = false
-          }, 1000)
+          this.$message({
+            message: res.msg || '成功',
+            type: 'success'
+          })
+          this.editShopFormVisible = false
+
+          // 重新调接口拉数据
+          this.fetchListstoreandareas()
+        }).finally(() => {
+          this.resetBtnLoading()
         })
       },
 
@@ -260,10 +283,16 @@
             name: this.addAreaname
           }
         }).then(res => {
-          setTimeout(() => {
-            this.resetBtnLoading()
-            this.addAreaFormVisible = false
-          }, 1000)
+          this.$message({
+            message: res.msg || '成功',
+            type: 'success'
+          })
+          this.addAreaFormVisible = false
+
+          // 重新调接口拉数据
+          this.fetchListstoreandareas()
+        }).finally(() => {
+          this.resetBtnLoading()
         })
       },
 
@@ -285,17 +314,17 @@
         this.btnLoading = false
         this.commitBtnText = text || '确 定'
 
-        if (+code < 0) {
-          this.$message({
-            message: msg || '服务异常，请稍后再试！',
-            type: 'error'
-          })
-        } else {
-          this.$message({
-            message: msg || '成功',
-            type: 'success'
-          });
-        }
+        // if (+code < 0) {
+        //   this.$message({
+        //     message: msg || '服务异常，请稍后再试！',
+        //     type: 'error'
+        //   })
+        // } else {
+        //   this.$message({
+        //     message: msg || '成功',
+        //     type: 'success'
+        //   });
+        // }
       },
     },
 
