@@ -1,18 +1,3 @@
-export const validatename = (rule, value, callback) => {
-  if (!value) {
-    callback(new Error('请输入用户名'))
-    return
-  }
-  callback()
-}
-export const validatePass = (rule, value, callback) => {
-  if (!value) {
-    callback(new Error('请输入密码'))
-    return
-  } else {
-    callback()
-  }
-}
 export const validateRequired = (rule, value, callback) => {
   console.log(rule)
   if (rule.required === true) {

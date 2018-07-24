@@ -27,31 +27,18 @@
 </template>
 
 <script>
-
+import {validateRequired} from '../validate.js'
 export default {
   name: 'login',
   data() {
-    const validatename = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入用户名'))
-      }
-      callback()
-    }
-    const validatePass = (rule, value, callback) => {
-      if (!value) {
-        callback(new Error('请输入密码'))
-      } else {
-        callback()
-      }
-    }
     return {
       loginForm: {
         name: '',
         password: ''
       },
       loginRules: {
-        name: [{ required: true, trigger: 'blur', validator: validatename }],
-        password: [{ required: true, trigger: 'blur', validator: validatePass }]
+        name: [{ name: '用户名', required: true, trigger: 'blur', validator: validateRequired }],
+        password: [{ name: '密码', minlength: 6, required: true, trigger: 'blur', validator: validateRequired }]
       },
       loading: false,
       pwdType: 'password',
