@@ -24,7 +24,7 @@
         <el-table-column min-width="50" align="center" label='创建日期' prop="time"></el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
           <template slot-scope="scope">
-            <span class="edit" @click="handlePushPage(scope.$index)">权限分配</span>
+            <span class="edit" @click="handlePushApplyright(scope.$index)">权限分配</span>
             <span class="edit" @click="handleShowEditDialog(scope.$index)">编辑</span>
           </template>
         </el-table-column>
@@ -152,8 +152,14 @@ export default {
     handleChange () {
       this.fetchData()
     },
-    handlePushPage () {
-      this.$message('功能尚在开发中...')
+    handlePushApplyright (index) {
+      console.log(this.list[index], index, '556')
+      this.$router.push({
+        path: '/system/applyright',
+        query: {
+          roleId: this.list[index].id
+        }
+      })
     }
   },
   mounted() {
