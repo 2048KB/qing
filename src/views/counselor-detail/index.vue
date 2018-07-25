@@ -317,15 +317,26 @@ export default {
         })
 
         // 获取顾问列表
-        this.$API.getcounselorsofstore({
-          data: {
-            storeId: this.storeId
-          }
-        }).then((res) => {
-          this.consultantList = res.data
-        })
+        // this.$API.getcounselorsofstore({
+        //   data: {
+        //     storeId: this.storeId
+        //   }
+        // }).then((res) => {
+        //   this.consultantList = res.data
+        // })
       }
     },
+
+    fetchGetcounselorsofstore() {
+      this.$API.getcounselorsofstore({
+        data: {
+          storeId: this.storeId
+        }
+      }).then((res) => {
+        this.consultantList = res.data
+      })
+    },
+
     updateYoujin(opts) {
       let data = {
         id: this.employeeDetail.id, // Long  必须  员工id
@@ -379,14 +390,11 @@ export default {
       }
     },
 
-    // 更新个人信息到服务器
-    commitInfoDetail() {
-      alert('更新个人信息到服务器')
-    },
-
     // 展示 更新个人信息弹窗
     updateInfoDetail() {
       this.infodialogFormVisible = true
+
+      this.fetchGetcounselorsofstore()
     },
 
     // 更新个人信息、更新职业信息都为同一个接口（入参也一样）
@@ -406,11 +414,11 @@ export default {
           this.$API[api]({
             data: this.infoform
           }).then(res => {
-            setTimeout(() => {
-              this.dialogFormVisible = false
-              this.infodialogFormVisible = false
-              this.resetBtnLoading(res.code, res.msg)
-            }, 1000)
+            this.dialogFormVisible = false
+            this.infodialogFormVisible = false
+            this.resetBtnLoading(res.code, res.msg)
+
+            this.handleCreated()
           })
         }
         if (this.dialogFormVisible === true) {
@@ -432,6 +440,8 @@ export default {
     // 展示 更新个人信息弹窗
     updateInfo() {
       this.dialogFormVisible = true
+
+      this.fetchGetcounselorsofstore()
     },
 
     // 顾问当月佣金明细

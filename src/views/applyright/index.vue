@@ -51,7 +51,9 @@
 
     methods: {
       fetchRights() {
-        this.$API.showright({}).then(res => {
+        this.$API.showright({
+          roleId: this.$route.query.roleId || ''
+        }).then(res => {
           this.rightLists = res.data.allRight
           this.roleId = res.data.roleId
 

@@ -19,12 +19,16 @@
 
         <div class="shop-wrapper">
           <div v-for="(item, key) in allShopObj">
+            <!-- .replace(/([^\u0000-\u00FF])/g, '') -->
+            <!-- editArea(key.split('-')[1], key)" -->
             <div class="title">
               <el-row>
                 <el-col :span="8"><span class="area">{{ key }}</span></el-col>
                 <el-col :span="8"><span class="count">{{ item.length }} 间美容店</span></el-col>
                 <el-col :span="8">
-                  <el-button type="primary" @click="editArea(item[0].areaId, key)"><i class="qq qq-44"></i>编辑</el-button>
+                  <el-button type="primary"
+                  @click="editArea(key.match(/\d+$/)[0], key)"
+                  ><i class="qq qq-44"></i>编辑</el-button>
                 </el-col>
               </el-row>
             </div>
@@ -82,9 +86,13 @@
             </el-form-item>
 
             <el-form-item label="所属大区" :label-width="formLabelWidth">
-              <el-select v-model="addShoparea" placeholder="请选择区域">
-                <el-option label="上海" value="shanghai"></el-option>
-                <el-option label="北京" value="beijing"></el-option>
+              <el-select v-model="addShoparea" placeholder="请选择区域" @change="selectedStoreArea">
+                <el-option
+                  v-for="item in storeAreas"
+                  :key="item.id"
+                  :label="item.name"
+                  :value="item.id">
+                </el-option>
               </el-select>
             </el-form-item>
 
@@ -155,6 +163,8 @@
         addShoptype: '1',
         addShopname: '',
         addShoparea: '',
+        storeAreas: [],
+        selectedStoreAreaId: null,
 
         shopCount: 0,
 
@@ -168,7 +178,20 @@
     },
 
     methods: {
+      selectedStoreArea(index) {
+        this.selectedStoreAreaId = index
+      },
+
+      showstoredetail() {
+        this.$API.showstoredetail({}).then(res => {
+          this.storeAreas = res.data.storeAreas
+        })
+      },
+
       fetchListstoreandareas() {
+        // 重置shopCount
+        this.shopCount = 0
+
         this.$API.liststoreandareas().then(res => {
           this.allShopObj = res.data
 
@@ -223,7 +246,7 @@
           data: {
             name: this.addShopname, //  String  字符串 门店名称
             type: this.addShoptype, //  int 整型  门店类型：1直营店，2加盟店
-            areaId: this.addShoparea //  int 整型  所属区域id
+            areaId: this.selectedStoreAreaId //  int 整型  所属区域id
           }
         }).then(res => {
           this.$message({
@@ -242,6 +265,7 @@
       // 添加美容店
       addShop() {
         this.addShopFormVisible = true
+        this.showstoredetail()
       },
 
       commitEditStop() {

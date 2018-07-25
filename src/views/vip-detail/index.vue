@@ -224,7 +224,12 @@ export default {
       this.$API.getcustomerdetail({
         data: {
           type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
-          userId: this.$route.query.id //  Long  必须  用户id
+          userId: this.$route.query.id, //  Long  必须  用户id
+          dirInviteId: '', //  Long    直接邀请人id
+          dirInviteRole: '', //  String    直接邀请人角色
+          inDirInviteId: '', //  Long    间接邀请人id
+          inDirInviteRole: '', //  String    间接邀请人角色
+          cardId: '', //   Long    会员卡id
         }
       }).then((res) => {
         // 用户基本信息
@@ -271,7 +276,12 @@ export default {
       this.$API.getmemberdetail({
         data: {
           type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
-          userId: this.$route.query.id //  Long  必须  用户id
+          userId: this.$route.query.id, //  Long  必须  用户id
+          dirInviteId: '', //  Long    直接邀请人id
+          dirInviteRole: '', //  String    直接邀请人角色
+          inDirInviteId: '', //  Long    间接邀请人id
+          inDirInviteRole: '', //  String    间接邀请人角色
+          cardId: '', //   Long    会员卡id
         }
       }).then((res) => {
         // 用户基本信息
@@ -322,11 +332,11 @@ export default {
     }
 
     // 获取门店会员列表
-    this.geLlistuserbystoreid({
-      storeId: this.storeId,
-      type: this.storeUserType,
-      key: this.searchKey
-    })
+    // this.geLlistuserbystoreid({
+    //   storeId: this.storeId,
+    //   type: this.storeUserType,
+    //   key: this.searchKey
+    // })
   },
 
   methods: {
@@ -373,24 +383,48 @@ export default {
       this.storeUserType = 4
       this.dialogFormVisible = false
       this.infodialogFormVisible = true
+
+      this.geLlistuserbystoreid({
+        storeId: this.storeId,
+        type: this.storeUserType,
+        // key: this.searchKey
+      })
     },
 
     selectMYS() {
       this.storeUserType = 3
       this.dialogFormVisible = false
       this.infodialogFormVisible = true
+
+      this.geLlistuserbystoreid({
+        storeId: this.storeId,
+        type: this.storeUserType,
+        // key: this.searchKey
+      })
     },
 
     selectVIP() {
       this.storeUserType = 2
       this.dialogFormVisible = false
       this.infodialogFormVisible = true
+
+      this.geLlistuserbystoreid({
+        storeId: this.storeId,
+        type: this.storeUserType,
+        // key: this.searchKey
+      })
     },
 
     rebindRe(opts) {
       this.modalTitle = opts.title
       this.dialogFormVisible = true
       this.changeRebindType = opts.type
+
+      // this.geLlistuserbystoreid({
+      //   storeId: this.storeId,
+      //   type: this.storeUserType,
+      //   key: this.searchKey
+      // })
     },
 
     // 根据userId获取直接邀请人信息（方法未使用）

@@ -270,12 +270,6 @@ export const constantRouterMap = [
         name: 'RunrulesFxset',
         component: () => import('@/views/runrules-fxset/index'),
         meta: { title: '分销规则设置', icon: '' },
-      },
-      {
-        path: 'applyright',
-        name: 'ApplyRight',
-        component: () => import('@/views/applyright/index'),
-        meta: { title: '权限分配', icon: '' },
       }
     ]
   },
@@ -336,6 +330,12 @@ export const constantRouterMap = [
         name: 'RoleList',
         component: () => import('@/views/role-list/index'),
         meta: { title: '角色列表', icon: '' }
+      },
+      {
+        path: 'applyright',
+        name: 'ApplyRight',
+        component: () => import('@/views/applyright/index'),
+        meta: { title: '权限分配', icon: '' },
       }
     ]
   }
