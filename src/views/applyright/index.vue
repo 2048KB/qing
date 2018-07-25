@@ -46,13 +46,16 @@
     },
 
     created() {
+      console.log(this.$route.query.roleId)
       this.fetchRights()
     },
 
     methods: {
       fetchRights() {
         this.$API.showright({
-          roleId: this.$route.query.roleId || ''
+          data: {
+            roleId: this.$route.query.roleId || ''
+          }
         }).then(res => {
           this.rightLists = res.data.allRight
           this.roleId = res.data.roleId
@@ -82,7 +85,11 @@
             type: 'success'
           });
 
-          this.fetchRights()
+          this.fetchRights({
+            data: {
+              roleId: this.$route.query.roleId || ''
+            }
+          })
         }).finally(() => {
           this.btnLoading = false
           this.commitBtnText = '保 存'

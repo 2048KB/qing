@@ -336,6 +336,7 @@ export const constantRouterMap = [
         name: 'ApplyRight',
         component: () => import('@/views/applyright/index'),
         meta: { title: '权限分配', icon: '' },
+        hidden: true
       }
     ]
   }

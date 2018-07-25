@@ -24,7 +24,7 @@
         <el-table-column min-width="50" align="center" label='创建日期' prop="time"></el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
           <template slot-scope="scope">
-            <span class="edit" @click="handlePushPage(scope.$index)">权限分配</span>
+            <span class="edit" @click="handlePushApplyright(scope.$index)">权限分配</span>
             <span class="edit" @click="handleShowEditDialog(scope.$index)">编辑</span>
           </template>
         </el-table-column>
@@ -36,7 +36,7 @@
           <el-input v-model="editForm.name" placeholder="请输入角色名称"></el-input>
         </el-form-item>
         <el-form-item label="角色描述">
-          <el-input v-model="editForm.description"></el-input>
+          <el-input v-model="editForm.description" placeholder="请输入角色描述"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -83,7 +83,7 @@ export default {
       editForm: DEFAULT_EDIT_FORM,
       submitApi: 'addrightrole',
       rules: {
-        name: {name: '角色名称', required: true, trigger: 'change', validator: validateRequired}
+        name: {name: '角色名称', required: true, trigger: 'blur', validator: validateRequired}
       }
     }
   },
@@ -109,21 +109,22 @@ export default {
       if (index !== undefined) {
         this.editDialogTitle = '编辑角色'
         this.submitApi = 'editrightrole'
-
         let role = this.list[index]
         id = role.id
       } else {
+        this.editForm = DEFAULT_EDIT_FORM
         this.submitApi = 'addrightrole'
         this.editDialogTitle = '添加角色'
       }
-      this.$API.showrightroledetail({
-        data: {id}
-      })
-        .then((res) => {
-          if (res.data && Object.keys(res.data).length > 0) {
-            this.editForm = res.data
-          } else {
-            this.editForm = DEFAULT_EDIT_FORM
+      Promise.resolve()
+        .then(() => {
+          if (id) {
+            return this.$API.showrightroledetail({
+              data: {id}
+            })
+              .then((res) => {
+                this.editForm = res.data
+              })
           }
         })
         .then(() => {
@@ -136,9 +137,14 @@ export default {
           this.$API[this.submitApi]({
             data: this.editForm
           })
-          .then(() => {
+          .then((res) => {
             this.fetchData()
             this.isShowEditDialog = false
+
+            this.$message({
+              message: res.msg,
+              type: 'success'
+            })
           })
         }
       })
@@ -146,8 +152,14 @@ export default {
     handleChange () {
       this.fetchData()
     },
-    handlePushPage () {
-      this.$message('功能尚在开发中...')
+    handlePushApplyright (index) {
+      console.log(this.list[index], index, '556')
+      this.$router.push({
+        path: '/system/applyright',
+        query: {
+          roleId: this.list[index].id
+        }
+      })
     }
   },
   mounted() {

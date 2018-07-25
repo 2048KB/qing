@@ -32,7 +32,7 @@
             <el-input maxlength="18" placeholder="请输入身份证号" v-model="formData.idNumber"></el-input>
           </el-form-item>
           <el-form-item label="员工编码"  prop="sno">
-            <el-input placeholder="BJCYMZYD-000001" v-model="formData.sno"></el-input>
+            <el-input placeholder="BJCYMZYD-000001" disabled v-model="formData.sno"></el-input>
           </el-form-item>
           <el-form-item label="通讯地址">
             <el-input placeholder="请输入常用地址" v-model="formData.address" maxlength="60"></el-input>
@@ -150,13 +150,26 @@ export default {
         })
       }
     },
+    storeId (val) {
+      this.$API.getemployeemaxsno({
+        data: {storeId: val}
+      }).then((res) => {
+        this.formData.sno = res.data
+      })
+    },
     $route () {
       this.pageData = ROLE_MAP[this.$route.name]
       this.fetchData()
     }
   },
+  computed: {
+    storeId () {
+      return this.formData.storeId
+    }
+  },
   methods: {
     fetchData () {
+      // 获取所属门店信息
       this.$API.liststoreareas()
         .then((res) => {
           this.storeAreaOptions = DEFAULT_OPTIONS.concat(res.data)
@@ -209,7 +222,6 @@ export default {
   },
   mounted () {
     this.fetchData()
-    console.log(this.$route)
   }
 }
 </script>
