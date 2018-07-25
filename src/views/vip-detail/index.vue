@@ -160,8 +160,9 @@ export default {
   },
   data() {
     return {
-      pageCount: 20,
-      vipcardPageCount: 40,
+      pageCount: 1,
+      pageSize: 10,
+      vipcardPageCount: 0,
       btnLoading: false,
       commitBtnText: '确 定',
       modalTitle: '',
@@ -181,7 +182,8 @@ export default {
         idNumber: '',
         sex: '',
         realityName: '',
-        storeAreaName: ''
+        storeAreaName: '',
+        id: null
       },
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -213,12 +215,12 @@ export default {
   },
 
   created() {
-    // 从路由拿角色，根据角色来调不同的接口 2 - 顾客，1 - 会员
+    // 从路由拿角色，根据角色来调不同的接口 1- 顾客，2 - 会员
     this.queryRoleType = this.$route.query.role
     this.queryId = this.$route.query.id
 
     // 顾客详情
-    if (this.$route.query.role == 2) {
+    if (this.$route.query.role == 1) {
       this.$API.getcustomerdetail({
         data: {
           type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
@@ -227,6 +229,9 @@ export default {
       }).then((res) => {
         // 用户基本信息
         this.employeeDetail = res.data.user
+
+        // 更新个人信息需要新增id入参
+        this.infoform.id = res.data.user.id
 
         // 用户账户信息
         // this.userFunds = res.data.userFunds
@@ -262,7 +267,7 @@ export default {
     }
 
     // 会员详情
-    if (this.$route.query.role == 1) {
+    if (this.$route.query.role == 2) {
       this.$API.getmemberdetail({
         data: {
           type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
@@ -271,6 +276,8 @@ export default {
       }).then((res) => {
         // 用户基本信息
         this.employeeDetail = res.data.user
+        // 更新个人信息需要新增id入参
+        this.infoform.id = res.data.user.id
 
         // 用户账户信息
         this.userFunds = res.data.userFunds
@@ -403,10 +410,11 @@ export default {
         data: {
           cardId: this.vipcard.cardNo, // 会员卡id
           currPage: opts.currPage || 1, // 当前页数
-          pageSize: 5 //每页显示数量
+          pageSize: this.pageSize //每页显示数量
         }
       }).then((res) => {
         this.vipcardRecordArray = res.data.page
+        this.vipcardPageCount = res.data.totalPageCount
       })
     },
 
@@ -445,10 +453,16 @@ export default {
         data: {
           userId: this.employeeDetail.id, //  Long  必须  用户id
           currPage: obj.currPage || 1, //  Int   当前页数
-          pageSize: 10 //  Int   每页显示数量
+          pageSize: this.pageSize //  Int   每页显示数量
         }
       }).then((res) => {
         this.yjLists = res.data.page
+        this.pageCount = res.data.totalPageCount
+        this.pageSize = res.data.pageSize
+
+        if (this.yjLists.length == 0) {
+          this.showPagination = false
+        }
       })
     },
 

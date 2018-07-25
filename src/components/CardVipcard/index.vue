@@ -20,7 +20,7 @@
       </div>
     </div>
 
-    <div class="block pagination">
+    <div class="block pagination" v-show="cardlist.length > 0">
       <el-pagination
         @current-change="handleChangeCurrent"
         layout="prev, pager, next"

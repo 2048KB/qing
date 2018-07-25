@@ -16,7 +16,7 @@
         <el-table-column prop="type" width="120" label="奖励金额（元）"> </el-table-column>
       </el-table>
 
-      <div class="block pagination">
+      <div class="block pagination" v-show="showPagination">
         <el-pagination
           @current-change="handleChangeCurrent"
           layout="prev, pager, next"
@@ -38,6 +38,11 @@ export default {
     totalPages: {
       type: Number,
       default: 10
+    },
+
+    showPagination: {
+      type: Boolean,
+      default: true
     }
   },
 

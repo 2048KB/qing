@@ -1,41 +1,41 @@
 <template>
   <div class="app-container consultant-page">
     <div class="top-bar"></div>
-    <SearchBox 
+    <SearchBox
       class="search-box"
       @change="handleChange"
       :options="listMemberSearchTypes"
       v-model="requestData.search"></SearchBox>
     <div class="filter-box">
       <div class="filter-item">
-        <RadioGroup 
+        <RadioGroup
           title="直接邀请人角色"
           @change="handleChange"
           :options="roleOptions"
           v-model="requestData.dirInviteRole"></RadioGroup>
       </div>
       <div class="filter-item">
-        <RadioGroup 
+        <RadioGroup
           title="间接邀请人角色"
           @change="handleChange"
           :options="roleOptions"
           v-model="requestData.inDirInviteRole"></RadioGroup>
       </div>
       <div class="filter-item">
-        <DatePicker 
-          @change="handleChange" 
-          v-model="requestData.time" 
+        <DatePicker
+          @change="handleChange"
+          v-model="requestData.time"
           title="注册日期"></DatePicker>
       </div>
     </div>
     <TableWrapper :title="pageData.title" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
-      <el-table 
+      <el-table
         empty-text="没有数据"
         class="list"
-        :data="list" 
-        v-loading.body="listLoading" 
-        element-loading-text="Loading" 
+        :data="list"
+        v-loading.body="listLoading"
+        element-loading-text="Loading"
         :fit="true"
         border highlight-current-row>
         <el-table-column min-width="50" align="center" label='ID' prop="id"></el-table-column>

@@ -15,7 +15,7 @@
             <card-yqxx :obj="inviters"></card-yqxx>
 
             <!-- 当月佣金 -->
-            <card-youjin :lists="yjLists" :totalPages="pageCount" @triggerPagination="updateYoujin"></card-youjin>
+            <card-youjin :lists="yjLists" :totalPages="pageCount" :showPagination="showPagination" @triggerPagination="updateYoujin"></card-youjin>
           </div>
         </el-col>
 
@@ -93,7 +93,7 @@
               <el-input v-model="infoform.idNumber" auto-complete="on" placeholder="18位"></el-input>
             </el-form-item>
             <el-form-item label="员工编号" prop="sno">
-              <el-input v-model="infoform.sno" auto-complete="on"></el-input>
+              <el-input v-model="infoform.sno" auto-complete="on" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="通讯地址">
               <el-input type="textarea" :rows="4" placeholder="限制30字" v-model="infoform.address"></el-input>
@@ -139,8 +139,9 @@ export default {
   },
   data() {
     return {
+      showPagination: true,
       pageSize: 10,
-      pageCount: 40,
+      pageCount: 0,
       btnLoading: false,
       commitBtnText: '确 定',
       inviters: {
@@ -164,7 +165,8 @@ export default {
         entryDateStr: '',
         storeId: '',
         remark: '',
-        parentId: ''
+        parentId: '',
+        id: null
       },
       dialogTableVisible: false,
       dialogFormVisible: false,
@@ -217,6 +219,10 @@ export default {
           }
         }).then((res) => {
           this.employeeDetail = res.data.employeeDetail
+
+          // 更新个人信息需要新增id入参
+          this.infoform.id = res.data.employeeDetail.id
+
           this.userFunds = res.data.userFunds
 
           // 账户信息
@@ -266,6 +272,8 @@ export default {
           }
         }).then((res) => {
           this.employeeDetail = res.data.employeeDetail
+          // 更新个人信息需要新增id入参
+          this.infoform.id = res.data.employeeDetail.id
           this.userFunds = res.data.userFunds
 
           // 美容师所属顾问
@@ -309,8 +317,12 @@ export default {
         })
 
         // 获取顾问列表
-        this.$API.listcounselors().then((res) => {
-          this.consultantList = res.data.page
+        this.$API.getcounselorsofstore({
+          data: {
+            storeId: this.storeId
+          }
+        }).then((res) => {
+          this.consultantList = res.data
         })
       }
     },
@@ -432,6 +444,12 @@ export default {
         }
       }).then((res) => {
         this.yjLists = res.data.page
+        this.pageCount = res.data.totalPageCount
+        this.pageSize = res.data.pageSize
+
+        if (this.yjLists.length == 0) {
+          this.showPagination = false
+        }
       })
     },
 
@@ -445,6 +463,12 @@ export default {
         }
       }).then((res) => {
         this.yjLists = res.data.page
+        this.pageCount = res.data.totalPageCount
+        this.pageSize = res.data.pageSize
+
+        if (this.yjLists.length == 0) {
+          this.showPagination = false
+        }
       })
     }
   }

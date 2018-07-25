@@ -31,7 +31,7 @@
             <p><i class="qq qq-20"></i>{{ employeeDetail.entryDate || employeeDetail.time }}</p>
             <p><i class="qq qq-21" v-show="employeeDetail.remark"></i>{{ employeeDetail.remark }}</p>
             <div>
-              <el-button type="success" plain v-show="employeeDetail.storeId">{{ employeeDetail.storeId }}</el-button>
+              <el-button type="success" plain v-show="employeeDetail.mobile">{{ employeeDetail.mobile }}</el-button>
               <el-button type="success" plain v-show="employeeDetail.storeName">{{ employeeDetail.storeName }}</el-button>
             </div>
           </div>
