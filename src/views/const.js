@@ -90,7 +90,7 @@ export const feeSearchTypes = [{
   label: '交易流水'
 }, {
   value: '2',
-  label: '扣款日昵称'
+  label: '扣款人昵称'
 }, {
   value: '3',
   label: '扣款人真实姓名'
@@ -98,7 +98,7 @@ export const feeSearchTypes = [{
   value: '4',
   label: '扣款人手机号'
 }]
-export const bounsType = [{
+export const bonusType = [{
   value: '0',
   label: '全部'
 }, {

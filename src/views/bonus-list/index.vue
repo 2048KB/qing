@@ -11,8 +11,8 @@
         <RadioGroup 
           title="佣金类别"
           @change="handleChange"
-          :options="bounsType"
-          v-model="requestData.bounsType"></RadioGroup>
+          :options="bonusType"
+          v-model="requestData.bonusType"></RadioGroup>
       </div>
       <div class="filter-item">
         <RadioGroup 
@@ -53,7 +53,7 @@
 
 <script>
 import RadioGroup from '@/components/RadioGroup'
-import {bounsSearchTypes, bounsType, pagingParams, roleOptions} from '@/views/const'
+import {bounsSearchTypes, bonusType, pagingParams, roleOptions} from '@/views/const'
 import DatePicker from '@/components/DatePicker'
 import SearchBox from '@/components/SearchBox'
 import TableWrapper from '@/components/TableWrapper'
@@ -78,14 +78,14 @@ export default {
           text: ''
         },
         roleType: '0',
-        bounsType: '0',
+        bonusType: '0',
         ...pagingParams
       },
       list: null,
       listLoading: true,
       totalCount: 0,
       bounsSearchTypes,
-      bounsType,
+      bonusType,
       roleOptions
     }
   },

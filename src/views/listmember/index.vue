@@ -48,7 +48,11 @@
        <el-table-column min-width="50" align="center" label='间接邀请人姓名' prop="inDirInviteName"></el-table-column>
         <el-table-column min-width="50" align="center" label='间接邀请人手机号' prop="inDirInviteMobile"></el-table-column>
         <el-table-column min-width="50" align="center" label='间接邀请人角色' prop="inDirInviteRole"></el-table-column>
-        <el-table-column v-if="pageData.roleType == 1" min-width="50" align="center" label='会员卡状态' prop="isActive"></el-table-column>
+        <el-table-column v-if="pageData.roleType == 2" min-width="50" align="center" label='会员卡状态' prop="isActive">
+          <template slot-scope="scope">
+            {{list[scope.$index].isActive ? '激活' : '未激活'}}
+          </template>
+        </el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
           <template slot-scope="scope"><span class="detail" @click="handleToDetail(scope.$index)">详情</span></template>
         </el-table-column>
