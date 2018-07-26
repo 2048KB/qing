@@ -114,12 +114,12 @@ export default {
       listRole: {},
       submitApi: 'addsupervisor',
       rules: {
-        name: {name: '用户名', minlength: 4, trigger: 'blur', validator: validateRequired},
-        realityName: {name: '真实姓名', required: true, trigger: 'blur', validator: validateRequired},
-        mobile: {name: '手机号', required: true, trigger: 'blur', validator: validateMobild},
-        roleId: {message: '请选择所属角色', required: true, trigger: 'blur', validator: validateRequired},
-        password: {name: '密码', minlength: 6, required: true, trigger: 'blur', validator: validateRequired},
-        lockStatus: {message: '请选择锁定状态', required: true, trigger: 'blur', validator: validateRequired},
+        name: {name: '用户名', minlength: 4, trigger: 'change', validator: validateRequired},
+        realityName: {name: '真实姓名', required: true, trigger: 'change', validator: validateRequired},
+        mobile: {name: '手机号', required: true, trigger: 'change', validator: validateMobild},
+        roleId: {message: '请选择所属角色', required: true, trigger: 'change', validator: validateRequired},
+        password: {name: '密码', minlength: 6, required: true, trigger: 'change', validator: validateRequired},
+        lockStatus: {message: '请选择锁定状态', required: true, trigger: 'change', validator: validateRequired},
       },
       isShowRemoveDialog: false,
       removeIndex: null
@@ -154,22 +154,16 @@ export default {
       } else {
         this.submitApi = 'addsupervisor'
         this.editDialogTitle = '添加管理员'
-        this.editForm = DEFAULT_EDIT_FORM
       }
-      Promise.resolve()
-        .then(() => {
-          if (id) {
-            return this.$API.showsupervisordetail({
-              data: {id}
-            })
-            .then((res) => {
-              this.listRole = res.data.listRole
+      this.$API.showsupervisordetail({
+        data: {id}
+      })
+        .then((res) => {
+          this.listRole = res.data.listRole
 
-              this.editForm = {
-                roleId: res.data.roleId,
-                ...(res.data.supervisor || DEFAULT_EDIT_FORM)
-              }
-            })
+          this.editForm = {
+            roleId: res.data.roleId,
+            ...(res.data.supervisor || DEFAULT_EDIT_FORM)
           }
         })
         .then(() => {
