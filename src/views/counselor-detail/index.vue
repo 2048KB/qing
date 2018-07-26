@@ -330,7 +330,7 @@ export default {
     fetchGetcounselorsofstore() {
       this.$API.getcounselorsofstore({
         data: {
-          storeId: this.storeId
+          storeId: this.employeeDetail.storeId
         }
       }).then((res) => {
         this.consultantList = res.data
@@ -394,7 +394,9 @@ export default {
     updateInfoDetail() {
       this.infodialogFormVisible = true
 
-      this.fetchGetcounselorsofstore()
+      if (this.$route.query.role == 1) {
+        this.fetchGetcounselorsofstore()
+      }
     },
 
     // 更新个人信息、更新职业信息都为同一个接口（入参也一样）
@@ -441,7 +443,10 @@ export default {
     updateInfo() {
       this.dialogFormVisible = true
 
-      this.fetchGetcounselorsofstore()
+      if (this.$route.query.role == 1) {
+        alert('美容师')
+        this.fetchGetcounselorsofstore()
+      }
     },
 
     // 顾问当月佣金明细

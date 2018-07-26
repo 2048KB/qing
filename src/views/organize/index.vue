@@ -21,13 +21,14 @@
           <div v-for="(item, key) in allShopObj">
             <!-- .replace(/([^\u0000-\u00FF])/g, '') -->
             <!-- editArea(key.split('-')[1], key)" -->
+            <!-- <p>{{ key.replace(/\d+$/g, '') }}</p> -->
             <div class="title">
               <el-row>
-                <el-col :span="8"><span class="area">{{ key }}</span></el-col>
+                <el-col :span="8"><span class="area">{{ key.replace(/\d+$/g, '') }}</span></el-col>
                 <el-col :span="8"><span class="count">{{ item.length }} 间美容店</span></el-col>
                 <el-col :span="8">
                   <el-button type="primary"
-                  @click="editArea(key.match(/\d+$/)[0], key)"
+                  @click="editArea(key.match(/\d+$/)[0], key.replace(/\d+$/g, ''))"
                   ><i class="qq qq-44"></i>编辑</el-button>
                 </el-col>
               </el-row>

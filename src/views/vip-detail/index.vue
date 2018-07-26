@@ -234,6 +234,7 @@ export default {
       }).then((res) => {
         // 用户基本信息
         this.employeeDetail = res.data.user
+        this.employeeDetail.storeName = res.data.storeName
 
         // 更新个人信息需要新增id入参
         this.infoform.id = res.data.user.id
@@ -286,6 +287,8 @@ export default {
       }).then((res) => {
         // 用户基本信息
         this.employeeDetail = res.data.user
+        this.employeeDetail.storeName = res.data.storeName
+
         // 更新个人信息需要新增id入参
         this.infoform.id = res.data.user.id
 

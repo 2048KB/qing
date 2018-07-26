@@ -6,7 +6,7 @@
         </span>
       </div>
 
-      <table-wrapper title="超级管理员">
+      <table-wrapper :title="roleName">
         <el-form ref="form" :model="form" label-width="120px">
           <div class="row" v-for="(item, key) in rightLists">
             <!-- <p>{{ item }}</p>
@@ -41,7 +41,8 @@
         form: {
           type: []
         },
-        rightLists: {}
+        rightLists: {},
+        roleName: ''
       }
     },
 
@@ -59,6 +60,7 @@
         }).then(res => {
           this.rightLists = res.data.allRight
           this.roleId = res.data.roleId
+          this.roleName = res.data.roleName
 
           this.handleRightCheckedList(res.data.allRight)
         })
@@ -77,8 +79,10 @@
         this.commitBtnText = '保存中...'
 
         this.$API.editright({
-          roleId: this.roleId, //  int 整型  角色id
-          rights: this.form.type //  Long[]  数组  选择的权限信息
+          data: {
+            roleId: this.roleId, //  int 整型  角色id
+            rights: this.form.type //  Long[]  数组  选择的权限信息
+          }
         }).then((res) => {
           this.$message({
             message: res.msg || '成功',
