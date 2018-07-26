@@ -7,14 +7,14 @@
       </div>
 
       <table-wrapper :title="roleName">
-        <el-form ref="form" :model="form" label-width="120px">
+        <el-form ref="form" label-width="120px">
           <div class="row" v-for="(item, key) in rightLists">
             <!-- <p>{{ item }}</p>
             <p>{{ key }}</p> -->
             <el-row>
               <el-form-item>
                 <span slot="label">{{ key }} : </span>
-                <el-checkbox-group v-model="form.type">
+                <el-checkbox-group v-model="types">
                   <el-checkbox
                     v-for="list in item"
                     :label="list.id"
@@ -41,6 +41,7 @@
         form: {
           type: []
         },
+        types: [],
         rightLists: {},
         roleName: ''
       }
@@ -69,7 +70,7 @@
       handleRightCheckedList(obj) {
         for (let key in obj) {
           for (let index in  obj[key]) {
-            this.form.type.push(obj[key][index].id)
+            this.types.push(obj[key][index].id)
           }
         }
       },
@@ -81,7 +82,7 @@
         this.$API.editright({
           data: {
             roleId: this.roleId, //  int 整型  角色id
-            rights: this.form.type //  Long[]  数组  选择的权限信息
+            rights: JSON.stringify(this.types) //  Long[]  数组  选择的权限信息
           }
         }).then((res) => {
           this.$message({

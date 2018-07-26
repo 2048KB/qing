@@ -14,31 +14,36 @@
             "description": "查看顾问列表",
             "id": 1,
             "moduleId": 1,
-            "name": "查看"
+            "name": "查看",
+            "right": 1
           },
           {
             "description": "查看顾问详情",
             "id": 2,
             "moduleId": 1,
-            "name": "查看详情"
+            "name": "查看详情",
+            "right": 2
           },
           {
             "description": "添加顾问",
             "id": 3,
             "moduleId": 1,
-            "name": "添加顾问"
+            "name": "添加顾问",
+            "right": 3
           },
           {
             "description": "编辑个人信息",
             "id": 4,
             "moduleId": 1,
-            "name": "编辑个人信息"
+            "name": "编辑个人信息",
+            "right": 4
           },
           {
             "description": "编辑职业信息",
             "id": 5,
             "moduleId": 1,
-            "name": "编辑职业信息"
+            "name": "编辑职业信息",
+            "right": 5
           }
         ],
         "美容师列表": [

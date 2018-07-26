@@ -225,11 +225,11 @@ export default {
         data: {
           type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
           userId: this.$route.query.id, //  Long  必须  用户id
-          dirInviteId: '', //  Long    直接邀请人id
-          dirInviteRole: '', //  String    直接邀请人角色
-          inDirInviteId: '', //  Long    间接邀请人id
-          inDirInviteRole: '', //  String    间接邀请人角色
-          cardId: '', //   Long    会员卡id
+          dirInviteId: this.$route.query.dirInviteId || '', //  Long    直接邀请人id
+          dirInviteRole: this.$route.query.dirInviteRole || '', //  String    直接邀请人角色
+          inDirInviteId: this.$route.query.inDirInviteId || '', //  Long    间接邀请人id
+          inDirInviteRole: this.$route.query.inDirInviteRole || '', //  String    间接邀请人角色
+          cardId: this.$route.query.cardId || '', //   Long    会员卡id
         }
       }).then((res) => {
         // 用户基本信息
@@ -278,11 +278,11 @@ export default {
         data: {
           type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
           userId: this.$route.query.id, //  Long  必须  用户id
-          dirInviteId: '', //  Long    直接邀请人id
-          dirInviteRole: '', //  String    直接邀请人角色
-          inDirInviteId: '', //  Long    间接邀请人id
-          inDirInviteRole: '', //  String    间接邀请人角色
-          cardId: '', //   Long    会员卡id
+          dirInviteId: this.$route.query.dirInviteId || '', //  Long    直接邀请人id
+          dirInviteRole: this.$route.query.dirInviteRole || '', //  String    直接邀请人角色
+          inDirInviteId: this.$route.query.inDirInviteId || '', //  Long    间接邀请人id
+          inDirInviteRole: this.$route.query.inDirInviteRole || '', //  String    间接邀请人角色
+          cardId: this.$route.query.cardId || '', //   Long    会员卡id
         }
       }).then((res) => {
         // 用户基本信息
@@ -445,7 +445,7 @@ export default {
     getListcarduse(opts = {}) {
       this.$API.listcarduse({
         data: {
-          cardId: this.vipcard.cardNo, // 会员卡id
+          cardId: this.$route.query.cardId, // 会员卡id
           currPage: opts.currPage || 1, // 当前页数
           pageSize: this.pageSize //每页显示数量
         }
