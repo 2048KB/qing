@@ -38,7 +38,15 @@
 <script>
   export default {
     props: {
-      inviterinfo: Object,
+      inviterinfo: {
+        type: Object,
+        default: {
+          nickName: '',
+          realityName: '',
+          mobile: '',
+          roleTypeStr: ''
+        }
+      },
 
       // type 1 - 直接邀请人， 2 - 间接邀请人, 3 - 绑定邀请人关系
       type: {
@@ -55,13 +63,16 @@
 
     methods: {
       goDetailPage() {
+        let str = `?cardId=${this.inviterinfo.cardId}&inDirInviteRole=${this.inviterinfo.inDirInviteRole}&inDirInviteId=${this.inviterinfo.inDirInviteId}&dirInviteRole=${this.inviterinfo.dirInviteRole}&dirInviteId=${this.inviterinfo.dirInviteId}`
+
         if (this.inviterinfo.roleTypeStr == '会员') { // role = 2
-          this.path = '/client/member/detail'
-          // location.reload()
+          this.path = '/client/member/detail' + str
+          location.reload()
         }
 
         if (this.inviterinfo.roleTypeStr == '顾问') { // role = 2
           this.path = '/employee/consultant/detail'
+          location.reload()
         }
 
         this.$router.push({

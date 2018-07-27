@@ -2,7 +2,7 @@
   "msg": "查询成功",
   "code": 1,
   "data": {
-    "addInvite": false,
+    "addInvite": true,
     "userSpreadMember": 435,
     "userCurMonSpreadCustomer": 434,
     "userAmountByUserId": 7576,
@@ -28,6 +28,11 @@
     ],
     "userCurMonInDirectAmount": 1212,
     "inMemberVO": {
+      "dirInviteId": "acdgew",
+      "dirInviteRole": "acdgew",
+      "inDirInviteId": "acdgew",
+      "inDirInviteRole": "acdgew",
+      "cardId": "acdgew",
       "isChange": false,
       "mobile": "13111111119",
       "nickName": "赵燕",
@@ -39,6 +44,11 @@
     },
     "storeAreaName": "北京区域",
     "memberVO": {
+      "dirInviteId": "acdgew",
+      "dirInviteRole": "acdgew",
+      "inDirInviteId": "acdgew",
+      "inDirInviteRole": "acdgew",
+      "cardId": "acdgew",
       "isChange": true,
       "mobile": "16555555555",
       "nickName": "fdsfs",
@@ -81,13 +91,13 @@
       "userId": 6
     },
     "userFunds": {
-        "availableBalance": 23456,
-        "balance": 12345678,
-        "freeze": 324.3,
-        "id": 4,
-        "sign": "585375c1448bfa3494298bdd79408081",
-        "time": "2018-07-07 15:38:28",
-        "userId": 8
+      "availableBalance": 23456,
+      "balance": 12345678,
+      "freeze": 324.3,
+      "id": 4,
+      "sign": "585375c1448bfa3494298bdd79408081",
+      "time": "2018-07-07 15:38:28",
+      "userId": 8
     }
   }
 }

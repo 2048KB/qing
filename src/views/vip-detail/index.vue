@@ -45,8 +45,9 @@
             <!-- 修改间接邀请人 -->
             <!-- <card-ssgw :inviterinfo="inMemberVO" :type="3" @activeReBind="rebindRe" v-if="!isEmptyObject(inMemberVO)"> -->
             <div v-show="addInvite">
+              <!-- v-if="!isEmptyObject(inMemberVO)" -->
               <card-ssgw
-                :inviterinfo="inMemberVO" :type="3" @activeReBind="rebindRe" v-if="!isEmptyObject(inMemberVO)">
+                :inviterinfo="inMemberVO" :type="3" @activeReBind="rebindRe">
                 <span>间接邀请人</span>
               </card-ssgw>
             </div>
@@ -111,7 +112,7 @@
 
             <div class="lists-wrap">
               <el-row v-for="item in storeUserLists" :key="item.id">
-                <el-radio v-model="radio7" :label="item.id" border>
+                <el-radio v-model="radio7" :label="item.id" border @change="selectSP(item)">
                   <div class="item clearfix">
                     <div class="th">
                       <img src="../../assets/images/qq-36.png" alt="">
@@ -129,6 +130,36 @@
           <div slot="footer" class="dialog-footer">
             <el-button @click="infodialogFormVisible = false">取 消</el-button>
             <!-- <el-button type="primary" @click="updateinviter">确 定</el-button> -->
+            <!-- <el-button type="primary" @click="updateinviter" :loading="btnLoading">{{ commitBtnText }}</el-button> -->
+            <el-button type="primary" @click="activeConfimChange">确 定</el-button>
+          </div>
+        </el-dialog>
+      </div>
+
+      <!-- 邀请关系确认 -->
+      <div class="edit-modal edit-modal--conf">
+        <el-dialog title="更改邀请" :visible.sync="dialogConfFormVisible">
+          <div class="wrap">
+            <div class="ttt">
+              已指定{{ storeUserTypeStr }}
+            </div>
+            <div class="item clearfix">
+              <div class="th">
+                <img src="../../assets/images/qq-36.png" alt="">
+              </div>
+              <div class="meta">
+                <div>{{ selectSPName }}</div>
+                <div><i class="qq qq-23 qq23-small"></i>{{ selectSPMobile }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div slot="footer" class="dialog-footer">
+            <span class="float-left">
+              <span><i class="qq qq-99"></i>通知{{ storeUserTypeStr }}</span>
+            </span>
+
+            <el-button @click="dialogConfFormVisible = false">取 消</el-button>
             <el-button type="primary" @click="updateinviter" :loading="btnLoading">{{ commitBtnText }}</el-button>
           </div>
         </el-dialog>
@@ -164,6 +195,7 @@ export default {
   },
   data() {
     return {
+      dialogConfFormVisible: false,
       pageCount: 1,
       pageSize: 10,
       vipcardPageCount: 0,
@@ -171,6 +203,11 @@ export default {
       commitBtnText: '确 定',
       modalTitle: '',
       storeUserType: '',
+
+      storeUserTypeStr: '',
+      selectSPName: '',
+      selectSPMobile: '',
+
       storeId: '',
       storeName: '',
       storeAreaName: '',
@@ -224,6 +261,17 @@ export default {
   },
 
   methods: {
+    activeConfimChange() {
+      this.dialogConfFormVisible = true
+      this.infodialogFormVisible = false
+    },
+
+    selectSP(item) {
+      this.selectSPName = item.name
+      this.selectSPMobile = item.mobile
+      console.log(item)
+    },
+
     init() {
       // 从路由拿角色，根据角色来调不同的接口 1- 顾客，2 - 会员
       this.queryRoleType = this.$route.query.role
@@ -398,6 +446,7 @@ export default {
 
     selectGW() {
       this.storeUserType = 4
+      this.storeUserTypeStr = '顾问'
       this.dialogFormVisible = false
       this.infodialogFormVisible = true
 
@@ -410,6 +459,7 @@ export default {
 
     selectMYS() {
       this.storeUserType = 3
+      this.storeUserTypeStr = '美容师'
       this.dialogFormVisible = false
       this.infodialogFormVisible = true
 
@@ -422,6 +472,7 @@ export default {
 
     selectVIP() {
       this.storeUserType = 2
+      this.storeUserTypeStr = '会员'
       this.dialogFormVisible = false
       this.infodialogFormVisible = true
 
@@ -494,7 +545,8 @@ export default {
         setTimeout(() => {
           this.resetBtnLoading()
           this.infodialogFormVisible = false
-        }, 1500)
+          this.dialogConfFormVisible = false
+        }, 1000)
       })
     },
 
@@ -578,5 +630,36 @@ export default {
 
 .detail-card--user .el-card__body {
   padding-bottom: 15px;
+}
+
+.edit-modal--conf div.ttt,
+.edit-modal--conf .item > div {
+  display: inline-block;
+  float: left;
+}
+
+.edit-modal--conf div.ttt {
+  margin-top: 15px;
+  margin-right: 25px;
+  font-weight: bold;
+}
+
+.edit-modal--conf .wrap {
+  padding-top: 30px;
+  padding-bottom: 30px;
+  padding-left: 30px;
+}
+
+.edit-modal--conf .item .th {
+  margin-top: 8px;
+}
+
+.edit-modal--conf .item .th img {
+  padding-right: 10px;
+}
+
+.float-left {
+  float: left;
+  line-height: 40px;
 }
 </style>
