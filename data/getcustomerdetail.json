@@ -5,6 +5,11 @@
     "addInvite": false,
     "storeAreaName": "北京区域",
     "memberVO": {
+      "dirInviteId": "acdgew",
+      "dirInviteRole": "acdgew",
+      "inDirInviteId": "acdgew",
+      "inDirInviteRole": "acdgew",
+      "cardId": "acdgew",
       "nickName": "赵燕",
       "time": null,
       "userId": 3,

@@ -13,7 +13,7 @@
         <el-table-column prop="inviteeName" width="120" label="邀请会员昵称"> </el-table-column>
         <el-table-column prop="inviteeMobile" width="120" label="邀请会员手机号"> </el-table-column>
         <el-table-column prop="typeStr" width="100" label="佣金类别"> </el-table-column>
-        <el-table-column prop="type" width="120" label="奖励金额（元）"> </el-table-column>
+        <el-table-column prop="amount" width="120" label="奖励金额（元）"> </el-table-column>
       </el-table>
 
       <div class="block pagination" v-show="showPagination">
