@@ -41,10 +41,10 @@
         <el-table-column min-width="50" align="center" label='支付方式' prop="payTypeStr"></el-table-column>
         <el-table-column min-width="100" align="center" label='付款日期' prop="payTime"></el-table-column>
         <el-table-column min-width="100" align="center" label='是否代付' prop="isPayFor">
-          <template slot-scope="scope">{{list[scope.$index].isPayFor == 0 ? '不是' : '是'}}</template>
+          <template slot-scope="scope">{{list[scope.$index].isPayFor == 0 ? '否' : '是'}}</template>
         </el-table-column>
         <el-table-column min-width="100" align="center" label='状态' prop="status">
-          <template slot-scope="scope">{{orderStatusMap[list[scope.$index].status]}}</template>
+          <template slot-scope="scope">{{orderStatusMap[list[scope.$index].status] || list[scope.$index].status}}</template>
         </el-table-column>
         <el-table-column min-width="50" align="center" label='操作'>
           <template slot-scope="scope"><span class="detail" @click="handleToDetail(scope.$index)">详情</span></template>
