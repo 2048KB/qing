@@ -202,6 +202,8 @@ export default {
   },
 
   created() {
+    console.log('adc')
+    console.log(this.counselorOfBeautician)
     this.handleCreated()
   },
 
@@ -218,6 +220,8 @@ export default {
             id: this.$route.query.id //  Long  必须  员工id
           }
         }).then((res) => {
+          this.counselorOfBeautician = {} // 美容师详情页面，跳转顾问详情重置为空
+
           this.employeeDetail = res.data.employeeDetail
 
           // 更新个人信息需要新增id入参
@@ -444,7 +448,6 @@ export default {
       this.dialogFormVisible = true
 
       if (this.$route.query.role == 1) {
-        alert('美容师')
         this.fetchGetcounselorsofstore()
       }
     },

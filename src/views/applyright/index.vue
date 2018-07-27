@@ -8,16 +8,24 @@
 
       <table-wrapper :title="roleName">
         <el-form ref="form" label-width="120px">
+          <!-- <el-form-item v-for="(key, index) in form">
+            <el-checkbox :label="index" @change="checkSubAll(index)">全部</el-checkbox>
+            <el-checkbox-group v-model="form[index].rights" @change="handleCheckedCitiesChange">
+              <el-checkbox
+                v-for="city in form[index].items"
+                :label="city.id"
+                :key="city.id">{{city.description}}</el-checkbox>
+            </el-checkbox-group>
+          </el-form-item> -->
+
           <div class="row" v-for="(item, key) in rightLists">
-            <!-- <p>{{ item }}</p>
-            <p>{{ key }}</p> -->
             <el-row>
               <el-form-item>
                 <span slot="label">{{ key }} : </span>
                 <el-checkbox-group v-model="types">
                   <el-checkbox
                     v-for="list in item"
-                    :label="list.id"
+                    :label="list.right !== '' ? list.right : ''"
                     :key="'' + list.id + list.moduleId"
                   >{{ list.description }}</el-checkbox>
                 </el-checkbox-group>
@@ -48,11 +56,25 @@
     },
 
     created() {
-      console.log(this.$route.query.roleId)
       this.fetchRights()
     },
 
     methods: {
+      handleCheckedCitiesChange() {
+
+      },
+
+      checkSubAll(index) {
+        let checkedList = []
+
+        for (let key in this.form[index].items) {
+          let id = this.form[index].items[key].id
+          checkedList.push(id)
+        }
+
+        this.form[index].rights = checkedList
+      },
+
       fetchRights() {
         this.$API.showright({
           data: {
@@ -70,9 +92,13 @@
       handleRightCheckedList(obj) {
         for (let key in obj) {
           for (let index in  obj[key]) {
-            this.types.push(obj[key][index].id)
+            if (obj[key][index].right) {
+              this.types.push(obj[key][index].right)
+            }
           }
         }
+
+        console.log(this.types)
       },
 
       updateRights() {

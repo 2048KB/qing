@@ -43,9 +43,13 @@
             </card-ssgw>
 
             <!-- 修改间接邀请人 -->
-            <card-ssgw :inviterinfo="inMemberVO" :type="3" @activeReBind="rebindRe" v-if="!isEmptyObject(inMemberVO)">
-              <span>间接邀请人</span>
-            </card-ssgw>
+            <!-- <card-ssgw :inviterinfo="inMemberVO" :type="3" @activeReBind="rebindRe" v-if="!isEmptyObject(inMemberVO)"> -->
+            <div v-show="addInvite">
+              <card-ssgw
+                :inviterinfo="inMemberVO" :type="3" @activeReBind="rebindRe" v-if="!isEmptyObject(inMemberVO)">
+                <span>间接邀请人</span>
+              </card-ssgw>
+            </div>
 
             <!-- 会员服务信息 -->
             <card-vipcard
@@ -210,139 +214,149 @@ export default {
       inMemberVO: {},
       storeUserLists: [],
       disableUploadImg: true,
-      vipcard: {}
+      vipcard: {},
+      addInvite: false
     }
   },
 
   created() {
-    // 从路由拿角色，根据角色来调不同的接口 1- 顾客，2 - 会员
-    this.queryRoleType = this.$route.query.role
-    this.queryId = this.$route.query.id
-
-    // 顾客详情
-    if (this.$route.query.role == 1) {
-      this.$API.getcustomerdetail({
-        data: {
-          type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
-          userId: this.$route.query.id, //  Long  必须  用户id
-          dirInviteId: this.$route.query.dirInviteId || '', //  Long    直接邀请人id
-          dirInviteRole: this.$route.query.dirInviteRole || '', //  String    直接邀请人角色
-          inDirInviteId: this.$route.query.inDirInviteId || '', //  Long    间接邀请人id
-          inDirInviteRole: this.$route.query.inDirInviteRole || '', //  String    间接邀请人角色
-          cardId: this.$route.query.cardId || '', //   Long    会员卡id
-        }
-      }).then((res) => {
-        // 用户基本信息
-        this.employeeDetail = res.data.user
-        this.employeeDetail.storeName = res.data.storeName
-
-        // 更新个人信息需要新增id入参
-        this.infoform.id = res.data.user.id
-
-        // 用户账户信息
-        // this.userFunds = res.data.userFunds
-
-        // 账户信息
-        // this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount // 本月用户直接赚取
-        // this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount // 本月用户间接赚取
-        // this.userFunds.userAmountByUserId = res.data.userAmountByUserId // 用户累计赚取
-
-        // 邀请会员信息
-        // this.inviters.total = res.data.userCurMonSpreadCustomer // 本月邀请顾客
-        // this.inviters.monthly = res.data.userCurMonSpreadMember // 本月邀请会员
-        // this.inviters.totalcustomers = res.data.userSpreadMember // 累计邀请会员
-
-        // 门店区域
-        this.storeAreaName = res.data.storeAreaName
-        this.storeName = res.data.storeName
-
-        // 用户收货地址
-        this.listUserAddress = res.data.listUserAddress
-
-        // 直接邀请人
-        this.memberVO = res.data.memberVO
-
-        // 间接邀请人
-        this.inMemberVO = res.data.inMemberVO
-
-        // 修改绑定关系弹窗信息
-        this.storeName = res.data.storeName
-        this.storeAreaName = res.data.storeAreaName
-        this.storeId = res.data.storeId
-      })
-    }
-
-    // 会员详情
-    if (this.$route.query.role == 2) {
-      this.$API.getmemberdetail({
-        data: {
-          type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
-          userId: this.$route.query.id, //  Long  必须  用户id
-          dirInviteId: this.$route.query.dirInviteId || '', //  Long    直接邀请人id
-          dirInviteRole: this.$route.query.dirInviteRole || '', //  String    直接邀请人角色
-          inDirInviteId: this.$route.query.inDirInviteId || '', //  Long    间接邀请人id
-          inDirInviteRole: this.$route.query.inDirInviteRole || '', //  String    间接邀请人角色
-          cardId: this.$route.query.cardId || '', //   Long    会员卡id
-        }
-      }).then((res) => {
-        // 用户基本信息
-        this.employeeDetail = res.data.user
-        this.employeeDetail.storeName = res.data.storeName
-
-        // 更新个人信息需要新增id入参
-        this.infoform.id = res.data.user.id
-
-        // 用户账户信息
-        this.userFunds = res.data.userFunds
-
-        // 账户信息
-        this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount // 本月用户直接赚取
-        this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount // 本月用户间接赚取
-        this.userFunds.userAmountByUserId = res.data.userAmountByUserId // 用户累计赚取
-
-        // 邀请会员信息
-        this.inviters.total = res.data.userSpreadMember // 累计邀请会员
-        this.inviters.monthly = res.data.userCurMonSpreadMember // 本月邀请会员
-        this.inviters.totalcustomers = res.data.userCurMonSpreadCustomer // 本月邀请顾客
-
-        // 门店区域
-        this.storeAreaName = res.data.storeAreaName
-        this.storeName = res.data.storeName
-
-        // 用户收货地址
-        this.listUserAddress = res.data.listUserAddress
-
-        // 直接邀请人
-        this.memberVO = res.data.memberVO
-
-        // 间接邀请人
-        this.inMemberVO = res.data.inMemberVO
-
-        // 修改绑定关系弹窗信息
-        this.storeName = res.data.storeName
-        this.storeAreaName = res.data.storeAreaName
-        this.storeId = res.data.storeId
-
-        // 会员卡信息
-        this.vipcard = res.data.card
-
-        // 会员卡服务记录（需要会员卡号做入参）
-        this.getListcarduse()
-
-        // 获取会员佣金列表
-        this.getListcounselorcurmonbonus()
-      })
-    }
-
-    // 获取门店会员列表
-    // this.geLlistuserbystoreid({
-    //   storeId: this.storeId,
-    //   type: this.storeUserType,
-    //   key: this.searchKey
-    // })
+    this.init()
   },
 
   methods: {
+    init() {
+      // 从路由拿角色，根据角色来调不同的接口 1- 顾客，2 - 会员
+      this.queryRoleType = this.$route.query.role
+      this.queryId = this.$route.query.id
+
+      // 顾客详情
+      if (this.$route.query.role == 1) {
+        this.$API.getcustomerdetail({
+          data: {
+            type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
+            userId: this.$route.query.id, //  Long  必须  用户id
+            dirInviteId: this.$route.query.dirInviteId || '', //  Long    直接邀请人id
+            dirInviteRole: this.$route.query.dirInviteRole || '', //  String    直接邀请人角色
+            inDirInviteId: this.$route.query.inDirInviteId || '', //  Long    间接邀请人id
+            inDirInviteRole: this.$route.query.inDirInviteRole || '', //  String    间接邀请人角色
+            // cardId: this.$route.query.cardId || '', //   Long    会员卡id
+          }
+        }).then((res) => {
+          // 用户基本信息
+          this.employeeDetail = res.data.user
+          this.employeeDetail.storeName = res.data.storeName
+
+          // 隐藏更改绑定关系模块
+          this.addInvite = res.data.addInvite
+
+          // 更新个人信息需要新增id入参
+          this.infoform.id = res.data.user.id
+
+          // 用户账户信息
+          // this.userFunds = res.data.userFunds
+
+          // 账户信息
+          // this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount // 本月用户直接赚取
+          // this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount // 本月用户间接赚取
+          // this.userFunds.userAmountByUserId = res.data.userAmountByUserId // 用户累计赚取
+
+          // 邀请会员信息
+          // this.inviters.total = res.data.userCurMonSpreadCustomer // 本月邀请顾客
+          // this.inviters.monthly = res.data.userCurMonSpreadMember // 本月邀请会员
+          // this.inviters.totalcustomers = res.data.userSpreadMember // 累计邀请会员
+
+          // 门店区域
+          this.storeAreaName = res.data.storeAreaName
+          this.storeName = res.data.storeName
+
+          // 用户收货地址
+          this.listUserAddress = res.data.listUserAddress
+
+          // 直接邀请人
+          this.memberVO = res.data.memberVO
+
+          // 间接邀请人
+          this.inMemberVO = res.data.inMemberVO
+
+          // 修改绑定关系弹窗信息
+          this.storeName = res.data.storeName
+          this.storeAreaName = res.data.storeAreaName
+          this.storeId = res.data.storeId
+        })
+      }
+
+      // 会员详情
+      if (this.$route.query.role == 2) {
+        this.$API.getmemberdetail({
+          data: {
+            type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
+            userId: this.$route.query.id, //  Long  必须  用户id
+            dirInviteId: this.$route.query.dirInviteId || '', //  Long    直接邀请人id
+            dirInviteRole: this.$route.query.dirInviteRole || '', //  String    直接邀请人角色
+            inDirInviteId: this.$route.query.inDirInviteId || '', //  Long    间接邀请人id
+            inDirInviteRole: this.$route.query.inDirInviteRole || '', //  String    间接邀请人角色
+            cardId: this.$route.query.cardId || '', //   Long    会员卡id
+          }
+        }).then((res) => {
+          // 用户基本信息
+          this.employeeDetail = res.data.user
+          this.employeeDetail.storeName = res.data.storeName
+
+          // 隐藏更改绑定关系模块
+          this.addInvite = res.data.addInvite
+
+          // 更新个人信息需要新增id入参
+          this.infoform.id = res.data.user.id
+
+          // 用户账户信息
+          this.userFunds = res.data.userFunds
+
+          // 账户信息
+          this.userFunds.userCurMonDirectAmount = res.data.userCurMonDirectAmount // 本月用户直接赚取
+          this.userFunds.userCurMonInDirectAmount = res.data.userCurMonInDirectAmount // 本月用户间接赚取
+          this.userFunds.userAmountByUserId = res.data.userAmountByUserId // 用户累计赚取
+
+          // 邀请会员信息
+          this.inviters.total = res.data.userSpreadMember // 累计邀请会员
+          this.inviters.monthly = res.data.userCurMonSpreadMember // 本月邀请会员
+          this.inviters.totalcustomers = res.data.userCurMonSpreadCustomer // 本月邀请顾客
+
+          // 门店区域
+          this.storeAreaName = res.data.storeAreaName
+          this.storeName = res.data.storeName
+
+          // 用户收货地址
+          this.listUserAddress = res.data.listUserAddress
+
+          // 直接邀请人
+          this.memberVO = res.data.memberVO
+
+          // 间接邀请人
+          this.inMemberVO = res.data.inMemberVO
+
+          // 修改绑定关系弹窗信息
+          this.storeName = res.data.storeName
+          this.storeAreaName = res.data.storeAreaName
+          this.storeId = res.data.storeId
+
+          // 会员卡信息
+          this.vipcard = res.data.card
+
+          // 会员卡服务记录（需要会员卡号做入参）
+          this.getListcarduse()
+
+          // 获取会员佣金列表
+          this.getListcounselorcurmonbonus()
+        })
+      }
+
+      // 获取门店会员列表
+      // this.geLlistuserbystoreid({
+      //   storeId: this.storeId,
+      //   type: this.storeUserType,
+      //   key: this.searchKey
+      // })
+    },
     setBtnLoading() {
       this.btnLoading = true
       this.commitBtnText = '加载中...'
@@ -534,6 +548,11 @@ export default {
         key: this.searchKey
       })
     }
+  },
+
+  watch: {
+    // 如果路由有变化，会再次执行该方法
+    '$route': 'init'
   }
 }
 </script>

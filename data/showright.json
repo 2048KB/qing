@@ -22,7 +22,7 @@
             "id": 2,
             "moduleId": 1,
             "name": "查看详情",
-            "right": 2
+            "right": 0
           },
           {
             "description": "添加顾问",

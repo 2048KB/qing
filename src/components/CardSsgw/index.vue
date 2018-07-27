@@ -57,6 +57,7 @@
       goDetailPage() {
         if (this.inviterinfo.roleTypeStr == '会员') { // role = 2
           this.path = '/client/member/detail'
+          // location.reload()
         }
 
         if (this.inviterinfo.roleTypeStr == '顾问') { // role = 2

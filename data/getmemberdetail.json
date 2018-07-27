@@ -2,6 +2,7 @@
   "msg": "查询成功",
   "code": 1,
   "data": {
+    "addInvite": false,
     "userSpreadMember": 435,
     "userCurMonSpreadCustomer": 434,
     "userAmountByUserId": 7576,
