@@ -1,16 +1,14 @@
 <template>
     <div class="runrules-fxset">
       <div class="top-bar">
-        <span class="add-member-buttom" @click="updateYYSet">
-          <i class="el-icon el-icon-loading" v-show="btnLoading"></i>{{ commitBtnText }}
-        </span>
+        <el-button class="add-member-buttom" icon="el-icon-edit" @click="handleSubmit">保存</el-button>
       </div>
 
-      <table-wrapper title="分销规则设置">
+      <table-wrapper title="分销规则设置" v-loading.body="listLoading">
         <table>
           <tr>
             <th class="name">名称</th>
-            <th class="zhitui">直推奖</th>
+            <th class="zhitui" width="150">直推奖</th>
             <th class="yideng">一级奖</th>
             <th class="erdeng">二级奖</th>
             <th class="shuangren">双人奖</th>
@@ -23,7 +21,13 @@
               <div>
                 <p>顾问直推1位奖励</p>
                 <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
+                  <el-input v-model="list['顾问直推奖'][0].bonus">
+                    <template slot="append">元</template>
+                  </el-input>
+                </div>
+                <p>美容师直推1位奖励<br>（顾问美容师合作）</p>
+                <div style="margin-top: 15px;">
+                  <el-input v-model="list['顾问合作奖'][0].bonus">
                     <template slot="append">元</template>
                   </el-input>
                 </div>
@@ -34,7 +38,7 @@
               <div>
                 <p>每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
+                  <el-input v-model="list['顾问二级奖'][0].bonus">
                     <template slot="append">元</template>
                   </el-input>
                 </div>
@@ -44,85 +48,28 @@
               <div>
                 <p>每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
+                  <el-input v-model="list['顾问双人奖'][0].bonus">
                     <template slot="append">元</template>
                   </el-input>
                 </div>
               </div>
             </td>
-            <td class="rentou" width="100%">
-              <div>
+            <td class="rentou">
+              <div v-for="item in list['顾问人头奖']">
                 <span>邀请</span>
-                <el-input v-model="input"></el-input>
+                <el-input v-model="item.inviteFrom"></el-input>
                 <span>-</span>
-                <el-input v-model="input4">
+                <el-input v-model="item.inviteTo">
                   <template slot="append">位</template>
                 </el-input>
                 <span>从</span>
-                <el-input v-model="input"></el-input>
+                <el-input v-model="item.from"></el-input>
                 <span>-</span>
-                <el-input v-model="input4">
+                <el-input v-model="item.to">
                   <template slot="append">位</template>
                 </el-input>
                 <span>每邀请1位所得奖励</span>
-                <el-input v-model="input4">
-                  <template slot="append">元</template>
-                </el-input>
-              </div>
-
-              <div>
-                <span>邀请</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>从</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>每邀请1位所得奖励</span>
-                <el-input v-model="input4">
-                  <template slot="append">元</template>
-                </el-input>
-              </div>
-
-              <div>
-                <span>邀请</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>从</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>每邀请1位所得奖励</span>
-                <el-input v-model="input4">
-                  <template slot="append">元</template>
-                </el-input>
-              </div>
-
-              <div>
-                <span>邀请</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>从</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>每邀请1位所得奖励</span>
-                <el-input v-model="input4">
+                <el-input v-model="item.bonus">
                   <template slot="append">元</template>
                 </el-input>
               </div>
@@ -131,20 +78,12 @@
           <tr>
             <td class="name">美容师</td>
             <td class="zhitui">
-              <div>
-                <p>美容师直推1位奖励(顾问美容师合作)</p>
-                <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
-                    <template slot="append">元</template>
-                  </el-input>
-                </div>
-              </div>
             </td>
             <td class="yideng">
               <div>
                 <p>每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
+                  <el-input v-model="list['美容师一级奖'][0].bonus">
                     <template slot="append">元</template>
                   </el-input>
                 </div>
@@ -154,7 +93,7 @@
               <div>
                 <p>每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
+                  <el-input v-model="list['美容师二级奖'][0].bonus">
                     <template slot="append">元</template>
                   </el-input>
                 </div>
@@ -164,85 +103,28 @@
               <div>
                 <p>每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
+                  <el-input v-model="list['美容师双人奖'][0].bonus">
                     <template slot="append">元</template>
                   </el-input>
                 </div>
               </div>
             </td>
-            <td class="rentou" width="100%">
-              <div>
+            <td class="rentou">
+              <div v-for="item in list['美容师人头奖']">
                 <span>邀请</span>
-                <el-input v-model="input"></el-input>
+                <el-input v-model="item.inviteFrom"></el-input>
                 <span>-</span>
-                <el-input v-model="input4">
+                <el-input v-model="item.inviteTo">
                   <template slot="append">位</template>
                 </el-input>
                 <span>从</span>
-                <el-input v-model="input"></el-input>
+                <el-input v-model="item.from"></el-input>
                 <span>-</span>
-                <el-input v-model="input4">
+                <el-input v-model="item.to">
                   <template slot="append">位</template>
                 </el-input>
                 <span>每邀请1位所得奖励</span>
-                <el-input v-model="input4">
-                  <template slot="append">元</template>
-                </el-input>
-              </div>
-
-              <div>
-                <span>邀请</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>从</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>每邀请1位所得奖励</span>
-                <el-input v-model="input4">
-                  <template slot="append">元</template>
-                </el-input>
-              </div>
-
-              <div>
-                <span>邀请</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>从</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>每邀请1位所得奖励</span>
-                <el-input v-model="input4">
-                  <template slot="append">元</template>
-                </el-input>
-              </div>
-
-              <div>
-                <span>邀请</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>从</span>
-                <el-input v-model="input"></el-input>
-                <span>-</span>
-                <el-input v-model="input4">
-                  <template slot="append">位</template>
-                </el-input>
-                <span>每邀请1位所得奖励</span>
-                <el-input v-model="input4">
+                <el-input v-model="item.bonus">
                   <template slot="append">元</template>
                 </el-input>
               </div>
@@ -255,7 +137,7 @@
               <div>
                 <p>每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
+                  <el-input v-model="list['会员一级奖'][0].bonus">
                     <template slot="append">元</template>
                   </el-input>
                 </div>
@@ -265,7 +147,7 @@
               <div>
                 <p>每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
+                  <el-input v-model="list['会员二级奖'][0].bonus">
                     <template slot="append">元</template>
                   </el-input>
                 </div>
@@ -275,7 +157,7 @@
               <div>
                 <p>每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
-                  <el-input v-model="input4">
+                  <el-input v-model="list['会员双人奖'][0].bonus">
                     <template slot="append">元</template>
                   </el-input>
                 </div>
@@ -290,23 +172,44 @@
 
 <script>
   import TableWrapper from '@/components/TableWrapper'
+  import DEFAULT_LIST from './default.js'
   // import { setBtnLoading, resetBtnLoading } '@/utils/btnLoading'
   export default {
     data() {
       return {
-        msg: 'Lorem',
-        commitBtnText: '保存',
-        lists: [
-          {
-            inviterRealName: '111',
-            inviterMobile: '222'
-          }
-        ]
+        list: DEFAULT_LIST,
+        listLoading: true
       }
     },
-
     components: {
       TableWrapper
+    },
+    methods: {
+      fetchData () {
+        this.$API.showsaleruledetail()
+          .then((res) => {
+            this.listLoading = false
+            Object.assign(this.list, res.data)
+          })
+          .catch(() => {
+            this.listLoading = false
+          })
+      },
+      handleSubmit () {
+        this.$API.editsalerule({
+          data: {
+            distributionRules: JSON.stringify(this.list)
+          }
+        }).then((res) => {
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          })
+        })
+      }
+    },
+    mounted () {
+      this.fetchData()
     }
   }
 </script>
@@ -381,6 +284,7 @@
     vertical-align: middle;
     width: 40px;
     padding: 0;
+    // padding-left: 15px;
   }
 
 
@@ -391,5 +295,10 @@
   .runrules-fxset .el-input-group__append, .el-input-group__prepend {
     padding: 0 2px;
     height: 20px !important;
+  }
+  .rentou {
+    input[type="text"] {
+      padding-left: 15px !important;
+    }
   }
 </style>
