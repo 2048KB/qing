@@ -17,7 +17,7 @@ if (getQS('api') == 'prd') {
 }
 
 // http://192.168.0.7:8080
-// domain = 'http://192.168.0.7:8080'
+// domain = 'http://192.168.0.121:8080'
 // domain = 'http://qqmr.web.data.jingdacaifu.com'
 
 // 打包测试、生产改接口域名

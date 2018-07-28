@@ -157,7 +157,7 @@ export default {
           // dirInviteRole: this.list[index].dirInviteRole,
           // inDirInviteId: this.list[index].inDirInviteId,
           // inDirInviteRole: this.list[index].inDirInviteRole,
-          // cardId: this.list[index].cardId
+          cardId: this.list[index].cardId
         }
       })
     }
