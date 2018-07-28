@@ -269,6 +269,7 @@ export default {
     selectSP(item) {
       this.selectSPName = item.name
       this.selectSPMobile = item.mobile
+      this.selectSPId = item.id
       console.log(item)
     },
 
@@ -537,8 +538,8 @@ export default {
 
       this.$API.updateinviter({
         data: {
-          inviteeUserId: inviteeUserId, // Long  必须  被邀请人id
-          inviterUserId: this.employeeDetail.employeeId, // Long  必须  邀请人id
+          inviteeUserId: this.employeeDetail.id, // inviteeUserId, Long  必须  被邀请人id
+          inviterUserId: this.selectSPId, // this.employeeDetail.id, // Long  必须  邀请人id
           type: this.storeUserType //  int   邀请人类型
         }
       }).then(res => {
