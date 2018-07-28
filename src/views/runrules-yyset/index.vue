@@ -1,9 +1,9 @@
 <template>
     <div class="runrules-yyset">
       <div class="top-bar">
-        <span class="add-member-buttom" @click="updateYYSet">
+        <el-button class="add-member-buttom" @click="updateYYSet" icon="el-icon-edit">
           <i class="el-icon el-icon-loading" v-show="btnLoading"></i>{{ commitBtnText }}
-        </span>
+        </el-button>
       </div>
 
       <table-wrapper title="参数设置">

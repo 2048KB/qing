@@ -284,10 +284,10 @@ export default {
           data: {
             type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
             userId: this.$route.query.id, //  Long  必须  用户id
-            dirInviteId: this.$route.query.dirInviteId || '', //  Long    直接邀请人id
-            dirInviteRole: this.$route.query.dirInviteRole || '', //  String    直接邀请人角色
-            inDirInviteId: this.$route.query.inDirInviteId || '', //  Long    间接邀请人id
-            inDirInviteRole: this.$route.query.inDirInviteRole || '', //  String    间接邀请人角色
+            // dirInviteId: this.$route.query.dirInviteId || '', //  Long    直接邀请人id
+            // dirInviteRole: this.$route.query.dirInviteRole || '', //  String    直接邀请人角色
+            // inDirInviteId: this.$route.query.inDirInviteId || '', //  Long    间接邀请人id
+            // inDirInviteRole: this.$route.query.inDirInviteRole || '', //  String    间接邀请人角色
             // cardId: this.$route.query.cardId || '', //   Long    会员卡id
           }
         }).then((res) => {
@@ -340,11 +340,11 @@ export default {
           data: {
             type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
             userId: this.$route.query.id, //  Long  必须  用户id
-            dirInviteId: this.$route.query.dirInviteId || '', //  Long    直接邀请人id
-            dirInviteRole: this.$route.query.dirInviteRole || '', //  String    直接邀请人角色
-            inDirInviteId: this.$route.query.inDirInviteId || '', //  Long    间接邀请人id
-            inDirInviteRole: this.$route.query.inDirInviteRole || '', //  String    间接邀请人角色
-            cardId: this.$route.query.cardId || '', //   Long    会员卡id
+            // dirInviteId: this.$route.query.dirInviteId || '', //  Long    直接邀请人id
+            // dirInviteRole: this.$route.query.dirInviteRole || '', //  String    直接邀请人角色
+            // inDirInviteId: this.$route.query.inDirInviteId || '', //  Long    间接邀请人id
+            // inDirInviteRole: this.$route.query.inDirInviteRole || '', //  String    间接邀请人角色
+            // cardId: this.$route.query.cardId || '', //   Long    会员卡id
           }
         }).then((res) => {
           // 用户基本信息
@@ -580,18 +580,23 @@ export default {
     },
 
     // 修改邀请人信息
+    /*
     updateInviter() {
       this.$API.updateinviter({
         data: {
-          inviteeUserId: inviteeUserId, // Long  必须  被邀请人id
-          inviterUserId: this.employeeDetail.employeeId, // Long  必须  邀请人id
+          inviteeUserId: this.employeeDetail.id, // inviteeUserId, Long  必须  被邀请人id
+          inviterUserId: this.selectSPId, // this.employeeDetail.id, // Long  必须  邀请人id
           type: this.storeUserType //  int   邀请人类型
+          // inviteeUserId: inviteeUserId, // Long  必须  被邀请人id
+          // inviterUserId: this.employeeDetail.employeeId, // Long  必须  邀请人id
+          // type: this.storeUserType //  int   邀请人类型
         }
       }).then(res => {
         this.resetBtnLoading()
         this.infodialogFormVisible = false
       })
     },
+    */
 
     // 点击搜索
     searchStoreUserLists() {

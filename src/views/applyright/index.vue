@@ -1,9 +1,9 @@
 <template>
     <div class="rights-wrapper">
       <div class="top-bar">
-        <span class="add-member-buttom" @click="updateRights">
+        <el-button class="add-member-buttom" @click="updateRights" icon="el-icon-edit">
           <i class="el-icon el-icon-loading" v-show="btnLoading"></i>{{ commitBtnText }}
-        </span>
+        </el-button>
       </div>
 
       <table-wrapper :title="roleName">
@@ -22,10 +22,10 @@
             <el-row>
               <el-form-item>
                 <span slot="label">{{ key }} : </span>
-                <el-checkbox-group v-model="types">
+                <el-checkbox-group v-model="rights">
                   <el-checkbox
                     v-for="list in item"
-                    :label="list.right !== '' ? list.right : ''"
+                    :label="list.id"
                     :key="'' + list.id + list.moduleId"
                   >{{ list.description }}</el-checkbox>
                 </el-checkbox-group>
@@ -49,6 +49,7 @@
         form: {
           type: []
         },
+        rights: [],
         types: [],
         rightLists: {},
         roleName: ''
@@ -60,8 +61,18 @@
     },
 
     methods: {
-      handleCheckedCitiesChange() {
+      handleCheckedCitiesChange(right) {
+        let index = this.rights.indexOf(right)
+        this.rights.push(right)
 
+        if (index > -1) {
+          return
+          console.log('不添加')
+        //   this.rights.splice(index, 1)
+        //   console.log(this.rights)
+        } else {
+          this.rights.push(right)
+        }
       },
 
       checkSubAll(index) {
@@ -84,6 +95,7 @@
           this.rightLists = res.data.allRight
           this.roleId = res.data.roleId
           this.roleName = res.data.roleName
+          this.rights = res.data.rights
 
           this.handleRightCheckedList(res.data.allRight)
         })
@@ -97,8 +109,6 @@
             }
           }
         }
-
-        console.log(this.types)
       },
 
       updateRights() {
@@ -108,7 +118,7 @@
         this.$API.editright({
           data: {
             roleId: this.roleId, //  int 整型  角色id
-            rights: JSON.stringify(this.types) //  Long[]  数组  选择的权限信息
+            rights: JSON.stringify(this.rights) //  Long[]  数组  选择的权限信息
           }
         }).then((res) => {
           this.$message({

@@ -153,11 +153,11 @@ export default {
         query: {
           id: this.list[index].id,
           role: this.pageData.roleType,
-          dirInviteId: this.list[index].dirInviteId,
-          dirInviteRole: this.list[index].dirInviteRole,
-          inDirInviteId: this.list[index].inDirInviteId,
-          inDirInviteRole: this.list[index].inDirInviteRole,
-          cardId: this.list[index].cardId
+          // dirInviteId: this.list[index].dirInviteId,
+          // dirInviteRole: this.list[index].dirInviteRole,
+          // inDirInviteId: this.list[index].inDirInviteId,
+          // inDirInviteRole: this.list[index].inDirInviteRole,
+          // cardId: this.list[index].cardId
         }
       })
     }
