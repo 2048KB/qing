@@ -20,7 +20,8 @@ module.exports = {
   getmemberdetail: '/back/user/getmemberdetail', // 获取会员详情
   listusercurmonbonus: '/back/user/listusercurmonbonus', // 获取用户当月佣金列表信息
   listcarduse: '/back/user/listcarduse', // 获取会员卡服务记录
-  updateinviter: '/back/user/updateinviter', // 修改邀请人信息
+  updatecustomerinviter: '/back/user/updatecustomerinviter', // 修改顾客邀请人信息
+  updatememberinviter: '/back/user/updatememberinviter', // 修改会员邀请人信息
   getinviterinfo: '/back/user/getinviterinfo', // 根据userId获取直接邀请人信息
   listcustomer: '/back/user/listcustomer', // 顾客列表
   getplatformoverview: '/back/overview/getplatformoverview', // 获取平台概况

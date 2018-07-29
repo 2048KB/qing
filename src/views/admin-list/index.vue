@@ -114,7 +114,7 @@ export default {
       listRole: {},
       submitApi: 'addsupervisor',
       rules: {
-        name: {name: '用户名', minlength: 4, trigger: 'change', validator: validateRequired},
+        name: {name: '用户名', minlength: 4, required: true, trigger: 'change', validator: validateRequired},
         realityName: {name: '真实姓名', required: true, trigger: 'change', validator: validateRequired},
         mobile: {name: '手机号', required: true, trigger: 'change', validator: validateMobild},
         roleId: {message: '请选择所属角色', required: true, trigger: 'change', validator: validateRequired},
@@ -167,8 +167,10 @@ export default {
           }
         })
         .then(() => {
-          console.log(this.listRole)
           this.isShowEditDialog = true
+          this.$nextTick(() => {
+            this.$refs.editForm.clearValidate()
+          })
         })
     },
     handleShowRemoveDialog (index) {

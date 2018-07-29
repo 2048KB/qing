@@ -278,6 +278,7 @@ export default {
           this.employeeDetail = res.data.employeeDetail
           // 更新个人信息需要新增id入参
           this.infoform.id = res.data.employeeDetail.id
+          this.infoform.parentId = res.data.counselorOfBeautician.parentId
           this.userFunds = res.data.userFunds
 
           // 美容师所属顾问
