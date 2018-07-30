@@ -255,6 +255,7 @@ export default {
       vipcard: {},
       addInvite: false,
       showPagination: true
+      updateinviterUrl: ''
     }
   },
 
@@ -282,6 +283,7 @@ export default {
 
       // 顾客详情
       if (this.$route.query.role == 1) {
+        this.updateinviterUrl = 'updatecustomerinviter'
         this.$API.getcustomerdetail({
           data: {
             type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
@@ -338,6 +340,8 @@ export default {
 
       // 会员详情
       if (this.$route.query.role == 2) {
+        this.updateinviterUrl = 'updatememberinviter'
+
         this.$API.getmemberdetail({
           data: {
             type: this.$route.query.role, //  Int 必须  搜索类型1:顾客  2:会员
@@ -540,7 +544,7 @@ export default {
         }
       } catch(err) { console.log(err) }
 
-      this.$API.updateinviter({
+      this.$API[this.updateinviterUrl]({
         data: {
           inviteeUserId: this.employeeDetail.id, // inviteeUserId, Long  必须  被邀请人id
           inviterUserId: this.selectSPId, // this.employeeDetail.id, // Long  必须  邀请人id

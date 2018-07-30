@@ -40,11 +40,13 @@
     props: {
       inviterinfo: {
         type: Object,
-        default: {
-          nickName: '',
-          realityName: '',
-          mobile: '',
-          roleTypeStr: ''
+        default: () => {
+          return {
+            nickName: '',
+            realityName: '',
+            mobile: '',
+            roleTypeStr: ''
+          }
         }
       },
 

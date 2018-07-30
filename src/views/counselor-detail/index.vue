@@ -278,6 +278,7 @@ export default {
           this.employeeDetail = res.data.employeeDetail
           // 更新个人信息需要新增id入参
           this.infoform.id = res.data.employeeDetail.id
+          this.infoform.parentId = res.data.counselorOfBeautician.id
           this.userFunds = res.data.userFunds
 
           // 美容师所属顾问
@@ -425,6 +426,9 @@ export default {
             this.resetBtnLoading(res.code, res.msg)
 
             this.handleCreated()
+          })
+          .catch((err) => {
+            this.resetBtnLoading(err.code, err.msg)
           })
         }
         if (this.dialogFormVisible === true) {

@@ -112,7 +112,9 @@ export default {
         let role = this.list[index]
         id = role.id
       } else {
-        this.editForm = DEFAULT_EDIT_FORM
+        this.editForm = {
+          ...DEFAULT_EDIT_FORM
+        }
         this.submitApi = 'addrightrole'
         this.editDialogTitle = '添加角色'
       }
@@ -129,6 +131,9 @@ export default {
         })
         .then(() => {
           this.isShowEditDialog = true
+          this.$nextTick(() => {
+            this.$refs.editForm.clearValidate()
+          })
         })
     },
     handleSubmitEdit () {
