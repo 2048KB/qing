@@ -21,6 +21,7 @@
               :lists="yjLists"
               :totalPages="pageCount"
               v-if="!isEmptyObject(inviters)"
+              :showPagination="showPagination"
               @triggerPagination="getListcounselorcurmonbonus"
               ></card-youjin>
           </div>
@@ -138,7 +139,7 @@
 
       <!-- 邀请关系确认 -->
       <div class="edit-modal edit-modal--conf">
-        <el-dialog title="更改邀请" :visible.sync="dialogConfFormVisible">
+        <el-dialog title="绑定邀请关系" :visible.sync="dialogConfFormVisible">
           <div class="wrap">
             <div class="ttt">
               已指定{{ storeUserTypeStr }}
@@ -252,7 +253,8 @@ export default {
       storeUserLists: [],
       disableUploadImg: true,
       vipcard: {},
-      addInvite: false
+      addInvite: false,
+      showPagination: true
     }
   },
 
@@ -525,16 +527,18 @@ export default {
     updateinviter() {
       this.setBtnLoading()
 
-      let inviteeUserId = ''
-      // 更改直接邀请人
-      if (this.changeRebindType == 1) {
-        inviteeUserId = this.memberVO.userId
-      }
+      try {
+        let inviteeUserId = ''
+        // 更改直接邀请人
+        if (this.changeRebindType == 1) {
+          inviteeUserId = this.memberVO.userId
+        }
 
-      // 更改间接邀请人
-      if (this.changeRebindType == 2 || this.changeRebindType == 3 ) {
-        inviteeUserId = this.inMemberVO.userId
-      }
+        // 更改间接邀请人
+        if (this.changeRebindType == 2 || this.changeRebindType == 3 ) {
+          inviteeUserId = this.inMemberVO.userId
+        }
+      } catch(err) { console.log(err) }
 
       this.$API.updateinviter({
         data: {

@@ -10,7 +10,7 @@
         <div class="yyset-form">
           <el-form ref="form" :model="form" label-width="200px">
             <el-row class="row">
-              <el-col :span="10">
+              <el-col :span="9">
                 <el-form-item label="佣金管理费">
                   <el-input v-model="form.service_award_fee"></el-input>
                 </el-form-item>
@@ -19,7 +19,7 @@
             </el-row>
 
             <el-row class="row">
-              <el-col :span="10">
+              <el-col :span="9">
                 <el-form-item label="人头奖结算时间设置（每月）">
                   <el-time-picker
                     arrow-control
@@ -34,7 +34,7 @@
             </el-row>
 
             <el-row class="row">
-              <el-col :span="10">
+              <el-col :span="9">
                 <el-form-item label="提现周期">
                   <el-input v-model="form.withdraw_time"></el-input>
                 </el-form-item>

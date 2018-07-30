@@ -27,7 +27,7 @@
                     v-for="list in item"
                     :label="list.id"
                     :key="'' + list.id + list.moduleId"
-                  >{{ list.description }}</el-checkbox>
+                  >{{ list.name }}</el-checkbox>
                 </el-checkbox-group>
               </el-form-item>
             </el-row>
