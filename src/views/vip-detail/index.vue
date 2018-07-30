@@ -254,7 +254,7 @@ export default {
       disableUploadImg: true,
       vipcard: {},
       addInvite: false,
-      showPagination: true
+      showPagination: true,
       updateinviterUrl: ''
     }
   },
