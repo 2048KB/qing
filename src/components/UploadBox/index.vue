@@ -10,6 +10,7 @@
       :onSuccess="handleSuccess"
       :onChange="handleFileChange"
       :beforeUpload="handleBeforeUpload"
+      :data="data"
       list-type="picture-card">
       <i class="custom-icon" :style="customStyle" v-if="innerValue === ''"></i>
       <div slot="tip" class="el-upload__tip" v-if="tips">{{tips}}</div>
@@ -30,7 +31,11 @@ export default {
       default: '点击头像上传，你可以上传JPG、GIF或PNG格式的文件，大小不能超过2M'
     },
     showButton: Boolean,
-    photo: String
+    photo: String,
+    data: {
+      type: Object,
+      default: () => {}
+    }
   },
   data () {
     return {

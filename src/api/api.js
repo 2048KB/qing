@@ -66,5 +66,7 @@ module.exports = {
 // 8.  获取员工最大编号
   getemployeemaxsno: '/back/employee/getemployeemaxsno',
 // 9.  上传图片文件（尚无mock数据）
-  upload: '/image/upload'
+  upload: '/image/upload',
+  // 更新账户签名
+  editsign: '/back/account/editsign'
 }
