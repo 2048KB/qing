@@ -31,7 +31,7 @@
           <el-form-item label="身份证号">
             <el-input maxlength="18" placeholder="请输入身份证号" v-model="formData.idNumber"></el-input>
           </el-form-item>
-          <el-form-item label="员工编码"  prop="sno">
+          <el-form-item label="员工编码">
             <el-input placeholder="BJCYMZYD-000001" disabled v-model="formData.sno"></el-input>
           </el-form-item>
           <el-form-item label="通讯地址">
@@ -117,7 +117,6 @@ export default {
         sex: {name: '性别', required: true, trigger: 'blur', validator: validateRequired},
         birthDateStr: {message: '请选择出生日期', required: true, trigger: 'blur', validator: validateRequired},
         mobile: {name: '手机号', required: true, trigger: 'blur', validator: validateMobild},
-        sno: {name: '员工编号', required: true, trigger: 'blur', validator: validateRequired},
         entryDateStr: {message: '请选择入职日期', required: true, trigger: 'blur', validator: validateRequired},
         storeId: {message: '请选择所属门店', required: true, validator: validateRequired},
         email: {trigger: 'blur', validator: validateEmail},

@@ -55,8 +55,11 @@
         <el-table-column v-if="pageData.roleType == 1" min-width="50" align="center" label='所属顾问姓名' prop="belongCounselor"></el-table-column>
         <el-table-column min-width="50" align="center" label='入职日期' prop="entryDate"></el-table-column>
         <el-table-column min-width="100" align="center" label='创建日期' prop="time"></el-table-column>
-        <el-table-column min-width="50" align="center" label='操作'>
-          <template slot-scope="scope"><span class="detail" @click="handleToDetail(scope.$index)">详情</span></template>
+        <el-table-column min-width="80" align="center" label='操作'>
+          <template slot-scope="scope">
+            <span class="detail" @click="handleToDetail(scope.$index)">详情</span>
+            <span class="update-sign" @click="handleUpdateSign(scope.$index)">更新签名</span>
+          </template>
         </el-table-column>
       </el-table>
     </TableWrapper>
@@ -174,6 +177,19 @@ export default {
           role: this.pageData.roleType
         }
       })
+    },
+    handleUpdateSign (index) {
+      this.$API.editsign({
+        data: {
+          id: this.list[index].id
+        }
+      })
+        .then((res) => {
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          })
+        })
     }
   },
   mounted() {
@@ -213,6 +229,11 @@ export default {
     }
     .detail {
       color: $c0;
+      cursor: pointer;
+    }
+    .update-sign {
+      margin-left: 10px;
+      color: $c1;
       cursor: pointer;
     }
     .pagination-container {

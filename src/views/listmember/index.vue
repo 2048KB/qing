@@ -53,8 +53,11 @@
             {{list[scope.$index].isActive ? '激活' : '未激活'}}
           </template>
         </el-table-column>
-        <el-table-column min-width="50" align="center" label='操作'>
-          <template slot-scope="scope"><span class="detail" @click="handleToDetail(scope.$index)">详情</span></template>
+        <el-table-column min-width="80" align="center" label='操作'>
+          <template slot-scope="scope">
+            <span class="detail" @click="handleToDetail(scope.$index)">详情</span>
+            <span v-if="pageData.isShowUpdateSignBtn" class="update-sign" @click="handleUpdateSign(scope.$index)">更新签名</span>
+          </template>
         </el-table-column>
       </el-table>
     </TableWrapper>
@@ -74,13 +77,15 @@ const ROLE_MAP = {
     listApi: 'listmember',
     title: '注册会员列表',
     roleType: roleType.member,
-    detailUrl: '/client/member/detail'
+    detailUrl: '/client/member/detail',
+    isShowUpdateSignBtn: true
   },
   CustomerList: {
     listApi: 'listcustomer',
     title: '顾客列表',
     roleType: roleType.customer,
-    detailUrl: '/client/customer/detail'
+    detailUrl: '/client/customer/detail',
+    isShowUpdateSignBtn: false
   }
 }
 export default {
@@ -160,6 +165,19 @@ export default {
           cardId: this.list[index].cardId
         }
       })
+    },
+    handleUpdateSign (index) {
+      this.$API.editsign({
+        data: {
+          id: this.list[index].id
+        }
+      })
+        .then((res) => {
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          })
+        })
     }
   },
   created() {
@@ -209,6 +227,11 @@ export default {
       display: flex;
       justify-content: flex-end;
       padding-right: 20px;
+    }
+    .update-sign {
+      margin-left: 10px;
+      color: $c1;
+      cursor: pointer;
     }
   }
 </style>

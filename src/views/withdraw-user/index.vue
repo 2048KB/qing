@@ -198,7 +198,8 @@ export default {
         let data = res.data || {}
         this.dialogForm = {
           auditOpinion: '同意提现',
-          remark: ''
+          remark: '',
+          serviceOrderNo: data.serviceOrderNo
         }
         this.dialogOpt = {
           title,
