@@ -37,7 +37,7 @@
           <!-- <div v-loading="true" element-loading-text="Loading..."></div> -->
           <el-form class="zh-form" :rules="rules" :model="infoform" ref="form1">
             <el-form-item label="入职日期">
-              <el-input v-model="form.date" auto-complete="off" :disabled="true"></el-input>
+              <el-input v-model="infoform.entryDateStr" auto-complete="off" :disabled="true"></el-input>
             </el-form-item>
             <el-form-item label="所属门店">
               <el-select v-model="areaName" placeholder="请选择活动区域" :disabled="true"></el-select>
@@ -172,9 +172,9 @@ export default {
       dialogFormVisible: false,
       infodialogFormVisible: false,
       form: {
-        date: '2018-02-23',
+        date: '',
         name: '',
-        region: '北京',
+        region: '',
         date1: '',
         date2: '',
         delivery: false,
@@ -236,7 +236,7 @@ export default {
 
           // 邀请会员信息
           this.inviters.total = res.data.counselorCurMonSpreadCustomer // 顾问本月邀请顾客
-          this.inviters.monthly = res.data.counselorCurMonSpreadMember // 顾问本月邀请会员
+          this.inviters.monthly = res.data.counselorCurMonSpreadCustomer // 顾问本月邀请会员
           this.inviters.totalcustomers = res.data.counselorSpreadMember // 顾问累计邀请会员
 
           // 门店区域
@@ -291,8 +291,8 @@ export default {
 
           // 邀请会员信息
           this.inviters.total = res.data.beauticianSpreadMember // 美容师累计邀请会员
-          this.inviters.monthly = res.data.beauticianCurMonSpreadMember // 美容师本月邀请会员
-          this.inviters.totalcustomers = res.data.beauticianSpreadMember // 美容师本月邀请顾客
+          this.inviters.monthly = res.data.beauticianSpreadMember // 美容师本月邀请会员
+          this.inviters.totalcustomers = res.data.beauticianCurMonSpreadMember // 美容师本月邀请顾客
 
           // 门店区域
           this.areaName = res.data.employeeDetail.areaName

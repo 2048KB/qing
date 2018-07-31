@@ -82,7 +82,7 @@
       "cardNo": "748123154",
       "expireTime": "2020-07-09 17:05:22",
       "id": 3,
-      "isActive": true,
+      "isActive": false,
       "isExpire": false,
       "isPayFor": false,
       "orderId": 0,

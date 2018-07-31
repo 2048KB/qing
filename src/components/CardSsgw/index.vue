@@ -66,16 +66,16 @@
     methods: {
       goDetailPage() {
         // let str = `?cardId=${this.inviterinfo.cardId}&inDirInviteRole=${this.inviterinfo.inDirInviteRole}&inDirInviteId=${this.inviterinfo.inDirInviteId}&dirInviteRole=${this.inviterinfo.dirInviteRole}&dirInviteId=${this.inviterinfo.dirInviteId}`
-        let str = `?cardId=${this.inviterinfo.cardId}`
+        // let str = `?cardId=${this.inviterinfo.cardId}`
 
         if (this.inviterinfo.roleTypeStr == '会员') { // role = 2
-          this.path = '/client/member/detail' + str
+          this.path = '/client/member/detail?role=2&id=' + this.inviterinfo.userId + '&cardId=' + this.inviterinfo.cardId
           // this.path = '/client/member/detail'
           location.reload()
         }
 
         if (this.inviterinfo.roleTypeStr == '顾问') { // role = 2
-          this.path = '/employee/consultant/detail'
+          this.path = '/employee/consultant/detail?role=2&id=' + this.inviterinfo.userId
           location.reload()
         }
 

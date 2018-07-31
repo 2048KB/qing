@@ -40,7 +40,7 @@
 
       totalPages: {
         type: Number,
-        default: 10
+        default: 4
       }
     },
 
