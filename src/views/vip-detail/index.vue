@@ -6,7 +6,11 @@
         <el-col :span="16">
           <div class="grid-content padding-left-none">
             <!-- 职业信息 -->
-            <card-zyxx :employeeDetail="employeeDetail" :isCustom="true" :hideEdit="true" :disableUploadImg="disableUploadImg">
+            <card-zyxx
+              :employeeDetail="employeeDetail"
+              :userCard="userCard"
+              :hideMobile="hideMobile"
+              :isCustom="true" :hideEdit="true" :disableUploadImg="disableUploadImg">
               <span>个人信息</span>
             </card-zyxx>
 
@@ -196,6 +200,7 @@ export default {
   },
   data() {
     return {
+      hideMobile: false,
       dialogConfFormVisible: false,
       pageCount: 1,
       pageSize: 10,
@@ -244,6 +249,7 @@ export default {
       },
       formLabelWidth: '120px',
       employeeDetail: {},
+      userCard: {},
       userFunds: {},
       yjLists: [],
       listUserAddress: [],
@@ -298,6 +304,8 @@ export default {
           // 用户基本信息
           this.employeeDetail = res.data.user
           this.employeeDetail.storeName = res.data.storeName
+
+          this.hideMobile = true
 
           // 隐藏更改绑定关系模块
           this.addInvite = res.data.addInvite
@@ -355,6 +363,7 @@ export default {
         }).then((res) => {
           // 用户基本信息
           this.employeeDetail = res.data.user
+          this.userCard = res.data.card
           this.employeeDetail.storeName = res.data.storeName
 
           // 隐藏更改绑定关系模块
@@ -555,7 +564,8 @@ export default {
           this.resetBtnLoading()
           this.infodialogFormVisible = false
           this.dialogConfFormVisible = false
-        }, 1000)
+          location.reload()
+        }, 500)
       })
     },
 

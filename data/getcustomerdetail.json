@@ -36,7 +36,8 @@
       "loginTime": null,
       "loginCount": null,
       "loginIp": null,
-      "wxOpenId": null
+      "wxOpenId": null,
+      "isActive": true
     },
     "listUserAddress": [
       {
