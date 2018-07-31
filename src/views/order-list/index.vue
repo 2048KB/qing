@@ -22,7 +22,7 @@
       </div>
     </div>
     <TableWrapper title="订单列表" :total="totalCount" @current-change="handleChangeCurrent">
-      <span slot="right">共{{totalCount}}人</span>
+      <span slot="right">共{{totalCount}}条</span>
       <el-table 
         empty-text="没有数据"
         class="list"
@@ -34,7 +34,7 @@
         <el-table-column min-width="50" align="center" label='订单号码' prop="orderNo"></el-table-column>
         <el-table-column min-width="50" align="center" label='昵称' prop="nickName"></el-table-column>
         <el-table-column min-width="50" align="center" label='真实姓名' prop="realityName"></el-table-column>
-        <el-table-column min-width="50" align="center" label='手机号' prop="mobile"></el-table-column>
+        <el-table-column min-width="80" align="center" label='手机号' prop="mobile"></el-table-column>
         <el-table-column min-width="50" align="center" label='商品名称' prop="goodsName"></el-table-column>
         <el-table-column min-width="100" align="center" label='金额（元）' prop="amount"></el-table-column>
         <el-table-column min-width="50" align="center" label='下单日期' prop="time"></el-table-column>

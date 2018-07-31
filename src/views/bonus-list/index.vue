@@ -29,7 +29,7 @@
       </div>
     </div>
     <TableWrapper title="佣金列表" :total="totalCount" @current-change="handleChangeCurrent">
-      <span slot="right">共{{totalCount}}人</span>
+      <span slot="right">共{{totalCount}}条</span>
       <el-table 
         empty-text="没有数据"
         class="list"

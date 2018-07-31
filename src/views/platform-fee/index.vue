@@ -36,7 +36,7 @@
       </div>
     </div>
     <TableWrapper title="收取费用列表" :total="totalCount" @current-change="handleChangeCurrent">
-      <span slot="right">共{{totalCount}}人</span>
+      <span slot="right">共{{totalCount}}条</span>
       <el-table 
         empty-text="没有数据"
         class="list"
@@ -47,13 +47,13 @@
         border highlight-current-row>
         <el-table-column min-width="50" align="center" label='交易流水' prop="orderNo"></el-table-column>
         <el-table-column min-width="50" align="center" label='划入账户' prop="acount"></el-table-column>
-        <el-table-column min-width="50" align="center" label='扣款人昵称' prop="nickName"></el-table-column>
+        <el-table-column min-width="80" align="center" label='扣款人昵称' prop="nickName"></el-table-column>
         <el-table-column min-width="50" align="center" label='扣款人真实姓名' prop="realityName"></el-table-column>
         <el-table-column min-width="50" align="center" label='性别' prop="sexStr"></el-table-column>
         <el-table-column min-width="100" align="center" label='扣款人手机号' prop="mobile"></el-table-column>
         <el-table-column min-width="50" align="center" label='扣款人角色' prop="roleTypeStr"></el-table-column>
         <el-table-column min-width="50" align="center" label='扣款金额（元）' prop="amount"></el-table-column>
-        <el-table-column min-width="100" align="center" label='费用类型' prop="typeStr"></el-table-column>
+        <el-table-column min-width="50" align="center" label='费用类型' prop="typeStr"></el-table-column>
         <el-table-column min-width="100" align="center" label='交易日期' prop="time"></el-table-column>
       </el-table>
     </TableWrapper>

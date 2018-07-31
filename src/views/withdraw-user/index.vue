@@ -21,7 +21,7 @@
           title="提现日期"></DatePicker>
       </div>
     </div>
-    <TableWrapper :title="dialogOpt.title" :total="totalCount" @current-change="handleChangeCurrent">
+    <TableWrapper title="提现列表" :total="totalCount" @current-change="handleChangeCurrent">
       <span slot="right">共{{totalCount}}人</span>
       <el-table 
         empty-text="没有数据"

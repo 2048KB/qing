@@ -45,10 +45,10 @@
         element-loading-text="Loading" 
         :fit="true"
         border highlight-current-row>
-        <el-table-column min-width="50" align="center" label='员工编号' prop="sno"></el-table-column>
+        <el-table-column min-width="100" align="center" label='员工编号' prop="sno"></el-table-column>
         <el-table-column min-width="50" align="center" label='姓名' prop="realityName"></el-table-column>
         <el-table-column min-width="50" align="center" label='性别' prop="sexStr"></el-table-column>
-        <el-table-column min-width="50" align="center" label='手机号' prop="mobile"></el-table-column>
+        <el-table-column min-width="70" align="center" label='手机号' prop="mobile"></el-table-column>
         <el-table-column min-width="50" align="center" label='出生日期' prop="birthDate"></el-table-column>
         <el-table-column min-width="100" align="center" label='身份证号' prop="idNumber"></el-table-column>
         <el-table-column min-width="50" align="center" label='QQ号' prop="qq"></el-table-column>
@@ -181,7 +181,7 @@ export default {
     handleUpdateSign (index) {
       this.$API.editsign({
         data: {
-          id: this.list[index].id
+          id: this.list[index].userId
         }
       })
         .then((res) => {

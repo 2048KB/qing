@@ -38,10 +38,10 @@
         element-loading-text="Loading"
         :fit="true"
         border highlight-current-row>
-        <el-table-column min-width="50" align="center" label='ID' prop="id"></el-table-column>
+        <el-table-column min-width="30" align="center" label='ID' prop="id"></el-table-column>
         <el-table-column min-width="50" align="center" label='昵称' prop="nickName"></el-table-column>
-        <el-table-column min-width="50" align="center" label='绑定手机号' prop="mobile"></el-table-column>
-        <el-table-column min-width="50" align="center" label='注册日期' prop="time"></el-table-column>
+        <el-table-column min-width="80" align="center" label='绑定手机号' prop="mobile"></el-table-column>
+        <el-table-column min-width="100" align="center" label='注册日期' prop="time"></el-table-column>
         <el-table-column min-width="50" align="center" label='直接邀请人姓名' prop="dirInviteName"></el-table-column>
         <el-table-column min-width="50" align="center" label='直接邀请人手机号' prop="dirInviteMobile"></el-table-column>
         <el-table-column min-width="50" align="center" label='直接邀请人角色' prop="dirInviteRole"></el-table-column>

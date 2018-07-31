@@ -16,12 +16,12 @@
     "payForId": 0,
     "payForMobile": "17899888888",
     "payForNickName": "--",
-    "payTime": "2018-07-04 15:10:57",
+    "payTime": "2018-07-31 21:00:57",
     "payType": 1,
     "payTypeStr": "微信支付",
     "realAmount": 9900,
     "realityName": "--",
-    "status": 2,
-    "time": "2018-07-19 22:55:59"
+    "status": 1,
+    "time": "2018-07-31 21:00:57"
   }
 }

@@ -59,5 +59,16 @@ export default {
   .content {
     padding: 10px;
   }
+  .el-table__empty-block {
+    padding-top: 220px;
+    padding-bottom: 25px;
+    background-image: url(../../assets/images/qq-47.png);
+    background-repeat: no-repeat;
+    background-position: center 50px;
+    span {
+      display: block;
+      position: relative;
+    }
+  }
 }
 </style>

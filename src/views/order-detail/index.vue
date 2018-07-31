@@ -41,7 +41,7 @@
         </el-table-column>
       </el-table>
     </TableWrapper>
-    <TableWrapper title="付款人信息" v-if="detail.status != -1">
+    <TableWrapper title="付款人信息">
       <el-table
         :data="payer"
         style="width: 100%">
@@ -61,7 +61,7 @@
         </el-table-column>
       </el-table>
     </TableWrapper>
-    <TableWrapper title="代付人信息" v-if="detail.status == 1">
+    <TableWrapper title="代付人信息" v-if="detail.isPayFor == true">
       <el-table
         :data="payFor"
         style="width: 100%">
@@ -221,7 +221,9 @@ export default {
     },
     handleCancel () {
       this.$API.cancelorder({
-        data: this.detail.id
+        data: {
+          id: this.detail.id
+        }
       }).then((res) => {
         this.fetchData()
       })

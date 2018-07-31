@@ -208,5 +208,13 @@ export default {
     .edit-form {
       padding-top: 10px;
     }
+    .el-dialog {
+      max-width: 450px;
+    }
+    .el-input {
+      input {
+        max-width: 300px;
+      }
+    }
   }
 </style>

@@ -276,6 +276,9 @@ export default {
   .store-select-box {
     .el-form-item__content {
       display: flex;
+      .el-select {
+        width: 50%;
+      }
       .el-select:first-child {
         margin-right: 10px;
       }
