@@ -12,8 +12,10 @@
       <el-row>
         <el-col :span="5">
           <div class="th">
-            <UploadBox v-model="formData.photo" :showButton="true" tips="" v-show="!disableUploadImg"></UploadBox>
-            <div class="img"><img src="../../assets/images/qq-18.png" alt="" v-show="disableUploadImg"></div>
+            <UploadBox :data="{id: employeeDetail.id}" v-model="formData.photo" :showButton="true" tips="" v-show="!disableUploadImg"></UploadBox>
+            <div class="img" v-if="employeeDetail.photo"><img :src="employeeDetail.photo" alt="" v-show="disableUploadImg"></div>
+            <div class="img" v-else><img src="../../assets/images/qq-18.png" alt="" v-show="disableUploadImg"></div>
+
             <!-- <el-button type="primary" v-show="!isVip">更换头像</el-button> -->
           </div>
         </el-col>
@@ -22,16 +24,25 @@
             <p class="name">
               {{ employeeDetail.realityName || employeeDetail.nickName }}
 
-              <span v-if="employeeDetail.isActive">
-                <span class="state">已激活</span>
-                <span class="validtime">有效期至{{ employeeDetail.expireTime }}</span>
+              <i class="sex" v-show="employeeDetail.sex == 1"><img src="../../assets/images/qq-22.png" alt=""></i>
+              <i class="sex" v-show="employeeDetail.sex == 2"><img src="../../assets/images/qq-22-1.png" alt=""></i>
+
+              <span v-show="userCard.id">
+                <span v-if="userCard.isActive">
+                  <span class="state">已激活</span>
+                  <span class="validtime">有效期至{{ userCard.expireTime }}</span>
+                </span>
+                <span v-else>
+                  <span class="state state--unactive">待激活</span>
+                </span>
               </span>
+
             </p>
             <p><i class="qq qq-19"></i>{{ employeeDetail.sno || employeeDetail.mobile }}</p>
             <p><i class="qq qq-20"></i>{{ employeeDetail.entryDate || employeeDetail.time }}</p>
             <p><i class="qq qq-21" v-show="employeeDetail.remark"></i>{{ employeeDetail.remark }}</p>
             <div>
-              <el-button type="success" plain v-show="employeeDetail.mobile">{{ employeeDetail.mobile }}</el-button>
+              <el-button type="success" plain v-show="!hideMobile">{{ employeeDetail.mobile }}</el-button>
               <el-button type="success" plain v-show="employeeDetail.storeName">{{ employeeDetail.storeName }}</el-button>
             </div>
           </div>
@@ -54,7 +65,17 @@
         Type: Boolean,
         default: false
       },
+      userCard: {
+        type: Object,
+        default: () => {
+          return {}
+        }
+      },
       hideEdit: {
+        type: Boolean,
+        default: false
+      },
+      hideMobile: {
         type: Boolean,
         default: false
       }
@@ -62,12 +83,24 @@
 
     data() {
       return {
+        userId: {
+          id: this.employeeDetail.id
+        },
         formData: {
           photo: ''
         }
       }
     },
     methods: {
+      isEmptyObject(obj) {
+        for (var prop in obj) {
+          if (obj.hasOwnProperty(prop)) {
+            return false;
+          }
+        }
+        return true;
+      },
+
       triggerUpdateInfoForm() {
         this.$emit('updateUserInfo', {})
       }
@@ -88,6 +121,15 @@
       background: #34c4d4;
       padding: 3px 8px;
       border-radius: 4px;
+    }
+
+    .meta .name .state--unactive {
+      background: #a0a0a0;
+    }
+
+    .meta .name .sex {
+      position: relative;
+      top: 7px;
     }
 
     .meta .name .validtime {
