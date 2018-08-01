@@ -12,7 +12,8 @@
       <el-row>
         <el-col :span="5">
           <div class="th">
-            <UploadBox :data="{id: employeeDetail.id}" v-model="formData.photo" :showButton="true" tips="" v-show="!disableUploadImg"></UploadBox>
+            <UploadBox :data="{id: employeeDetail.id}" v-model="formData.photo" :showButton="true" tips="" v-show="!disableUploadImg" :photo="employeeDetail.photo"></UploadBox>
+
             <div class="img" v-if="employeeDetail.photo"><img :src="employeeDetail.photo" alt="" v-show="disableUploadImg"></div>
             <div class="img" v-else><img src="../../assets/images/qq-18.png" alt="" v-show="disableUploadImg"></div>
 
@@ -86,6 +87,7 @@
         userId: {
           id: this.employeeDetail.id
         },
+        photo: '',
         formData: {
           photo: ''
         }

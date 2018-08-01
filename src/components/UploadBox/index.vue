@@ -12,7 +12,12 @@
       :beforeUpload="handleBeforeUpload"
       :data="data"
       list-type="picture-card">
-      <i class="custom-icon" :style="customStyle" v-if="innerValue === ''"></i>
+
+      <i v-show="!photo" class="custom-icon" :style="customStyle" v-if="innerValue === ''"></i>
+      <i v-show="photo" class="custom-icon" :style="customStyle" v-if="innerValue === ''">
+        <img :src="photo" alt="">
+      </i>
+
       <div slot="tip" class="el-upload__tip" v-if="tips">{{tips}}</div>
       <div slot="tip" class="el-upload__tip upload-error-tip" v-if="error">{{error}}</div>
       <el-button size="small" type="primary" v-if="showButton">点击上传</el-button>
@@ -42,7 +47,8 @@ export default {
       innerValue: this.value,
       uploadAction: getFullPath('upload'),
       error: null,
-      customStyle: {}
+      customStyle: {},
+      ph: ''
     }
   },
   watch: {
@@ -66,7 +72,7 @@ export default {
     },
     handleFileChange () {
       let uploadFiles = this.$refs.upload.uploadFiles
-      this.$refs.upload.uploadFiles = [uploadFiles[uploadFiles.length - 1]] 
+      this.$refs.upload.uploadFiles = [uploadFiles[uploadFiles.length - 1]]
     },
     handleSuccess (data) {
       if (data.code < 0) {
@@ -116,7 +122,6 @@ export default {
       }
     }
   }
-
 }
 </script>
 

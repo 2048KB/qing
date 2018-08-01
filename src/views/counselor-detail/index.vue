@@ -7,6 +7,7 @@
           <div class="grid-content padding-left-none">
             <!-- 职业信息 -->
             <card-zyxx :employeeDetail="employeeDetail" @updateUserInfo="updateInfo"></card-zyxx>
+            <!-- 职业信息 -->
 
             <!-- 账户信息 -->
             <card-zhxx :userFunds="userFunds"></card-zhxx>
@@ -235,9 +236,9 @@ export default {
           this.userFunds.userAmountByUserId = res.data.userAmountByUserId // 用户累计赚取
 
           // 邀请会员信息
-          this.inviters.total = res.data.counselorCurMonSpreadCustomer // 顾问本月邀请顾客
-          this.inviters.monthly = res.data.counselorCurMonSpreadCustomer // 顾问本月邀请会员
-          this.inviters.totalcustomers = res.data.counselorSpreadMember // 顾问累计邀请会员
+          this.inviters.total = res.data.counselorSpreadMember // 累计邀请会员
+          this.inviters.monthly = res.data.counselorCurMonSpreadMember // 本月邀请会员
+          this.inviters.totalcustomers = res.data.counselorCurMonSpreadCustomer // 本月邀请顾客
 
           // 门店区域
           this.areaName = res.data.employeeDetail.areaName
@@ -290,9 +291,13 @@ export default {
           this.userFunds.userAmountByUserId = res.data.userAmountByUserId // 用户累计赚取
 
           // 邀请会员信息
-          this.inviters.total = res.data.beauticianSpreadMember // 美容师累计邀请会员
-          this.inviters.monthly = res.data.beauticianSpreadMember // 美容师本月邀请会员
-          this.inviters.totalcustomers = res.data.beauticianCurMonSpreadMember // 美容师本月邀请顾客
+          // this.inviters.total = res.data.beauticianSpreadMember // 美容师累计邀请会员
+          // this.inviters.monthly = res.data.beauticianSpreadMember // 美容师本月邀请会员
+          // this.inviters.totalcustomers = res.data.beauticianCurMonSpreadMember // 美容师本月邀请顾客
+
+          this.inviters.total = res.data.beauticianSpreadMember // 累计邀请会员
+          this.inviters.monthly = res.data.beauticianCurMonSpreadMember // 本月邀请会员
+          this.inviters.totalcustomers = res.data.beauticianCurMonSpreadCustomer // 本月邀请顾客
 
           // 门店区域
           this.areaName = res.data.employeeDetail.areaName
