@@ -7,13 +7,13 @@
 
     <div class="detail-card__body detail-card__body--yj">
       <el-table :data="lists" stripe style="width: 100%">
-        <el-table-column prop="time" width="160" label="日期"></el-table-column>
-        <el-table-column prop="inviterRealName" width="100" label="邀请人姓名"></el-table-column>
-        <el-table-column prop="inviterMobile" width="120" label="邀请人手机号"> </el-table-column>
-        <el-table-column prop="inviteeName" width="120" label="邀请会员昵称"> </el-table-column>
-        <el-table-column prop="inviteeMobile" width="120" label="邀请会员手机号"> </el-table-column>
-        <el-table-column prop="typeStr" width="100" label="佣金类别"> </el-table-column>
-        <el-table-column prop="amount" width="120" label="奖励金额（元）"> </el-table-column>
+        <el-table-column prop="time" label="日期"></el-table-column>
+        <el-table-column prop="inviterRealName" label="邀请人姓名"></el-table-column>
+        <el-table-column prop="inviterMobile" label="邀请人手机号"> </el-table-column>
+        <el-table-column prop="inviteeName" label="邀请会员昵称"> </el-table-column>
+        <el-table-column prop="inviteeMobile" label="邀请会员手机号"> </el-table-column>
+        <el-table-column prop="typeStr" label="佣金类别"> </el-table-column>
+        <el-table-column prop="amount" label="奖励金额（元）"> </el-table-column>
       </el-table>
 
       <div class="block pagination" v-show="showPagination">

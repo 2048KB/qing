@@ -56,7 +56,8 @@
       <!-- 编辑大区 -->
       <el-dialog title="编辑大区" :visible.sync="editAreaFormVisible">
         <el-form>
-            <el-form-item label="大区名字" :label-width="formLabelWidth">
+            <el-form-item :label-width="formLabelWidth">
+              <span slot="label">大区名字 <span class="require">*</span> </span>
               <el-input v-model="editAreaName" auto-complete="off"></el-input>
             </el-form-item>
         </el-form>
@@ -67,9 +68,10 @@
       </el-dialog>
 
       <!-- 添加大区 -->
-      <el-dialog title="添加大区" :visible.sync="addAreaFormVisible">
+      <el-dialog title="添加大区" :visible.sync="addAreaFormVisible" class="addAreaModal">
         <el-form :model="form">
-            <el-form-item label="大区名字" :label-width="formLabelWidth">
+            <el-form-item :label-width="formLabelWidth">
+              <span slot="label">大区名字 <span class="require">*</span> </span>
               <el-input v-model="addAreaname" auto-complete="off" placeholder="请输入大区名字"></el-input>
             </el-form-item>
         </el-form>
@@ -82,11 +84,13 @@
       <!-- 添加美容店 -->
       <el-dialog title="添加美容店" :visible.sync="addShopFormVisible">
         <el-form :model="form">
-            <el-form-item label="美容店名称" :label-width="formLabelWidth">
+            <el-form-item :label-width="formLabelWidth">
+              <span slot="label">美容店名称 <span class="require">*</span> </span>
               <el-input v-model="addShopname" auto-complete="off" placeholder="请输入美容店名字"></el-input>
             </el-form-item>
 
-            <el-form-item label="所属大区" :label-width="formLabelWidth">
+            <el-form-item :label-width="formLabelWidth">
+              <span slot="label">所属大区 <span class="require">*</span> </span>
               <el-select v-model="addShoparea" placeholder="请选择区域" @change="selectedStoreArea">
                 <el-option
                   v-for="item in storeAreas"
@@ -97,7 +101,8 @@
               </el-select>
             </el-form-item>
 
-            <el-form-item label="类别" :label-width="formLabelWidth">
+            <el-form-item :label-width="formLabelWidth">
+              <span slot="label">类别 <span class="require">*</span> </span>
               <el-radio-group v-model="addShoptype">
                 <el-radio v-model="addShoptype" label="1">直营店</el-radio>
                 <el-radio v-model="addShoptype" label="2">加盟店</el-radio>
@@ -113,11 +118,13 @@
       <!-- 编辑门店 -->
       <el-dialog title="编辑美容店" :visible.sync="editShopFormVisible">
         <el-form>
-            <el-form-item label="美容店名称" :label-width="formLabelWidth">
+            <el-form-item :label-width="formLabelWidth">
+              <span slot="label">美容店名称 <span class="require">*</span> </span>
               <el-input v-model="editShopName" auto-complete="off"></el-input>
             </el-form-item>
 
-            <el-form-item label="类别" :label-width="formLabelWidth">
+            <el-form-item :label-width="formLabelWidth">
+                <span slot="label">类别 <span class="require">*</span> </span>
                 <el-radio v-model="editShopType" label="1">直营店</el-radio>
                 <el-radio v-model="editShopType" label="2">加盟店</el-radio>
             </el-form-item>
@@ -410,7 +417,11 @@
     color: #06aaff;
   }
 
-  .el-input {
+/*  .el-input {
     width: auto !important;
+  }
+*/
+  .el-input {
+    width: 260px;
   }
 </style>

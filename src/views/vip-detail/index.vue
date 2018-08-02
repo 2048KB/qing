@@ -61,6 +61,7 @@
             <card-vipcard
               :cardlist="vipcardRecordArray"
               v-if="vipcardRecordArray.length > 0"
+              :pageSize="vipcardPageSize"
               :totalPages="vipcardPageCount"
               @triggerVipcardPagination="getListcarduse"
               ></card-vipcard>
@@ -89,7 +90,7 @@
         <el-dialog :title="modalTitle" :visible.sync="infodialogFormVisible">
           <el-form :inline="true" :model="infoform" class="demo-form-inline">
             <el-row class="row-filter">
-              <el-col :span="7">
+              <el-col :span="8">
                 <el-form-item label="">
                   <el-select v-model="storeAreaName" placeholder="地区" :disabled="true">
                     <el-option label="上海" value="shanghai"></el-option>
@@ -98,21 +99,21 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item label="">
+                <el-form-item label="" width="100%">
                   <el-select v-model="storeName" placeholder="所属门店" :disabled="true">
                     <el-option label="区域一" value="shanghai"></el-option>
                     <el-option label="区域二" value="beijing"></el-option>
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="7" class="col-phone">
+              <el-col :span="8" class="col-phone">
                 <el-form-item label="">
                   <el-input v-model="searchKey" placeholder="输入姓名/手机号"></el-input>
+                  <div @click="searchStoreUserLists" class="col-phone__search">
+                    <el-col><el-button type="primary" icon="el-icon-search">搜索</el-button></el-col>
+                  </div>
                 </el-form-item>
               </el-col>
-              <div @click="searchStoreUserLists">
-                <el-col :span="2"><el-button type="primary" icon="el-icon-search">搜索</el-button></el-col>
-              </div>
             </el-row>
 
             <div class="lists-wrap">
@@ -205,6 +206,7 @@ export default {
       pageCount: 1,
       pageSize: 10,
       vipcardPageCount: 0,
+      vipcardPageSize: 10,
       btnLoading: false,
       commitBtnText: '确 定',
       modalTitle: '',
@@ -532,7 +534,8 @@ export default {
         }
       }).then((res) => {
         this.vipcardRecordArray = res.data.page
-        this.vipcardPageCount = res.data.totalPageCount
+        this.vipcardPageCount = res.data.totalCount
+        this.vipcardPageSize = res.data.pageSize
       })
     },
 
@@ -685,5 +688,15 @@ export default {
 .float-left {
   float: left;
   line-height: 40px;
+}
+
+.col-phone {
+  position: relative;
+}
+
+.col-phone .col-phone__search {
+  position: absolute;
+  top: 0;
+  right: -25px;
 }
 </style>

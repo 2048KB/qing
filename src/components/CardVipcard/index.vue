@@ -24,6 +24,7 @@
       <el-pagination
         @current-change="handleChangeCurrent"
         layout="prev, pager, next"
+        :page-size="pageSize"
         :total="totalPages">
       </el-pagination>
     </div>
@@ -36,6 +37,11 @@
       cardlist: {
         Type: Array,
         default: []
+      },
+
+      pageSize: {
+        type: Number,
+        default: 10
       },
 
       totalPages: {

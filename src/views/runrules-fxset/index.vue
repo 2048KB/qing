@@ -7,16 +7,16 @@
       <table-wrapper title="分销规则设置" v-loading.body="listLoading">
         <table>
           <tr>
-            <th class="name">名称</th>
-            <th class="zhitui" width="150">直推奖</th>
-            <th class="yideng">一级奖</th>
-            <th class="erdeng">二级奖</th>
-            <th class="shuangren">双人奖</th>
+            <th class="name" width="8%">名称</th>
+            <th class="zhitui" width="13%">直推奖</th>
+            <th class="yideng" width="13%">一级奖</th>
+            <th class="erdeng" width="13%">二级奖</th>
+            <th class="shuangren" width="13%">双人奖</th>
             <th class="rentou">人头奖</th>
           </tr>
 
           <tr>
-            <td class="name">顾客</td>
+            <td class="name">顾问</td>
             <td class="zhitui">
               <div>
                 <p>顾问直推1位奖励</p>
@@ -36,7 +36,7 @@
             <td class="yideng">-</td>
             <td class="erdeng">
               <div>
-                <p>每邀请1位奖励</p>
+                <p>二级每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
                   <el-input v-model="list['顾问二级奖'][0].bonus">
                     <template slot="append">元</template>
@@ -46,7 +46,7 @@
             </td>
             <td class="shuangren">
               <div>
-                <p>每邀请1位奖励</p>
+                <p>邀请满2位奖励</p>
                 <div style="margin-top: 15px;">
                   <el-input v-model="list['顾问双人奖'][0].bonus">
                     <template slot="append">元</template>
@@ -91,7 +91,7 @@
             </td>
             <td class="erdeng">
               <div>
-                <p>每邀请1位奖励</p>
+                <p>二级每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
                   <el-input v-model="list['美容师二级奖'][0].bonus">
                     <template slot="append">元</template>
@@ -101,7 +101,7 @@
             </td>
             <td class="shuangren">
               <div>
-                <p>每邀请1位奖励</p>
+                <p>邀请满2位奖励</p>
                 <div style="margin-top: 15px;">
                   <el-input v-model="list['美容师双人奖'][0].bonus">
                     <template slot="append">元</template>
@@ -145,7 +145,7 @@
             </td>
             <td class="erdeng">
               <div>
-                <p>每邀请1位奖励</p>
+                <p>二级每邀请1位奖励</p>
                 <div style="margin-top: 15px;">
                   <el-input v-model="list['会员二级奖'][0].bonus">
                     <template slot="append">元</template>
@@ -155,7 +155,7 @@
             </td>
             <td class="shuangren">
               <div>
-                <p>每邀请1位奖励</p>
+                <p>邀请满2位奖励</p>
                 <div style="margin-top: 15px;">
                   <el-input v-model="list['会员双人奖'][0].bonus">
                     <template slot="append">元</template>
