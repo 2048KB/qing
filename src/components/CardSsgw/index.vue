@@ -69,11 +69,19 @@
           this.path = '/client/member/detail?role=2&id=' + this.inviterinfo.userId + '&cardId=' + this.inviterinfo.cardId
         }
 
-        if (this.inviterinfo.roleTypeStr == '顾问' || this.inviterinfo.roleTypeStr == '美容师') { // role = 2
-          this.path = '/employee/consultant/detail?role=2&id=' + this.inviterinfo.userId
+        //if (this.inviterinfo.roleTypeStr == '顾问' || this.inviterinfo.roleTypeStr == '美容师') { // role = 2
+        //  this.path = '/employee/consultant/detail?role=2&id=' + this.inviterinfo.userId
+        //}
+
+        if (this.inviterinfo.roleTypeStr == '顾问') {
+            this.path = '/employee/consultant/detail?role=2&id=' + this.inviterinfo.userId
         }
 
-        this.$router.push({
+        if (this.inviterinfo.roleTypeStr == '美容师') {
+            this.path = '/employee/beautician/detail?role=2&id=' + this.inviterinfo.userId
+        }
+
+        this.$router.replace({
           path: this.path,
           query: {
             id: this.inviterinfo.id || this.inviterinfo.userId || '',
@@ -81,9 +89,10 @@
           }
         })
 
-        setTimeout(() => {
-          location.reload()
-        }, 0)
+       // setTimeout(() => {
+        //  location.reload()
+       // }, 0)
+
       },
 
       triggerParentEvent() {

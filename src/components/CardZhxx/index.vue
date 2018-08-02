@@ -10,13 +10,13 @@
       <div class="clearfix row row1">
         <div class="item">
           <el-col :span="8">
-            <div class="sum">{{ userFunds.balance }}</div>
+            <div class="sum">{{ userFunds.totalAssets }}</div>
             <div class="title">总资产</div>
           </el-col>
         </div>
         <div class="item">
           <el-col :span="8">
-            <div class="sum">{{ userFunds.availableBalance }}</div>
+            <div class="sum">{{ userFunds.balance }}</div>
             <div class="title">账户余额</div>
           </el-col>
         </div>
