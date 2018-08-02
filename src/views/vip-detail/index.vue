@@ -281,7 +281,7 @@ export default {
       this.selectSPName = item.name
       this.selectSPMobile = item.mobile
       this.selectSPId = item.id
-      console.log(item)
+      // console.log(item)
     },
 
     init() {
@@ -554,7 +554,9 @@ export default {
         if (this.changeRebindType == 2 || this.changeRebindType == 3 ) {
           inviteeUserId = this.inMemberVO.userId
         }
-      } catch(err) { console.log(err) }
+      } catch(err) { 
+          // console.log(err)
+       }
 
       this.$API[this.updateinviterUrl]({
         data: {

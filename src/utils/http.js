@@ -125,10 +125,10 @@ const fetch = function fetch(url = '', options = {}) {
       resolve(data)
     }
 
-    console.group('请求接口：' + request.url)
-    console.log('========== 接口入参 ==========')
-    console.log(request.data)
-    console.groupEnd()
+    // console.group('请求接口：' + request.url)
+    // console.log('========== 接口入参 ==========')
+    // console.log(request.data)
+    // console.groupEnd()
 
     $.ajax(Object.assign(ajaxSettings, request))
   })

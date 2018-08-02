@@ -139,14 +139,14 @@ export default {
       })
         .then((res) => {
           this.listLoading = false
-          console.log(res)
+          // console.log(res)
           let data = res.data || {}
           this.list = data.page
           this.totalCount = data.totalCount
         })
         .catch((res) => {
           this.listLoading = false
-          console.log(res)
+          // console.log(res)
         })
     },
     handleChange () {

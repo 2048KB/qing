@@ -203,8 +203,8 @@ export default {
   },
 
   created() {
-    console.log('adc')
-    console.log(this.counselorOfBeautician)
+    // console.log('adc')
+    // console.log(this.counselorOfBeautician)
     this.handleCreated()
   },
 

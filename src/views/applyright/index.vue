@@ -67,7 +67,7 @@
 
         if (index > -1) {
           return
-          console.log('不添加')
+          // console.log('不添加')
         //   this.rights.splice(index, 1)
         //   console.log(this.rights)
         } else {

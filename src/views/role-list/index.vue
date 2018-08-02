@@ -158,7 +158,7 @@ export default {
       this.fetchData()
     },
     handlePushApplyright (index) {
-      console.log(this.list[index], index, '556')
+      // console.log(this.list[index], index, '556')
       this.$router.push({
         path: '/system/applyright',
         query: {

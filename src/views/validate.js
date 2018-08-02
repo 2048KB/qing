@@ -1,5 +1,5 @@
 export const validateRequired = (rule, value, callback) => {
-  console.log(rule)
+  // console.log(rule)
   if (rule.required === true) {
     let message = rule.message || `请输入${rule.name}`
     if (!value && value !== 0) {

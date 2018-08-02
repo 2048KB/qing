@@ -196,7 +196,7 @@ export default {
     countdown (time) {
       let min30 = 1000 * 60 * 30
       let timestamp = (time + min30) - Date.now()
-      console.log(timestamp)
+      // console.log(timestamp)
       if (timestamp > 0) {
         this.time = this.formatTimestamp(timestamp)
         setTimeout(() => {

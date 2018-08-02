@@ -118,7 +118,7 @@ export default {
         birthDateStr: {message: '请选择出生日期', required: true, trigger: 'blur', validator: validateRequired},
         mobile: {name: '手机号', required: true, trigger: 'blur', validator: validateMobild},
         entryDateStr: {message: '请选择入职日期', required: true, trigger: 'blur', validator: validateRequired},
-        storeId: {message: '请选择所属门店', required: true, validator: validateRequired},
+        storeId: {message: '请选择所属门店', required: true, trigger: '', validator: validateRequired},
         email: {trigger: 'blur', validator: validateEmail},
         qq: {trigger: 'blur', validator: validateQQ},
         parentId: {message: '请选择所属顾问', required: true, validator: validateRequired}
@@ -141,10 +141,10 @@ export default {
         .then((res) => {
           if (res.data && res.data.length > 0) {
             this.storeOptions = res.data
-            this.formData.storeId = res.data[0].id
-            this.$nextTick(() => {
-              this.$refs.selectStore.validate()
-            })
+            this.formData.storeId = ''
+            // this.$nextTick(() => {
+            //   this.$refs.selectStore.validate()
+            // })
           }
         })
       }
@@ -155,6 +155,13 @@ export default {
       }).then((res) => {
         this.formData.sno = res.data
       })
+
+      if (this.pageData.roleType === 1) {
+        this.$API.listcounselors()
+          .then((res) => {
+            this.consultantListOptions = DEFAULT_OPTIONS.concat(res.data.page)
+          })
+      }
     },
     $route () {
       this.pageData = ROLE_MAP[this.$route.name]
@@ -173,12 +180,6 @@ export default {
         .then((res) => {
           this.storeAreaOptions = DEFAULT_OPTIONS.concat(res.data)
         })
-      if (this.pageData.roleType === 1) {
-        this.$API.listcounselors()
-          .then((res) => {
-            this.consultantListOptions = DEFAULT_OPTIONS.concat(res.data.page)
-          })
-      }
     },
     handleValidate () {
       let form1 = new Promise((resolve, reject) => {

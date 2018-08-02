@@ -47,7 +47,7 @@ export default {
     handleLogout () {
       this.$API.dropout()
         .then(() => {
-          console.log(this.$router)
+          // console.log(this.$router)
           this.$router.push({
             path: '/login'
           })

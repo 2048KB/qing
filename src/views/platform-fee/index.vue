@@ -121,7 +121,7 @@ export default {
         })
         .catch((res) => {
           this.listLoading = false
-          console.log(res)
+          // console.log(res)
         })
     },
     handleChange () {
@@ -130,8 +130,8 @@ export default {
   },
   mounted() {
     this.fetchData()
-    console.log(this.$route)
-    console.log(this.$router)
+    // console.log(this.$route)
+    // console.log(this.$router)
   }
 }
 </script>
